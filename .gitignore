@@ -1,0 +1,11 @@
+*.swp
+*.swo
+*.sublime-*
+*.pyc
+__pycache__
+tmp/
+node_modules/
+sftp-config.json
+.DS_Store
+dist/
+synonyms.egg-info
