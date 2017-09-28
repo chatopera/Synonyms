@@ -44,7 +44,7 @@ data is built based on https://github.com/Samurais/wikidata-corpus.
 [Synonyms](https://github.com/shuzi/insuranceQA)发布证书 GPL 3.0。数据仅限于研究用途，如果在发布的任何媒体、期刊、杂志或博客等内容时，必须注明引用和地址。
 ```
 @online{Synonyms:hain2017,
-  author = {Hai Liang Wang, Hu Xi Ying},
+  author = {Hai Liang Wang, Hu Ying Xi},
   title = {中文近义词工具包Synonyms},
   year = 2017,
   url = {https://github.com/huyingxi/Synonyms},
@@ -55,7 +55,9 @@ data is built based on https://github.com/Samurais/wikidata-corpus.
 任何基于[Synonyms](https://github.com/huyingxi/Synonyms)衍生的数据和项目也需要开放并需要声明一致的“声明”。
 
 # References
+
 [wikidata-corpus](https://github.com/Samurais/wikidata-corpus)
+
 [word2vec原理推导与代码分析](http://www.hankcs.com/nlp/word2vec.html)
 
 # License
