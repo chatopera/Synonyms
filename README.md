@@ -54,5 +54,9 @@ data is built based on https://github.com/Samurais/wikidata-corpus.
 
 任何基于[Synonyms](https://github.com/huyingxi/Synonyms)衍生的数据和项目也需要开放并需要声明一致的“声明”。
 
+# References
+[wikidata-corpus](https://github.com/Samurais/wikidata-corpus)
+[word2vec原理推导与代码分析](http://www.hankcs.com/nlp/word2vec.html)
+
 # License
 [GPL3.0](./LICENSE)
