@@ -33,8 +33,47 @@ if sys.version_info[0] < 3:
     # raise "Must be using Python 3"
 
 import gzip
-wn_raw_data=gzip.open(os.path.join(curdir, 'data', 'words.nearby.gz'),'rt', encoding='utf-8')
+from collections import defaultdict
+wn_raw_data=gzip.open(os.path.join(curdir, 'data', 'words.nearby.gz'),'rt', encoding='utf-8', errors = "ignore")
 
-for (k, v) in enumerate(wn_raw_data.readlines()):
-    print("index: %s, word: %s" % (k, v))
-    if k > 500: break
+_vocab = defaultdict(lambda: [])
+_is_init = False
+
+def add_word_to_vocab(word, nearby, nearby_score):
+    '''
+    Add word into vocab by word, nearby lis and nearby_score lis
+    '''
+    if not word is None:
+        # print('word %s: %s, %s' % (word, nearby, nearby_score))
+        _vocab[word] = [nearby, nearby_score]
+
+def build_vocab():
+    '''
+    Build vocab
+    '''
+    c = None # current word
+    w = []   # word nearby 
+    s = []   # score of word nearby
+    for v in wn_raw_data.readlines():
+        v = v.strip()
+        if v is None or len(v) == 0: continue
+        if v.startswith("query:"):
+            add_word_to_vocab(c, w, s)
+            o = v.split(":")
+            c = o[1].strip()
+            w, s = [], []
+        else:
+            o = v.split()
+            assert len(o) == 2, "nearby data should have text and score"
+            w.append(o[0].strip())
+            s.append(float(o[1]))
+    add_word_to_vocab(c, w, s) # add the last word
+    _is_init = True
+
+def main():
+    build_vocab()
+    print(_vocab["人脸"])
+    print(_vocab["NOT_EXIST"])
+
+if __name__ == '__main__':
+    main()

@@ -9,3 +9,4 @@ sftp-config.json
 .DS_Store
 dist/
 synonyms.egg-info
+.vscode/
