@@ -37,5 +37,22 @@ words.wc.gz     # 词频统计
 ```
 View data with ```zmore```, ```zgrep```, ```zcat```.
 
+data is built based on https://github.com/Samurais/wikidata-corpus.
+
+
+## 声明
+[Synonyms](https://github.com/shuzi/insuranceQA)发布证书 GPL 3.0。数据仅限于研究用途，如果在发布的任何媒体、期刊、杂志或博客等内容时，必须注明引用和地址。
+```
+@online{Synonyms:hain2017,
+  author = {Hai Liang Wang, Hu Xi Ying},
+  title = {中文近义词工具包Synonyms},
+  year = 2017,
+  url = {https://github.com/huyingxi/Synonyms},
+  urldate = {2017-09-27}
+}
+```
+
+任何基于[Synonyms](https://github.com/huyingxi/Synonyms)衍生的数据也需要开放并需要声明和“声明1”一致的内容。
+
 # License
 [GPL3.0](./LICENSE)
