@@ -16,13 +16,26 @@ print("人脸: %s" % (synonyms.nearby("人脸")))
 print("识别: %s" % (synonyms.nearby("识别")))
 print("NOT_EXIST: %s" % (synonyms.nearby("NOT_EXIST")))
 ```
+
+## Similarity Demo
+```
+$ pip install -r Requirements.txt
+$ python demo.py
+>> Synonyms on loading ...
+>> Synonyms vocabulary size: 125792
+Model loaded succeed
+人脸: [['图片', '图像', '通过观察', '数字图像', '几何图形', '脸部', '图象', '放大镜', '面孔', 'Mii'], [0.597284, 0.580373, 0.568486, 0.535674, 0.531835, 0.530
+095, 0.525344, 0.524009, 0.523101, 0.516046]]
+识别: [['辨识', '辨别', '辨认', '标识', '鉴别', '标记', '识别系统', '分辨', '检测', '区分'], [0.872249, 0.764099, 0.725761, 0.702918, 0.68861, 0.678132, 0.663
+829, 0.661863, 0.639442, 0.611004]]
+```
+
 ## Data
 ```
 words.nearby.gz # 近义词汇源数据
 words.wc.gz     # 词频统计
 ```
 View data with ```zmore```, ```zgrep```, ```zcat```.
-
 
 # License
 [GPL3.0](./LICENSE)

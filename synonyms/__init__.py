@@ -7,7 +7,7 @@
 #
 # File: /Users/hain/ai/Synonyms/synonyms/__init__.py
 # Author: Hai Liang Wang
-# Date: 2017-09-27:15:18:36
+# Date: 2017-09-27
 #
 #===============================================================================
 
@@ -19,7 +19,7 @@ from __future__ import division
 
 __copyright__ = "Copyright (c) 2017 . All Rights Reserved"
 __author__    = "Hu Ying Xi<>, Hai Liang Wang<hailiang.hl.wang@gmail.com>"
-__date__      = "2017-09-27:15:18:36"
+__date__      = "2017-09-27"
 
 
 import os
@@ -72,6 +72,7 @@ def _build_vocab():
     print(">> Synonyms vocabulary size: %s" % _size)
 
 # build on load
+print(">> Synonyms on loading ...")
 _build_vocab()
 
 def nearby(word):
