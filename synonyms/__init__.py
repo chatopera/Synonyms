@@ -37,15 +37,17 @@ from collections import defaultdict
 wn_raw_data=gzip.open(os.path.join(curdir, 'data', 'words.nearby.gz'),'rt', encoding='utf-8', errors = "ignore")
 
 _vocab = defaultdict(lambda: [])
+_size = 0
 _is_init = False
 
 def add_word_to_vocab(word, nearby, nearby_score):
     '''
     Add word into vocab by word, nearby lis and nearby_score lis
     '''
+    global _size
     if not word is None:
-        # print('word %s: %s, %s' % (word, nearby, nearby_score))
         _vocab[word] = [nearby, nearby_score]
+        _size += 1
 
 def build_vocab():
     '''
@@ -69,11 +71,13 @@ def build_vocab():
             s.append(float(o[1]))
     add_word_to_vocab(c, w, s) # add the last word
     _is_init = True
+    print(">> Synonyms vocabulary size: %s" % _size)
 
 def main():
     build_vocab()
-    print(_vocab["人脸"])
-    print(_vocab["NOT_EXIST"])
+    print("人脸", _vocab["人脸"])
+    print("识别", _vocab["识别"])
+    print("OOV",_vocab["NOT_EXIST"])
 
 if __name__ == '__main__':
     main()
