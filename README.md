@@ -52,7 +52,7 @@ data is built based on https://github.com/Samurais/wikidata-corpus.
 }
 ```
 
-任何基于[Synonyms](https://github.com/huyingxi/Synonyms)衍生的数据也需要开放并需要声明和“声明1”一致的内容。
+任何基于[Synonyms](https://github.com/huyingxi/Synonyms)衍生的数据和项目也需要开放并需要声明一致的“声明”。
 
 # License
 [GPL3.0](./LICENSE)
