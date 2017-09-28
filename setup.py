@@ -12,7 +12,7 @@ Welcome
 """
 
 setup(name='synonyms',
-      version='0.1',
+      version='0.2',
       description='Chinese Synonyms for Natural Language Processing and Understanding',
       long_description=LONGDOC,
       author='Hai Liang Wang',

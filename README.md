@@ -10,8 +10,12 @@ pip install -U synonyms
 ```
 
 ## Usage
-TODO
-
+```
+import synonyms
+print("人脸: %s" % (synonyms.nearby("人脸")))
+print("识别: %s" % (synonyms.nearby("识别")))
+print("NOT_EXIST: %s" % (synonyms.nearby("NOT_EXIST")))
+```
 ## Data
 ```
 words.nearby.gz # 近义词汇源数据
