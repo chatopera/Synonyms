@@ -30,6 +30,10 @@ synonyms.nearby(人脸) = [
 
 在OOV的情况下，返回  ```[[], []]```。
 
+![](assets/1.png)
+
+> PCA分析词汇距离
+
 ## Similarity Demo
 ```
 $ pip install -r Requirements.txt
