@@ -37,7 +37,7 @@ synonyms.nearby(人脸) = [
 
 > PCA分析词汇距离
 
-![](assets/1.png)
+![](assets/2.png)
 
 > 更多示例
 
