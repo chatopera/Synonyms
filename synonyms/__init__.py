@@ -36,7 +36,7 @@ import gzip
 from collections import defaultdict
 wn_raw_data=gzip.open(os.path.join(curdir, 'data', 'words.nearby.gz'),'rt', encoding='utf-8', errors = "ignore")
 
-_vocab = defaultdict(lambda: [])
+_vocab = defaultdict(lambda: [[], []])
 _size = 0
 
 def add_word_to_vocab(word, nearby, nearby_score):

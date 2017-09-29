@@ -10,12 +10,25 @@ pip install -U synonyms
 ```
 
 ## Usage
+
+### synonyms#nearby
 ```
 import synonyms
 print("人脸: %s" % (synonyms.nearby("人脸")))
 print("识别: %s" % (synonyms.nearby("识别")))
 print("NOT_EXIST: %s" % (synonyms.nearby("NOT_EXIST")))
 ```
+
+```synonyms.nearby(WORD)```返回一个list，list中包含两项：```[[nearby_words], [nearby_words_score]]```，```nearby_words```是WORD的近义词们，也以list的方式存储，并且按照距离的长度由近及远排列，```nearby_words_score```是```nearby_words```中**对应位置**的词的距离的分数，分数在(0-1)区间内，越接近于1，代表越相近。比如:
+
+```
+synonyms.nearby(人脸) = [
+    ["图片", "图像", "通过观察", "数字图像", "几何图形", "脸部", "图象", "放大镜", "面孔", "Mii"], 
+    [0.597284, 0.580373, 0.568486, 0.535674, 0.531835, 0.530
+095, 0.525344, 0.524009, 0.523101, 0.516046]]
+```
+
+在OOV的情况下，返回  ```[[], []]```。
 
 ## Similarity Demo
 ```
