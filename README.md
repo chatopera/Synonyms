@@ -32,14 +32,13 @@ synonyms.nearby(人脸) = [
 
 在OOV的情况下，返回  ```[[], []]```。
 
+## PCA (主成分析)
 
 ![](assets/1.png)
 
-> PCA分析词汇距离
+## More samples
 
 ![](assets/2.png)
-
-> 更多示例
 
 ## Similarity Demo
 ```
