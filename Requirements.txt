@@ -1,2 +1,2 @@
 thulac==0.1.2
-synonyms==0.2
+synonyms>=0.2
