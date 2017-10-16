@@ -32,6 +32,16 @@ synonyms.nearby(人脸) = [
 
 在OOV的情况下，返回  ```[[], []]```。
 
+### synonyms#compare
+两个句子的相似度比较
+```
+sen1 = "旗帜引领方向"
+sen2 = "道路决定命运"
+assert synonyms.compare(sen1, sen2) == 0.0, "the similarity should be zero"
+```
+
+返回值：[0-1]，并且越接近于1代表两个句子越相似。
+
 ## PCA (主成分析)
 
 ![](assets/1.png)
