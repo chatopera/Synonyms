@@ -10,6 +10,7 @@ Chinese Synonyms for Natural Language Processing and Understanding.
 ```
 pip install -U synonyms
 ```
+兼容py2, py3.
 
 ## Usage
 
