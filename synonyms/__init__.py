@@ -129,6 +129,8 @@ def _similarity(w1, t1, w2, t2, explain = False):
             if w1[k] in vocab_space:
                 # overlap += word2_weight_vocab[word1[k]]
                 overlap += 1 # set 1 to all included word
+    if total == 0:
+        return 0.0
     return float("{:1.2f}".format(overlap/total))
 
 def compare(s1, s2):
