@@ -27,19 +27,29 @@ import sys
 curdir = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(curdir)
 
+PLT = 2
+
 if sys.version_info[0] < 3:
     reload(sys)
     sys.setdefaultencoding("utf-8")
     # raise "Must be using Python 3"
+else:
+    PLT = 3
 
 import gzip
 import thulac # http://thulac.thunlp.org/
 from collections import defaultdict
-wn_raw_data=gzip.open(os.path.join(curdir, 'data', 'words.nearby.gz'),'rt', encoding='utf-8', errors = "ignore")
 
 _vocab = defaultdict(lambda: [[], []])
 _size = 0
 _thulac = thulac.thulac() #默认模式
+_fin = []
+_fin_path = os.path.join(curdir, 'data', 'words.nearby.gz')
+if PLT == 2:
+    import io
+    _fin=io.TextIOWrapper(io.BufferedReader(gzip.open(_fin_path)), encoding='utf8', errors='ignore')
+else:
+    _fin=gzip.open(_fin_path,'rt', encoding='utf-8', errors = "ignore")
 
 def add_word_to_vocab(word, nearby, nearby_score):
     '''
@@ -47,6 +57,9 @@ def add_word_to_vocab(word, nearby, nearby_score):
     '''
     global _size
     if not word is None:
+        if PLT == 2:
+            word = word.encode("utf-8")
+            nearby = [z.encode("utf-8") for z in nearby]
         _vocab[word] = [nearby, nearby_score]
         _size += 1
 
@@ -57,7 +70,7 @@ def _build_vocab():
     c = None # current word
     w = []   # word nearby 
     s = []   # score of word nearby
-    for v in wn_raw_data.readlines():
+    for v in _fin.readlines():
         v = v.strip()
         if v is None or len(v) == 0: continue
         if v.startswith("query:"):
@@ -126,10 +139,14 @@ def compare(s1, s2):
     w2, t2 = _segment_words(s2)
     return max(_similarity(w1, t1, w2, t2), _similarity(w2, t2, w1, t1))
 
+def display(word):
+    print("'%s'近义词：" % word)
+    o = nearby("人脸")
+    for k,v in enumerate(o[0]):
+        print("  %d. %s:%s" %(k+1, v, o[1][k]))
+
 def main():
-    print("人脸", nearby("人脸"))
-    print("识别", nearby("识别"))
-    print("OOV", nearby("NOT_EXIST"))
+    display("人脸")
 
 if __name__ == '__main__':
     main()

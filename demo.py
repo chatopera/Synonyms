@@ -35,6 +35,7 @@ if sys.version_info[0] < 3:
 import synonyms # https://github.com/huyingxi/Synonyms
 import numpy
 import unittest
+import thulac
 
 # run testcase: python /Users/hain/ai/Synonyms/demo.py Test.testExample
 class Test(unittest.TestCase):
@@ -70,7 +71,7 @@ class Test(unittest.TestCase):
             tags.append(_[1])
         for (k,v) in enumerate(tags):
             if v.startswith("n") or v.startswith("v"): # 去停，去标，去副词、形容词、代词 etc.
-                print("%s: %s" % (words[k], synonyms.nearby(words[k])))
+                synonyms.display(words[k]) # synonyms.display calls synonyms.nearby
 
 def test():
     unittest.main()
