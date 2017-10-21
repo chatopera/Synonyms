@@ -147,6 +147,7 @@ def display(word):
     for k,v in enumerate(o[0]):
         print("  %d. %s:%s" %(k+1, v, o[1][k]))
 
+
 def main():
     display("人脸")
 
