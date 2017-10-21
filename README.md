@@ -95,7 +95,7 @@ synonyms/data/words.nearby.x.pklz # compressed pickle object
 
 data is built based on [wikidata-corpus](https://github.com/Samurais/wikidata-corpus).
 
-## benchmark
+## Benchmark
 
 Test with py3, MacBook Pro.
 
@@ -106,13 +106,15 @@ python benchmark.py
 ++++++++++ OS Name and version ++++++++++
 
 Platform: Darwin
+
 Kernel: 16.7.0
-Distro: ('', '', '')
+
 Architecture: ('64bit', '')
 
 ++++++++++ CPU Cores ++++++++++
 
 Cores: 4
+
 CPU Load: 60
 
 ++++++++++ System Memory ++++++++++
