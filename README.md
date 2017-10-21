@@ -104,12 +104,14 @@ python benchmark.py
 ```
 
 ++++++++++ OS Name and version ++++++++++
+
 Platform: Darwin
 Kernel: 16.7.0
 Distro: ('', '', '')
 Architecture: ('64bit', '')
 
 ++++++++++ CPU Cores ++++++++++
+
 Cores: 4
 CPU Load: 60
 
@@ -117,9 +119,7 @@ CPU Load: 60
 
 meminfo 8GB
 
-Model loaded succeed
->> Synonyms on loading ...
-synonyms#nearby: 100000 loops, best of 3 epochs: 0.209 usec per loop
+```synonyms#nearby: 100000 loops, best of 3 epochs: 0.209 usec per loop```
 
 ## 声明
 [Synonyms](https://github.com/shuzi/insuranceQA)发布证书 GPL 3.0。数据和程序可用于研究和商业产品，必须注明引用和地址，比如发布的任何媒体、期刊、杂志或博客等内容。
