@@ -1,5 +1,6 @@
 # Synonyms
 Chinese Synonyms for Natural Language Processing and Understanding.
+最好的中文近义词工具包。
 
 ```synonyms```可以用于自然语言理解的很多任务：文本对齐，推荐算法，相似度计算，语义偏移等。
 
@@ -31,7 +32,7 @@ synonyms.nearby(人脸) = [
 095, 0.525344, 0.524009, 0.523101, 0.516046]]
 ```
 
-在OOV的情况下，返回  ```[[], []]```。
+在OOV的情况下，返回  ```[[], []]```，目前的字典大小: 125,792。
 
 ### synonyms#compare
 两个句子的相似度比较
@@ -81,28 +82,44 @@ assert synonyms.compare(sen1, sen2) == 0.0, "the similarity should be zero"
 
 ![](assets/2.png)
 
-## Similarity Demo
+## Demo
 ```
 $ pip install -r Requirements.txt
 $ python demo.py
->> Synonyms on loading ...
->> Synonyms vocabulary size: 125792
-Model loaded succeed
-人脸: [['图片', '图像', '通过观察', '数字图像', '几何图形', '脸部', '图象', '放大镜', '面孔', 'Mii'], [0.597284, 0.580373, 0.568486, 0.535674, 0.531835, 0.530
-095, 0.525344, 0.524009, 0.523101, 0.516046]]
-识别: [['辨识', '辨别', '辨认', '标识', '鉴别', '标记', '识别系统', '分辨', '检测', '区分'], [0.872249, 0.764099, 0.725761, 0.702918, 0.68861, 0.678132, 0.663
-829, 0.661863, 0.639442, 0.611004]]
 ```
 
 ## Data
 ```
-words.nearby.gz # 近义词汇源数据
-words.wc.gz     # 词频统计
+synonyms/data/words.nearby.x.pklz # compressed pickle object
 ```
-View data with ```zmore```, ```zgrep```, ```zcat```.
 
-data is built based on https://github.com/Samurais/wikidata-corpus.
+data is built based on [wikidata-corpus](https://github.com/Samurais/wikidata-corpus).
 
+## benchmark
+
+Test with py3, MacBook Pro.
+
+```
+python benchmark.py
+```
+
+++++++++++ OS Name and version ++++++++++
+Platform: Darwin
+Kernel: 16.7.0
+Distro: ('', '', '')
+Architecture: ('64bit', '')
+
+++++++++++ CPU Cores ++++++++++
+Cores: 4
+CPU Load: 60
+
+++++++++++ System Memory ++++++++++
+
+meminfo 8GB
+
+Model loaded succeed
+>> Synonyms on loading ...
+synonyms#nearby: 100000 loops, best of 3 epochs: 0.209 usec per loop
 
 ## 声明
 [Synonyms](https://github.com/shuzi/insuranceQA)发布证书 GPL 3.0。数据和程序可用于研究和商业产品，必须注明引用和地址，比如发布的任何媒体、期刊、杂志或博客等内容。

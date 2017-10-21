@@ -38,18 +38,33 @@ else:
 
 import gzip
 import thulac # http://thulac.thunlp.org/
-from collections import defaultdict
+import shutil
 
-_vocab = defaultdict(lambda: [[], []])
+_vocab = dict()
 _size = 0
 _thulac = thulac.thulac() #默认模式
-_fin = []
-_fin_path = os.path.join(curdir, 'data', 'words.nearby.gz')
+_fin_path = os.path.join(curdir, os.path.pardir, 'tmp', 'words.nearby.gz')
+_fin_cached_vocab_path = os.path.join(curdir, 'data', 'words.nearby.%d.pklz' % PLT)
+
 if PLT == 2:
-    import io
-    _fin=io.TextIOWrapper(io.BufferedReader(gzip.open(_fin_path)), encoding='utf8', errors='ignore')
+    import cPickle as pickle
 else:
-    _fin=gzip.open(_fin_path,'rt', encoding='utf-8', errors = "ignore")
+    import pickle
+
+def dump_pickle_file(file_path, data):
+    if os.path.exists(file_path):
+        shutil.rmtree(file_path)
+    with gzip.open(file_path, "wb") as fout:
+        print("dump pickle file, version ", pickle.HIGHEST_PROTOCOL)
+        pickle.dump(data, fout, protocol=pickle.HIGHEST_PROTOCOL)
+        print("done.")
+
+def load_pickle_file(file_path):
+    if os.path.exists(file_path):
+        with gzip.open(file_path, "rb") as fin:
+            return pickle.load(fin)
+    else: 
+        return None
 
 def add_word_to_vocab(word, nearby, nearby_score):
     '''
@@ -67,6 +82,13 @@ def _build_vocab():
     '''
     Build vocab
     '''
+    _fin = []
+    if PLT == 2:
+        import io
+        _fin=io.TextIOWrapper(io.BufferedReader(gzip.open(_fin_path)), encoding='utf8', errors='ignore')
+    else:
+        _fin=gzip.open(_fin_path,'rt', encoding='utf-8', errors = "ignore")
+
     c = None # current word
     w = []   # word nearby 
     s = []   # score of word nearby
@@ -86,15 +108,36 @@ def _build_vocab():
     add_word_to_vocab(c, w, s) # add the last word
     print(">> Synonyms vocabulary size: %s" % _size)
 
+def _load_vocab():
+    '''
+    load vocab dict
+    '''
+    global _vocab
+    try:
+        o = load_pickle_file(_fin_cached_vocab_path)
+        if o is None:
+            _build_vocab()
+            dump_pickle_file(_fin_cached_vocab_path, _vocab)
+        else:
+            _vocab = o
+    except Exception as e:
+        '''
+        Just load the data without cached policy
+        '''
+        _build_vocab()
+
 # build on load
 print(">> Synonyms on loading ...")
-_build_vocab()
+_load_vocab()
 
 def nearby(word):
     '''
     Nearby word
     '''
-    return _vocab[word]
+    try:
+        return _vocab[word]
+    except KeyError as e:
+        return [[],[]]
 
 def _segment_words(sen):
     '''
@@ -144,12 +187,14 @@ def compare(s1, s2):
 def display(word):
     print("'%s'近义词：" % word)
     o = nearby(word)
+    assert len(o) == 2, "should contain 2 list"
+    if len(o[0]) == 0: print(" out of vocabulary")
     for k,v in enumerate(o[0]):
         print("  %d. %s:%s" %(k+1, v, o[1][k]))
 
-
 def main():
     display("人脸")
+    display("NOT_EXIST")
 
 if __name__ == '__main__':
     main()

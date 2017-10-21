@@ -12,7 +12,7 @@ Welcome
 """
 
 setup(name='synonyms',
-      version='1.3',
+      version='1.5',
       description='Chinese Synonyms for Natural Language Processing and Understanding',
       long_description=LONGDOC,
       author='Hai Liang Wang, Hu Ying Xi',
@@ -41,5 +41,5 @@ setup(name='synonyms',
       install_requires=[
           'thulac==0.1.2',
       ],
-      package_data={'synonyms':['**/*gz', 'LICENSE']}
+      package_data={'synonyms':['**/*.pklz', 'LICENSE']}
 )

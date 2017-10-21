@@ -35,7 +35,6 @@ if sys.version_info[0] < 3:
 import synonyms # https://github.com/huyingxi/Synonyms
 import numpy
 import unittest
-import thulac
 
 # run testcase: python /Users/hain/ai/Synonyms/demo.py Test.testExample
 class Test(unittest.TestCase):
@@ -61,17 +60,7 @@ class Test(unittest.TestCase):
         assert synonyms.compare(sen1, sen2) > 0, "the similarity should be bigger then zero"
 
     def testNearbyWords(self):
-        thu1 = thulac.thulac() #默认模式
-        text = thu1.cut("人脸识别", text=True)  #进行一句话分词
-        words, tags = [], []
-        data = [x.rsplit('_', 1) for x in text.split()]
-        for _ in data:
-            assert len(_) == 2, "seg len should be 2"
-            words.append(_[0])
-            tags.append(_[1])
-        for (k,v) in enumerate(tags):
-            if v.startswith("n") or v.startswith("v"): # 去停，去标，去副词、形容词、代词 etc.
-                synonyms.display(words[k]) # synonyms.display calls synonyms.nearby
+        synonyms.display("人脸") # synonyms.display calls synonyms.nearby
 
 def test():
     unittest.main()
