@@ -143,7 +143,7 @@ def compare(s1, s2):
 
 def display(word):
     print("'%s'近义词：" % word)
-    o = nearby("人脸")
+    o = nearby(word)
     for k,v in enumerate(o[0]):
         print("  %d. %s:%s" %(k+1, v, o[1][k]))
 
