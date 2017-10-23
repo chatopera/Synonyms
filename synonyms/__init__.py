@@ -30,7 +30,11 @@ sys.path.append(curdir)
 PLT = 2
 
 if sys.version_info[0] < 3:
+    default_stdout = sys.stdout
+    default_stderr = sys.stderr
     reload(sys)
+    sys.stdout = default_stdout
+    sys.stderr = default_stderr
     sys.setdefaultencoding("utf-8")
     # raise "Must be using Python 3"
 else:
