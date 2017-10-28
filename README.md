@@ -11,7 +11,7 @@ Chinese Synonyms for Natural Language Processing and Understanding.
 ```
 pip install -U synonyms
 ```
-兼容py2和py3，当前稳定版本 v1.5。
+兼容py2和py3，当前稳定版本 v1.6。
 
 ![](./assets/3.gif)
 

@@ -41,12 +41,11 @@ else:
     PLT = 3
 
 import gzip
-import thulac # http://thulac.thunlp.org/
 import shutil
+import jieba.posseg as _tokenizer
 
 _vocab = dict()
 _size = 0
-_thulac = thulac.thulac() #默认模式
 _fin_path = os.path.join(curdir, os.path.pardir, 'tmp', 'words.nearby.gz')
 _fin_cached_vocab_path = os.path.join(curdir, 'data', 'words.nearby.%d.pklz' % PLT)
 
@@ -147,13 +146,11 @@ def _segment_words(sen):
     '''
     segment words
     '''
-    text = _thulac.cut(sen, text=True)  #进行一句话分词
     words, tags = [], []
-    data = [x.rsplit('_', 1) for x in text.split()]
-    for _ in data:
-        assert len(_) == 2, "seg len should be 2"
-        words.append(_[0])
-        tags.append(_[1])
+    m = _tokenizer.cut(sen, HMM=True) # HMM更好的识别新词
+    for x in m:
+        words.append(x.word)
+        tags.append(x.flag)
     return words, tags
 
 def _similarity(w1, t1, w2, t2, explain = False):

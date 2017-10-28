@@ -53,11 +53,15 @@ class Test(unittest.TestCase):
         '''
         sen1 = "旗帜引领方向"
         sen2 = "道路决定命运"
-        assert synonyms.compare(sen1, sen2) == 0.0, "the similarity should be zero"
+        r = synonyms.compare(sen1, sen2)
+        print("旗帜引领方向 vs 道路决定命运:", r)
+        assert r == 0.0, "the similarity should be zero"
 
         sen1 = "发生历史性变革"
         sen2 = "取得历史性成就"
-        assert synonyms.compare(sen1, sen2) > 0, "the similarity should be bigger then zero"
+        r = synonyms.compare(sen1, sen2)
+        print("发生历史性变革 vs 取得历史性成就:", r)
+        assert r > 0, "the similarity should be bigger then zero"
 
     def testNearbyWords(self):
         synonyms.display("人脸") # synonyms.display calls synonyms.nearby

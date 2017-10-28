@@ -12,7 +12,7 @@ Welcome
 """
 
 setup(name='synonyms',
-      version='1.5',
+      version='1.6',
       description='Chinese Synonyms for Natural Language Processing and Understanding',
       long_description=LONGDOC,
       author='Hai Liang Wang, Hu Ying Xi',
@@ -39,7 +39,7 @@ setup(name='synonyms',
       keywords='corpus,machine-learning,NLU,NLP,Synonyms,Similarity',
       packages= find_packages(),
       install_requires=[
-          'thulac==0.1.2',
+          'jieba>=0.39',
       ],
       package_data={'synonyms':['**/*.pklz', 'LICENSE']}
 )
