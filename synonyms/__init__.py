@@ -50,62 +50,18 @@ from utils import any2unicode
 import jieba.posseg as _tokenizer
 import jieba
 
+'''
+globals
+'''
 _vocab = dict()
 _size = 0
-_fin_wv_path = os.path.join(curdir, 'data', 'words.vector')
-_fin_stopwords_path = os.path.join(curdir, 'data', 'stopwords.txt')
+_vectors = None
+_stopwords = set()
+
 
 '''
 nearby
 '''
-
-def add_word_to_vocab(word, nearby, nearby_score):
-    '''
-    Add word into vocab by word, nearby lis and nearby_score lis
-    '''
-    global _size
-    if word is not None:
-        if PLT == 2:
-            word = any2unicode(word)
-            nearby = [any2unicode(z) for z in nearby]
-        _vocab[word] = [nearby, nearby_score]
-        _size += 1
-
-def _build_vocab():
-    '''
-    Build vocab
-    '''
-    _fin = []
-    if PLT == 2:
-        import io
-        _fin = io.TextIOWrapper(
-            io.BufferedReader(
-                gzip.open(_fin_path)),
-            encoding='utf8',
-            errors='ignore')
-    else:
-        _fin = gzip.open(_fin_path, 'rt', encoding='utf-8', errors="ignore")
-
-    c = None  # current word
-    w = []   # word nearby
-    s = []   # score of word nearby
-    for v in _fin.readlines():
-        v = v.strip()
-        if v is None or len(v) == 0:
-            continue
-        if v.startswith("query:"):
-            add_word_to_vocab(c, w, s)
-            o = v.split(":")
-            c = o[1].strip()
-            w, s = [], []
-        else:
-            o = v.split()
-            assert len(o) == 2, "nearby data should have text and score"
-            w.append(o[0].strip())
-            s.append(float(o[1]))
-    add_word_to_vocab(c, w, s)  # add the last word
-    print(">> Synonyms vocabulary size: %s" % _size)
-
 def _load_vocab(file_path):
     '''
     load vocab dict
@@ -137,38 +93,12 @@ def nearby(word):
         return [[], []]
 
 
-def _segment_words(sen):
-    '''
-    segment words
-    '''
-    words, tags = [], []
-    m = _tokenizer.cut(sen, HMM=True)  # HMM更好的识别新词
-    for x in m:
-        words.append(x.word)
-        tags.append(x.flag)
-    return words, tags
-
-
 '''
 similarity
 '''
-# vectors
-_vectors = None
-_f_model = os.path.join(curdir, 'data', 'words.vector')
-def _load_w2v(model_file=_f_model, binary=True):
-    if not os.path.exists(model_file):
-        print("os.path : ", os.path)
-        raise Exception("Model file does not exist.")
-    return KeyedVectors.load_word2vec_format(
-        model_file, binary=binary, unicode_errors='ignore')
-
-print(">> Synonyms on loading vectors ...")
-_vectors = _load_w2v(model_file=_f_model)
 
 # stopwords
-_stopwords = set()
 _fin_stopwords_path = os.path.join(curdir, 'data', 'stopwords.txt')
-
 def _load_stopwords(file_path):
     '''
     load stop words
@@ -181,6 +111,31 @@ def _load_stopwords(file_path):
 
 print(">> Synonyms on loading stopwords ...")
 _load_stopwords(_fin_stopwords_path)
+
+def _segment_words(sen):
+    '''
+    segment words with jieba
+    '''
+    words, tags = [], []
+    m = _tokenizer.cut(sen, HMM=True)  # HMM更好的识别新词
+    for x in m:
+        words.append(x.word)
+        tags.append(x.flag)
+    return words, tags
+
+# vectors
+_f_model = os.path.join(curdir, 'data', 'words.vector')
+def _load_w2v(model_file=_f_model, binary=True):
+    '''
+    load word2vec model
+    '''
+    if not os.path.exists(model_file):
+        print("os.path : ", os.path)
+        raise Exception("Model file does not exist.")
+    return KeyedVectors.load_word2vec_format(
+        model_file, binary=binary, unicode_errors='ignore')
+print(">> Synonyms on loading vectors ...")
+_vectors = _load_w2v(model_file=_f_model)
 
 _sim_molecule = lambda x: np.sum(x, axis=0)  # 分子
 
