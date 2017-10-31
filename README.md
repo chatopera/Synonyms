@@ -41,8 +41,20 @@ synonyms.nearby(人脸) = [
 ```
 sen1 = "旗帜引领方向"
 sen2 = "道路决定命运"
-assert synonyms.compare(sen1, sen2) == 0.0, "the similarity should be zero"
+
+旗帜引领方向 vs 道路决定命运: 0.008
+
+sen1 = "发生历史性变革"
+sen2 = "取得历史性成就"
+
+发生历史性变革 vs 取得历史性成就: 0.208
 ```
+
+句子相似度性能：
+在778条标准语料上进行测试，效果如下
+![](assets/pr_curve_eulidean0.8+unigram0.2.png)
+![](assets/pr_hresholds_eulidean0.8+unigram0.2+POS.png)
+![](assets/roc_curve_eulidean0.8+unigram0.2+POS.png)
 
 返回值：[0-1]，并且越接近于1代表两个句子越相似。
 
