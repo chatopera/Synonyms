@@ -24,6 +24,7 @@ __date__      = "2017-09-27"
 
 import os
 import sys
+import numpy as np
 curdir = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(curdir)
 
@@ -43,11 +44,15 @@ else:
 import gzip
 import shutil
 import jieba.posseg as _tokenizer
+import jieba
 
 _vocab = dict()
 _size = 0
 _fin_path = os.path.join(curdir, os.path.pardir, 'tmp', 'words.nearby.gz')
 _fin_cached_vocab_path = os.path.join(curdir, 'data', 'words.nearby.%d.pklz' % PLT)
+_fin_wv_path = os.path.join(curdir, 'data', 'words.vector')
+_fin_stopwords_path = os.path.join(curdir, 'data', 'stopwords.txt')
+
 
 if PLT == 2:
     import cPickle as pickle
@@ -66,7 +71,7 @@ def load_pickle_file(file_path):
     if os.path.exists(file_path):
         with gzip.open(file_path, "rb") as fin:
             return pickle.load(fin)
-    else: 
+    else:
         return None
 
 def add_word_to_vocab(word, nearby, nearby_score):
@@ -93,7 +98,7 @@ def _build_vocab():
         _fin=gzip.open(_fin_path,'rt', encoding='utf-8', errors = "ignore")
 
     c = None # current word
-    w = []   # word nearby 
+    w = []   # word nearby
     s = []   # score of word nearby
     for v in _fin.readlines():
         v = v.strip()
@@ -153,37 +158,88 @@ def _segment_words(sen):
         tags.append(x.flag)
     return words, tags
 
-def _similarity(w1, t1, w2, t2, explain = False):
+
+
+def similarity_distance(s1,s2):
     '''
     compute similarity
     '''
-    vocab_space = dict()
-    
-    for (k,v) in enumerate(t2):
-        vocab_space[w2[k]] = 1
-        for k2,v2 in enumerate(nearby(w2[k])[0]):
-            vocab_space[v2] = nearby(w2[k])[1][k2]
-        
-    if explain: print(vocab_space)
-    total = 0
-    overlap = 0
-    for (k,v) in enumerate(t1):
-        if v.startswith("n") or v.startswith("v"): # 去停，去标，去副词、形容词、代词 etc.
-            total += 1
-            if w1[k] in vocab_space:
-                # overlap += word2_weight_vocab[word1[k]]
-                overlap += 1 # set 1 to all included word
-    if total == 0:
-        return 0.0
-    return float("{:1.2f}".format(overlap/total))
+    sim_molecule = lambda x: np.sum(x, axis=0) # 分子
 
-def compare(s1, s2):
+    def load_wv(model_file, binary):
+        if not os.path.exists(model_file):
+            print("os.path : ",os.path)
+            raise Exception("Model file does not exist.")
+        from gensim.models.keyedvectors import KeyedVectors
+        return KeyedVectors.load_word2vec_format(model_file, binary=binary, unicode_errors='ignore')
+
+    V = load_wv(model_file=_fin_wv_path, binary=True)
+    print('loaded.')
+
+    def set_stopwords():
+        global words_set
+        words = open(_fin_stopwords_path,'r')
+        stopwords = words.readlines()
+        words_set = set()
+        for w in stopwords:
+            words_set.add(w.strip())
+
+    def _vector(sentence):
+        vectors = []
+        for x,y in enumerate(sentence.split()):
+            if y.strip() not in words_set:
+                y_ = y.decode('utf-8', errors='ignore').strip()
+                syns = nearby(y.strip())[0]
+                current = []
+                try:
+                    current.append(V.word_vec(y_))
+                except KeyError,error:
+                    current.append(np.zeros((100,),dtype=float))
+                for y in syns:
+                    if y: # discard word if empty
+                        try:
+                            v = V.word_vec(y)
+                        except KeyError,error:
+                            v = np.zeros((100,),dtype=float)
+                        current.append(v)
+                cur = np.average(current,axis=0)
+                vectors.append(cur)
+        return vectors
+
+    def unigram_overlap(sentence1, sentence2):
+        sen1_set = set(sentence1.split())
+        sen2_set = set(sentence2.split())
+
+        sen_intersection = sen1_set & sen2_set
+        sen_union = sen1_set | sen2_set
+
+        return ((float)(len(sen_intersection))/(float)(len(sen_union)))
+
+    set_stopwords()
+    a = sim_molecule(_vector(s1))
+    b = sim_molecule(_vector(s2))
+    similarity_nearby = 1/(np.linalg.norm(a - b)+1)
+    similarity_unigram =unigram_overlap(s1,s2)
+    similarity = similarity_nearby*0.5+similarity_unigram*1.0
+
+    return float("%.3f" % similarity)
+
+def compare(s1, s2, seg = True):
     '''
     compare similarity
+    s1 : sentence1
+    s2 : sentence2
+    seg : True : The original sentences need jieba.cut
+          Flase : The original sentences have been cut.
     '''
-    w1, t1 = _segment_words(s1)
-    w2, t2 = _segment_words(s2)
-    return max(_similarity(w1, t1, w2, t2), _similarity(w2, t2, w1, t1))
+    assert len(s1) > 0 and len(s2) > 0, "The length of s1 and s2 should > 0."
+    if seg:
+        s1_ = ' '.join(jieba.cut(s1))
+        s2_ = ' '.join(jieba.cut(s2))
+        return similarity_distance(s1_,s2_)
+    else:
+        return similarity_distance(s1,s2)
+
 
 def display(word):
     print("'%s'近义词：" % word)
