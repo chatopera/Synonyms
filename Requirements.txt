@@ -1,1 +1,1 @@
-jieba==0.39
+synonyms>=1.6

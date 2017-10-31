@@ -11,15 +11,16 @@ Welcome
 
 """
 
-setup(name='synonyms',
-      version='1.6',
-      description='Chinese Synonyms for Natural Language Processing and Understanding',
-      long_description=LONGDOC,
-      author='Hai Liang Wang, Hu Ying Xi',
-      author_email='hailiang.hl.wang@gmail.com',
-      url='https://github.com/huyingxi/Synonyms',
-      license="GPL 3.0",
-      classifiers=[
+setup(
+    name='synonyms',
+    version='1.8',
+    description='Chinese Synonyms for Natural Language Processing and Understanding',
+    long_description=LONGDOC,
+    author='Hai Liang Wang, Hu Ying Xi',
+    author_email='hailiang.hl.wang@gmail.com',
+    url='https://github.com/huyingxi/Synonyms',
+    license="GPL 3.0",
+    classifiers=[
         'Intended Audience :: Developers',
         'License :: OSI Approved :: GNU General Public License v3 (GPLv3)',
         'Operating System :: OS Independent',
@@ -34,12 +35,16 @@ setup(name='synonyms',
         'Programming Language :: Python :: 3.6',
         'Topic :: Text Processing',
         'Topic :: Text Processing :: Indexing',
-        'Topic :: Text Processing :: Linguistic'
-      ],
-      keywords='corpus,machine-learning,NLU,NLP,Synonyms,Similarity',
-      packages= find_packages(),
-      install_requires=[
-          'jieba>=0.39',
-      ],
-      package_data={'synonyms':['**/*.pklz', 'LICENSE']}
-)
+        'Topic :: Text Processing :: Linguistic'],
+    keywords='corpus,machine-learning,NLU,NLP,Synonyms,Similarity',
+    packages=find_packages(),
+    install_requires=[
+        'jieba>=0.39',
+        'numpy>=1.13.1'
+    ],
+    package_data={
+        'synonyms': [
+            '**/*.gz',
+            '**/*.txt',
+            '**/*.vector',
+            'LICENSE']})

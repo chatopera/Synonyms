@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-#===============================================================================
+#=========================================================================
 #
 # Copyright (c) 2017 <> All Rights Reserved
 #
@@ -9,7 +9,7 @@
 # Author: Hai Liang Wang
 # Date: 2017-09-27
 #
-#===============================================================================
+#=========================================================================
 
 """
 Chinese Synonyms for Natural Language Processing and Understanding.
@@ -18,8 +18,8 @@ from __future__ import print_function
 from __future__ import division
 
 __copyright__ = "Copyright (c) 2017 . All Rights Reserved"
-__author__    = "Hu Ying Xi<>, Hai Liang Wang<hailiang.hl.wang@gmail.com>"
-__date__      = "2017-09-27"
+__author__ = "Hu Ying Xi<>, Hai Liang Wang<hailiang.hl.wang@gmail.com>"
+__date__ = "2017-09-27"
 
 
 import os
@@ -41,48 +41,33 @@ if sys.version_info[0] < 3:
 else:
     PLT = 3
 
+import json
 import gzip
 import shutil
+from word2vec import KeyedVectors
+from utils import any2utf8
+from utils import any2unicode
 import jieba.posseg as _tokenizer
 import jieba
 
 _vocab = dict()
 _size = 0
-_fin_path = os.path.join(curdir, os.path.pardir, 'tmp', 'words.nearby.gz')
-_fin_cached_vocab_path = os.path.join(curdir, 'data', 'words.nearby.%d.pklz' % PLT)
 _fin_wv_path = os.path.join(curdir, 'data', 'words.vector')
 _fin_stopwords_path = os.path.join(curdir, 'data', 'stopwords.txt')
 
-
-if PLT == 2:
-    import cPickle as pickle
-else:
-    import pickle
-
-def dump_pickle_file(file_path, data):
-    if os.path.exists(file_path):
-        shutil.rmtree(file_path)
-    with gzip.open(file_path, "wb") as fout:
-        print("dump pickle file, version ", pickle.HIGHEST_PROTOCOL)
-        pickle.dump(data, fout, protocol=pickle.HIGHEST_PROTOCOL)
-        print("done.")
-
-def load_pickle_file(file_path):
-    if os.path.exists(file_path):
-        with gzip.open(file_path, "rb") as fin:
-            return pickle.load(fin)
-    else:
-        return None
+'''
+nearby
+'''
 
 def add_word_to_vocab(word, nearby, nearby_score):
     '''
     Add word into vocab by word, nearby lis and nearby_score lis
     '''
     global _size
-    if not word is None:
+    if word is not None:
         if PLT == 2:
-            word = word.encode("utf-8")
-            nearby = [z.encode("utf-8") for z in nearby]
+            word = any2unicode(word)
+            nearby = [any2unicode(z) for z in nearby]
         _vocab[word] = [nearby, nearby_score]
         _size += 1
 
@@ -93,16 +78,21 @@ def _build_vocab():
     _fin = []
     if PLT == 2:
         import io
-        _fin=io.TextIOWrapper(io.BufferedReader(gzip.open(_fin_path)), encoding='utf8', errors='ignore')
+        _fin = io.TextIOWrapper(
+            io.BufferedReader(
+                gzip.open(_fin_path)),
+            encoding='utf8',
+            errors='ignore')
     else:
-        _fin=gzip.open(_fin_path,'rt', encoding='utf-8', errors = "ignore")
+        _fin = gzip.open(_fin_path, 'rt', encoding='utf-8', errors="ignore")
 
-    c = None # current word
+    c = None  # current word
     w = []   # word nearby
     s = []   # score of word nearby
     for v in _fin.readlines():
         v = v.strip()
-        if v is None or len(v) == 0: continue
+        if v is None or len(v) == 0:
+            continue
         if v.startswith("query:"):
             add_word_to_vocab(c, w, s)
             o = v.split(":")
@@ -113,118 +103,146 @@ def _build_vocab():
             assert len(o) == 2, "nearby data should have text and score"
             w.append(o[0].strip())
             s.append(float(o[1]))
-    add_word_to_vocab(c, w, s) # add the last word
+    add_word_to_vocab(c, w, s)  # add the last word
     print(">> Synonyms vocabulary size: %s" % _size)
 
-def _load_vocab():
+def _load_vocab(file_path):
     '''
     load vocab dict
     '''
     global _vocab
-    try:
-        o = load_pickle_file(_fin_cached_vocab_path)
-        if o is None:
-            _build_vocab()
-            dump_pickle_file(_fin_cached_vocab_path, _vocab)
-        else:
-            _vocab = o
-    except Exception as e:
-        '''
-        Just load the data without cached policy
-        '''
-        _build_vocab()
+    if PLT == 2:
+        import io
+        fin = io.TextIOWrapper(
+            io.BufferedReader(
+                gzip.open(file_path)),
+            encoding='utf8',
+            errors='ignore')
+    else:
+        fin = gzip.open(file_path, 'rt', encoding='utf-8', errors="ignore")
+
+    _vocab = json.loads(fin.read())
 
 # build on load
-print(">> Synonyms on loading ...")
-_load_vocab()
+print(">> Synonyms on loading vocab ...")
+_load_vocab(os.path.join(curdir, "data", "words.nearby.json.gz"))
 
 def nearby(word):
     '''
     Nearby word
     '''
     try:
-        return _vocab[word]
+        return _vocab[any2unicode(word)]
     except KeyError as e:
-        return [[],[]]
+        return [[], []]
+
 
 def _segment_words(sen):
     '''
     segment words
     '''
     words, tags = [], []
-    m = _tokenizer.cut(sen, HMM=True) # HMM更好的识别新词
+    m = _tokenizer.cut(sen, HMM=True)  # HMM更好的识别新词
     for x in m:
         words.append(x.word)
         tags.append(x.flag)
     return words, tags
 
 
+'''
+similarity
+'''
+# vectors
+_vectors = None
+_f_model = os.path.join(curdir, 'data', 'words.vector')
+def _load_w2v(model_file=_f_model, binary=True):
+    if not os.path.exists(model_file):
+        print("os.path : ", os.path)
+        raise Exception("Model file does not exist.")
+    return KeyedVectors.load_word2vec_format(
+        model_file, binary=binary, unicode_errors='ignore')
 
-def similarity_distance(s1,s2):
+print(">> Synonyms on loading vectors ...")
+_vectors = _load_w2v(model_file=_f_model)
+
+# stopwords
+_stopwords = set()
+_fin_stopwords_path = os.path.join(curdir, 'data', 'stopwords.txt')
+
+def _load_stopwords(file_path):
     '''
-    compute similarity
+    load stop words
     '''
-    sim_molecule = lambda x: np.sum(x, axis=0) # 分子
+    global _stopwords
+    words = open(file_path, 'r')
+    stopwords = words.readlines()
+    for w in stopwords:
+        _stopwords.add(any2unicode(w).strip())
 
-    def load_wv(model_file, binary):
-        if not os.path.exists(model_file):
-            print("os.path : ",os.path)
-            raise Exception("Model file does not exist.")
-        from gensim.models.keyedvectors import KeyedVectors
-        return KeyedVectors.load_word2vec_format(model_file, binary=binary, unicode_errors='ignore')
+print(">> Synonyms on loading stopwords ...")
+_load_stopwords(_fin_stopwords_path)
 
-    V = load_wv(model_file=_fin_wv_path, binary=True)
-    print('loaded.')
+_sim_molecule = lambda x: np.sum(x, axis=0)  # 分子
 
-    def set_stopwords():
-        global words_set
-        words = open(_fin_stopwords_path,'r')
-        stopwords = words.readlines()
-        words_set = set()
-        for w in stopwords:
-            words_set.add(w.strip())
-
-    def _vector(sentence):
-        vectors = []
-        for x,y in enumerate(sentence.split()):
-            if y.strip() not in words_set:
-                y_ = y.decode('utf-8', errors='ignore').strip()
-                syns = nearby(y.strip())[0]
-                current = []
+def _get_wv(sentence):
+    '''
+    get word2vec data by sentence
+    sentence is segmented string.
+    '''
+    global _vectors
+    vectors = []
+    for y in sentence.split():
+        y_ = any2unicode(y).strip()
+        if y_ not in _stopwords:
+            syns = nearby(y_)[0]
+            # print("sentence %s word: %s" %(sentence, y_))
+            # print("sentence %s word nearby: %s" %(sentence, " ".join(syns)))
+            c = []
+            try:
+                c.append(_vectors.word_vec(y_))
+            except KeyError as error:
+                print("not exist in w2v model: %s" % y_)
+                c.append(np.zeros((100,), dtype=float))
+            for n in syns:
+                if n is None: continue
                 try:
-                    current.append(V.word_vec(y_))
-                except KeyError,error:
-                    current.append(np.zeros((100,),dtype=float))
-                for y in syns:
-                    if y: # discard word if empty
-                        try:
-                            v = V.word_vec(y)
-                        except KeyError,error:
-                            v = np.zeros((100,),dtype=float)
-                        current.append(v)
-                cur = np.average(current,axis=0)
-                vectors.append(cur)
-        return vectors
+                    v = _vectors.word_vec(any2unicode(n))
+                except KeyError as error:
+                    v = np.zeros((100,), dtype=float)
+                c.append(v)
+            r = np.average(c, axis=0)
+            vectors.append(r)
+    return vectors
 
-    def unigram_overlap(sentence1, sentence2):
-        sen1_set = set(sentence1.split())
-        sen2_set = set(sentence2.split())
 
-        sen_intersection = sen1_set & sen2_set
-        sen_union = sen1_set | sen2_set
+def _unigram_overlap(sentence1, sentence2):
+    '''
+    compute unigram overlap
+    '''
+    x = set(sentence1.split())
+    y = set(sentence2.split())
 
-        return ((float)(len(sen_intersection))/(float)(len(sen_union)))
+    intersection = x & y
+    union = x | y
 
-    set_stopwords()
-    a = sim_molecule(_vector(s1))
-    b = sim_molecule(_vector(s2))
-    similarity_nearby = 1/(np.linalg.norm(a - b)+1)
-    similarity_unigram =unigram_overlap(s1,s2)
-    similarity = similarity_nearby*0.8+similarity_unigram*0.2
+    return ((float)(len(intersection)) / (float)(len(union)))
 
-    return float("%.3f" % similarity)
 
-def compare(s1, s2, seg = True):
+def _similarity_distance(s1, s2):
+    '''
+    compute similarity with distance measurement
+    '''
+    a = _sim_molecule(_get_wv(s1))
+    b = _sim_molecule(_get_wv(s2))
+    # https://docs.scipy.org/doc/numpy-1.13.0/reference/generated/numpy.linalg.norm.html
+    g = 1 / (np.linalg.norm(a - b) + 1)
+    u = _unigram_overlap(s1, s2)
+    r = g * 0.8 + u * 0.2
+
+    return float("%.3f" % r)
+
+
+def compare(s1, s2, seg=True):
     '''
     compare similarity
     s1 : sentence1
@@ -234,24 +252,25 @@ def compare(s1, s2, seg = True):
     '''
     assert len(s1) > 0 and len(s2) > 0, "The length of s1 and s2 should > 0."
     if seg:
-        s1_ = ' '.join(jieba.cut(s1))
-        s2_ = ' '.join(jieba.cut(s2))
-        return similarity_distance(s1_,s2_)
-    else:
-        return similarity_distance(s1,s2)
+        s1 = ' '.join(jieba.cut(s1))
+        s2 = ' '.join(jieba.cut(s2))
+    return _similarity_distance(s1, s2)
 
 
 def display(word):
     print("'%s'近义词：" % word)
     o = nearby(word)
     assert len(o) == 2, "should contain 2 list"
-    if len(o[0]) == 0: print(" out of vocabulary")
-    for k,v in enumerate(o[0]):
-        print("  %d. %s:%s" %(k+1, v, o[1][k]))
+    if len(o[0]) == 0:
+        print(" out of vocabulary")
+    for k, v in enumerate(o[0]):
+        print("  %d. %s:%s" % (k + 1, v, o[1][k]))
+
 
 def main():
     display("人脸")
     display("NOT_EXIST")
+
 
 if __name__ == '__main__':
     main()
