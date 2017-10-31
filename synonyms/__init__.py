@@ -220,7 +220,7 @@ def similarity_distance(s1,s2):
     b = sim_molecule(_vector(s2))
     similarity_nearby = 1/(np.linalg.norm(a - b)+1)
     similarity_unigram =unigram_overlap(s1,s2)
-    similarity = similarity_nearby*0.5+similarity_unigram*1.0
+    similarity = similarity_nearby*0.8+similarity_unigram*0.2
 
     return float("%.3f" % similarity)
 
