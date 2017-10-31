@@ -11,7 +11,7 @@ Chinese Synonyms for Natural Language Processing and Understanding.
 ```
 pip install -U synonyms
 ```
-兼容py2和py3，当前稳定版本 v1.6。
+兼容py2和py3，当前稳定版本 v1.8。
 
 ![](./assets/3.gif)
 
@@ -51,9 +51,12 @@ sen2 = "取得历史性成就"
 ```
 
 句子相似度性能：
-在778条标准语料上进行测试，效果如下
+在[778条标准语料](https://github.com/fssqawj/SentenceSim/blob/master/dev.txt)上进行测试，效果如下
+
 ![](assets/pr_curve_eulidean0.8+unigram0.2.png)
+
 ![](assets/pr_hresholds_eulidean0.8+unigram0.2+POS.png)
+
 ![](assets/roc_curve_eulidean0.8+unigram0.2+POS.png)
 
 返回值：[0-1]，并且越接近于1代表两个句子越相似。
