@@ -55,15 +55,17 @@ sen2 = "取得历史性成就"
 句子相似度性能：
 
 在[7516条标准语料](https://github.com/fssqawj/SentenceSim/blob/master/dev.txt)上进行测试，
-
+```
 设定阈值为0.5：
-
 当相似度 > 0.5 ； 返回相似；
-
 当相似度 < 0.5 ； 返回不相似；
-
+```
 效果如下
-![](assets/sentence_precision.jpg)
+```
+right predict : 6626
+wrong predict : 890
+precision : 0.8815859499733901
+```
 
 
 
