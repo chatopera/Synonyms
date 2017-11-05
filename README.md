@@ -1,8 +1,9 @@
 # Synonyms
 Chinese Synonyms for Natural Language Processing and Understanding.
+
 最好的中文近义词工具包。
 
-```synonyms```可以用于自然语言理解的很多任务：文本对齐，推荐算法，相似度计算，语义偏移等。
+```synonyms```可以用于自然语言理解的很多任务：文本对齐，推荐算法，相似度计算，语义偏移，关键字提取，概念提取，自动摘要，搜索引擎等。
 
 ![](https://camo.githubusercontent.com/ae91a5698ad80d3fe8e0eb5a4c6ee7170e088a7d/687474703a2f2f37786b6571692e636f6d312e7a302e676c622e636c6f7564646e2e636f6d2f61692f53637265656e25323053686f74253230323031372d30342d30342532306174253230382e32302e3437253230504d2e706e67)
 
@@ -11,9 +12,13 @@ Chinese Synonyms for Natural Language Processing and Understanding.
 ```
 pip install -U synonyms
 ```
-兼容py2和py3，当前稳定版本 v1.8。
+兼容py2和py3，当前稳定版本 v1.9。
 
 ![](./assets/3.gif)
+
+## Samples
+
+![](assets/2.png)
 
 ## Usage
 
@@ -38,36 +43,39 @@ synonyms.nearby(人脸) = [
 
 ### synonyms#compare
 两个句子的相似度比较
+
 ```
-sen1 = "旗帜引领方向"
-sen2 = "道路决定命运"
-
-旗帜引领方向 vs 道路决定命运: 0.316
-
-sen1 = "发生历史性变革"
-sen2 = "取得历史性成就"
-
-发生历史性变革 vs 取得历史性成就: 0.712
+    sen1 = "发生历史性变革"
+    sen2 = "发生历史性变革"
+    r = synonyms.compare(sen1, sen2, seg=True)
 ```
 
-返回值：[0-1]，并且越接近于1代表两个句子越相似。
+其中，参数 seg 表示 synonyms.compare是否对sen1 和 sen2进行分词，默认为 True。返回值：[0-1]，并且越接近于1代表两个句子越相似。
 
-句子相似度性能：
-
-在[7516条标准语料](https://github.com/fssqawj/SentenceSim/blob/master/dev.txt)上进行测试，
 ```
-设定阈值为0.5：
-当相似度 > 0.5 ； 返回相似；
-当相似度 < 0.5 ； 返回不相似；
-```
-效果如下
-```
-right predict : 6626
-wrong predict : 890
-precision : 0.8815859499733901
+旗帜引领方向 vs 道路决定命运: 0.429
+旗帜引领方向 vs 旗帜指引道路: 0.93
+发生历史性变革 vs 发生历史性变革: 1.0
 ```
 
+* 句子相似度准确率
 
+在[SentenceSim](https://github.com/fssqawj/SentenceSim/blob/master/dev.txt)上进行测试。
+
+```
+测试语料条数为：7516条.
+设定阈值 0.5：
+  相似度 > 0.5, 返回相似；
+  相似度 < 0.5, 返回不相似.
+```
+
+评测结果：
+
+```
+正确 : 6626，错误 : 890，准确度 : 88.15%
+```
+
+关于距离计算和阀值选取，参考 [enhance Synonyms#compare](https://github.com/huyingxi/Synonyms/issues/6)。
 
 ### synonyms#display
 以友好的方式打印近义词，方便调试，```display```调用了 ```synonyms#nearby``` 方法。
@@ -85,27 +93,11 @@ precision : 0.8815859499733901
   8. 飞行中:0.732649
   9. 航空器:0.723945
   10. 运输机:0.720578
->>> synonyms.display("航母")
-'航母'近义词：
-  1. 航空母舰:0.916647
-  2. 航舰:0.860443
-  3. 舰艇:0.762755
-  4. 舰载机:0.758707
-  5. 舰:0.751264
-  6. 驱逐舰:0.74454
-  7. 战舰:0.742578
-  8. 巡洋舰:0.73104
-  9. 舰队:0.72761
-  10. 潜艇:0.726795
 ```
 
-## PCA (主成分析)
+## PCA
 
 ![](assets/1.png)
-
-## More samples
-
-![](assets/2.png)
 
 ## Demo
 ```
@@ -148,8 +140,9 @@ meminfo 8GB
 
 ```synonyms#nearby: 100000 loops, best of 3 epochs: 0.209 usec per loop```
 
-## 声明
-[Synonyms](https://github.com/shuzi/insuranceQA)发布证书 GPL 3.0。数据和程序可用于研究和商业产品，必须注明引用和地址，比如发布的任何媒体、期刊、杂志或博客等内容。
+## Statement
+
+[Synonyms](https://github.com/huyingxi/Synonyms)发布证书 GPL 3.0。数据和程序可用于研究和商业产品，必须注明引用和地址，比如发布的任何媒体、期刊、杂志或博客等内容。
 ```
 @online{Synonyms:hain2017,
   author = {Hai Liang Wang, Hu Ying Xi},
@@ -167,6 +160,24 @@ meminfo 8GB
 [wikidata-corpus](https://github.com/Samurais/wikidata-corpus)
 
 [word2vec原理推导与代码分析](http://www.hankcs.com/nlp/word2vec.html)
+
+# Authors
+
+[Hai Liang Wang](http://blog.chatbot.io/webcv/)
+
+[Hu Ying Xi](https://github.com/huyingxi/)
+
+# Give credits to
+
+[Word2vec by Google](https://code.google.com/archive/p/word2vec/)
+
+[Wikimedia: 训练语料来源](https://dumps.wikimedia.org/)
+
+[gensim: word2vec.py](https://github.com/RaRe-Technologies/gensim)
+
+[SentenceSim: 相似度评测语料](https://github.com/fssqawj/SentenceSim/)
+
+[jieba: 中文分词](https://github.com/fxsjy/jieba)
 
 # License
 [GPL3.0](./LICENSE)
