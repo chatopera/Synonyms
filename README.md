@@ -42,24 +42,30 @@ synonyms.nearby(人脸) = [
 sen1 = "旗帜引领方向"
 sen2 = "道路决定命运"
 
-旗帜引领方向 vs 道路决定命运: 0.008
+旗帜引领方向 vs 道路决定命运: 0.316
 
 sen1 = "发生历史性变革"
 sen2 = "取得历史性成就"
 
-发生历史性变革 vs 取得历史性成就: 0.208
+发生历史性变革 vs 取得历史性成就: 0.712
 ```
 
-句子相似度性能：
-在[778条标准语料](https://github.com/fssqawj/SentenceSim/blob/master/dev.txt)上进行测试，效果如下
-
-![](assets/pr_curve_eulidean0.8+unigram0.2.png)
-
-![](assets/pr_hresholds_eulidean0.8+unigram0.2+POS.png)
-
-![](assets/roc_curve_eulidean0.8+unigram0.2+POS.png)
-
 返回值：[0-1]，并且越接近于1代表两个句子越相似。
+
+句子相似度性能：
+
+在[7516条标准语料](https://github.com/fssqawj/SentenceSim/blob/master/dev.txt)上进行测试，
+
+设定阈值为0.5：
+
+当相似度 > 0.5 ； 返回相似；
+
+当相似度 < 0.5 ； 返回不相似；
+
+效果如下
+![](assets/sentence_precision.jpg)
+
+
 
 ### synonyms#display
 以友好的方式打印近义词，方便调试，```display```调用了 ```synonyms#nearby``` 方法。
