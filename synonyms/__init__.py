@@ -104,7 +104,10 @@ def _load_stopwords(file_path):
     load stop words
     '''
     global _stopwords
-    words = open(file_path, 'r')
+    if sys.version_info[0] < 3:
+        words = open(file_path, 'r')
+    else:
+        words = open(file_path, 'r', encoding='utf-8')
     stopwords = words.readlines()
     for w in stopwords:
         _stopwords.add(any2unicode(w).strip())
