@@ -185,6 +185,30 @@ def _unigram_overlap(sentence1, sentence2):
 
     return ((float)(len(intersection)) / (float)(len(union)))
 
+def _levenshtein_distance(sentence1, sentence2):
+    '''
+    Return the Levenshtein distance between two strings.
+    Based on:
+        http://rosettacode.org/wiki/Levenshtein_distance#Python
+    '''
+    first = sentence1.split()
+    second = sentence2.split()
+    if len(first) > len(second):
+        first, second = second, first
+    distances = range(len(first) + 1)
+    for index2, char2 in enumerate(second):
+        new_distances = [index2 + 1]
+        for index1, char1 in enumerate(first):
+            if char1 == char2:
+                new_distances.append(distances[index1])
+            else:
+                new_distances.append(1 + min((distances[index1],
+                                             distances[index1 + 1],
+                                             new_distances[-1])))
+        distances = new_distances
+    levenshtein = distances[-1]
+    return 2 ** (-1 * levenshtein)
+
 
 def _similarity_distance(s1, s2):
     '''
@@ -194,9 +218,9 @@ def _similarity_distance(s1, s2):
     b = _sim_molecule(_get_wv(s2))
     # https://docs.scipy.org/doc/numpy-1.13.0/reference/generated/numpy.linalg.norm.html
     g = 1 / (np.linalg.norm(a - b) + 1)
-    u = _unigram_overlap(s1, s2)
+    u = _levenshtein_distance(s1, s2)
     r = g * 1.4 + u * 0.2
-    r = min((r * 10 + 0.1) , 1.0)
+    r = min((r * 10 + 0.1), 1.0)
 
     return float("%.3f" % r)
 
