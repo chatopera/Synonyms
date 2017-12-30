@@ -219,8 +219,8 @@ def _similarity_distance(s1, s2):
     # https://docs.scipy.org/doc/numpy-1.13.0/reference/generated/numpy.linalg.norm.html
     g = 1 / (np.linalg.norm(a - b) + 1)
     u = _levenshtein_distance(s1, s2)
-    r = g * 1.4 + u * 0.2
-    r = min((r * 10 + 0.1), 1.0)
+    r = g * 1.8 + u * 0.4
+    r = min((r * 18), 1.0)
 
     return float("%.3f" % r)
 
