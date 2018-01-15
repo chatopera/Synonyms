@@ -140,6 +140,10 @@ meminfo 8GB
 
 ```synonyms#nearby: 100000 loops, best of 3 epochs: 0.209 usec per loop```
 
+
+## Live Sharing
+[线上分享: Synonyms 中文近义词工具包 @ 2018-02-07](https://github.com/huyingxi/Synonyms/issues/21)
+
 ## Statement
 
 [Synonyms](https://github.com/huyingxi/Synonyms)发布证书 GPL 3.0。数据和程序可用于研究和商业产品，必须注明引用和地址，比如发布的任何媒体、期刊、杂志或博客等内容。
