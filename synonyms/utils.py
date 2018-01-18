@@ -25,11 +25,13 @@ import re
 import unicodedata
 import os
 import random
+import shutil
 import sys
 import subprocess
 from contextlib import contextmanager
 import numpy as np
 import numbers
+from six import string_types, u
 
 if sys.version_info[0] < 3:
     reload(sys)
