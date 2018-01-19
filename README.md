@@ -12,7 +12,7 @@ Chinese Synonyms for Natural Language Processing and Understanding.
 ```
 pip install -U synonyms
 ```
-兼容py2和py3，当前稳定版本 v2.0。
+兼容py2和py3，当前稳定版本 v2.1。
 
 ![](./assets/3.gif)
 
@@ -105,6 +105,9 @@ $ pip install -r Requirements.txt
 $ python demo.py
 ```
 
+## Voice of Users
+![](assets/4.png)
+
 ## Data
 ```
 synonyms/data/words.nearby.x.pklz # compressed pickle object
@@ -142,6 +145,11 @@ meminfo 8GB
 
 
 ## Live Sharing
+
+[52nlp.cn](http://www.52nlp.cn/synonyms-%E4%B8%AD%E6%96%87%E8%BF%91%E4%B9%89%E8%AF%8D%E5%B7%A5%E5%85%B7%E5%8C%85)
+
+[机器之心](https://www.jiqizhixin.com/articles/2018-01-14-3)
+
 [线上分享: Synonyms 中文近义词工具包 @ 2018-02-07](https://github.com/huyingxi/Synonyms/issues/21)
 
 ## Statement
