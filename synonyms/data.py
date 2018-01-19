@@ -21,9 +21,10 @@ __copyright__ = "Copyright (c) 2017 . All Rights Reserved"
 __author__    = "Hai Liang Wang"
 __date__      = "2017-10-31:17:13:51"
 
-
+import gzip
 import os
 import sys
+from utils import any2unicode
 curdir = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(curdir)
 
