@@ -38,7 +38,7 @@ def add_word_to_vocab(word, nearby, nearby_score):
     '''
     Add word into vocab by word, nearby lis and nearby_score lis
     '''
-    global _size
+    global _size, _vocab, PLT  # defined in __init__.py
     if word is not None:
         if PLT == 2:
             word = any2unicode(word)
@@ -50,6 +50,7 @@ def _build_vocab():
     '''
     Build vocab
     '''
+    global PLT  # defined in __init__.py
     _fin = []
     if PLT == 2:
         import io
