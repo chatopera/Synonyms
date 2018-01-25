@@ -28,7 +28,7 @@ if sys.version_info[0] < 3:
 else:
     xrange = range
 
-import utils
+import synonyms.utils as utils
 from numpy import dot, zeros, dtype, float32 as REAL,\
     double, array, vstack, fromstring, sqrt, newaxis,\
     ndarray, sum as np_sum, prod, ascontiguousarray,\

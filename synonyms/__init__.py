@@ -44,9 +44,9 @@ else:
 import json
 import gzip
 import shutil
-from word2vec import KeyedVectors
-from utils import any2utf8
-from utils import any2unicode
+from synonyms.word2vec import KeyedVectors
+from synonyms.utils import any2utf8
+from synonyms.utils import any2unicode
 import jieba.posseg as _tokenizer
 import jieba
 
