@@ -160,13 +160,17 @@ def _get_wv(sentence):
                 c.append(_vectors.word_vec(y_))
             except KeyError as error:
                 print("not exist in w2v model: %s" % y_)
-                c.append(np.zeros((100,), dtype=float))
+                # c.append(np.zeros((100,), dtype=float))
+                random_state = np.random.RandomState(seed=(hash(y_) % (2**32 - 1)))
+                c.append(random_state.uniform(low=-10.0, high=10.0, size=(100,)))
             for n in syns:
                 if n is None: continue
                 try:
                     v = _vectors.word_vec(any2unicode(n))
                 except KeyError as error:
-                    v = np.zeros((100,), dtype=float)
+                    # v = np.zeros((100,), dtype=float)
+                    random_state = np.random.RandomState(seed=(hash(n) % (2 ** 32 - 1)))
+                    v = random_state.uniform(low=10.0, high=10.0, size=(100,))
                 c.append(v)
             r = np.average(c, axis=0)
             vectors.append(r)
