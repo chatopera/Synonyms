@@ -12,7 +12,7 @@ Chinese Synonyms for Natural Language Processing and Understanding.
 ```
 pip install -U synonyms
 ```
-兼容py2和py3，当前稳定版本 v2.1。
+兼容py2和py3，当前稳定版本 v2.2。
 
 ![](./assets/3.gif)
 
@@ -57,25 +57,6 @@ synonyms.nearby(人脸) = [
 旗帜引领方向 vs 旗帜指引道路: 0.93
 发生历史性变革 vs 发生历史性变革: 1.0
 ```
-
-* 句子相似度准确率
-
-在[SentenceSim](https://github.com/fssqawj/SentenceSim/blob/master/dev.txt)上进行测试。
-
-```
-测试语料条数为：7516条.
-设定阈值 0.5：
-  相似度 > 0.5, 返回相似；
-  相似度 < 0.5, 返回不相似.
-```
-
-评测结果：
-
-```
-正确 : 6626，错误 : 890，准确度 : 88.15%
-```
-
-关于距离计算和阀值选取，参考 [enhance Synonyms#compare](https://github.com/huyingxi/Synonyms/issues/6)。
 
 ### synonyms#display
 以友好的方式打印近义词，方便调试，```display```调用了 ```synonyms#nearby``` 方法。
