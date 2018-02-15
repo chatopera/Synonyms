@@ -12,7 +12,11 @@ Chinese Synonyms for Natural Language Processing and Understanding.
 ```
 pip install -U synonyms
 ```
-兼容py2和py3，当前稳定版本 v2.2。
+兼容py2和py3，当前稳定版本 v2.2。**同时，Node.js 用户可以使用 [node-synonyms](https://www.npmjs.com/package/node-synonyms)了。**
+
+```
+npm install node-synonyms
+```
 
 ![](./assets/3.gif)
 
@@ -148,7 +152,7 @@ meminfo 8GB
 
 [机器之心](https://www.jiqizhixin.com/articles/2018-01-14-3)
 
-[线上分享: Synonyms 中文近义词工具包 @ 2018-02-07](https://github.com/huyingxi/Synonyms/issues/21)
+[线上分享实录: Synonyms 中文近义词工具包 @ 2018-02-07](http://gitbook.cn/gitchat/activity/5a563545a8b23d387720ccd5)
 
 ## Statement
 
