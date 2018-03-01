@@ -12,7 +12,7 @@ Chinese Synonyms for Natural Language Processing and Understanding.
 ```
 pip install -U synonyms
 ```
-兼容py2和py3，当前稳定版本 v2.2。**同时，Node.js 用户可以使用 [node-synonyms](https://www.npmjs.com/package/node-synonyms)了。**
+兼容py2和py3，当前稳定版本 v2.3。**同时，Node.js 用户可以使用 [node-synonyms](https://www.npmjs.com/package/node-synonyms)了。**
 
 ```
 npm install node-synonyms
@@ -103,10 +103,10 @@ data is built based on [wikidata-corpus](https://github.com/Samurais/wikidata-co
 ## Valuation
 
 ### 同义词词林
-《同义词词林》是梅家驹等人于1983年编纂而成，现在使用广泛的是哈工大社会计算与信息检索研究中心维护的《同义词词林扩展版》，它精细的将中文词汇划分成大类和小类，梳理了词汇间的关系，同义词词林扩展版包含词语77,343条，其中32,470被以开放数据形式共享。
+《同义词词林》是梅家驹等人于1983年编纂而成，现在使用广泛的是哈工大社会计算与信息检索研究中心维护的《同义词词林扩展版》，它精细的将中文词汇划分成大类和小类，梳理了词汇间的关系，同义词词林扩展版包含词语7万余条，其中3万余条被以开放数据形式共享。
 
 ### 知网, HowNet
-HowNet，也被称为知网，它并不只是一个语义字典，而是一个知识系统，词汇之间的关系是其一个基本使用场景。知网包含词语8,265条。
+HowNet，也被称为知网，它并不只是一个语义字典，而是一个知识系统，词汇之间的关系是其一个基本使用场景。知网包含词语8余条。
 
 国际上对词语相似度算法的评价标准普遍采用 Miller&Charles 发布的英语词对集的人工判定值。该词对集由十对高度相关、十对中度相关、十对低度相关共 30 个英语词对组成,然后让38个受试者对这30对进行语义相关度判断，最后取他们的平均值作为人工判定标准。然后不同近义词工具也对这些词汇进行相似度评分，与人工判定标准做比较，比如使用皮尔森相关系数。在中文领域，使用这个词表的翻译版进行中文近义词比较也是常用的办法。
 
@@ -115,7 +115,7 @@ Synonyms的词表容量是125,792，下面选择一些在同义词词林、知�
 
 ![](./assets/5.png)
 
-注：同义词林及知网数据、分数来源, https://github.com/yaleimeng/Final_word_Similarity
+注：同义词林及知网数据、分数来源, https://github.com/yaleimeng/Final_word_Similarity；Synonyms也在不断优化中，新的分数可能和上图不一致。
 
 ## Benchmark
 

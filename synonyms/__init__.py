@@ -47,6 +47,7 @@ import shutil
 from synonyms.word2vec import KeyedVectors
 from synonyms.utils import any2utf8
 from synonyms.utils import any2unicode
+from synonyms.utils import sigmoid
 import jieba.posseg as _tokenizer
 import jieba
 
@@ -57,7 +58,6 @@ _vocab = dict()
 _size = 0
 _vectors = None
 _stopwords = set()
-
 
 '''
 nearby
@@ -195,10 +195,13 @@ def _levenshtein_distance(sentence1, sentence2):
     Based on:
         http://rosettacode.org/wiki/Levenshtein_distance#Python
     '''
-    first = sentence1.split()
-    second = sentence2.split()
-    if len(first) > len(second):
+    first = any2utf8(sentence1).decode('utf-8', 'ignore')
+    second = any2utf8(sentence2).decode('utf-8', 'ignore')
+    sentence1_len, sentence2_len = len(first), len(second)
+    maxlen = max(sentence1_len, sentence2_len)
+    if sentence1_len > sentence2_len:
         first, second = second, first
+
     distances = range(len(first) + 1)
     for index2, char2 in enumerate(second):
         new_distances = [index2 + 1]
@@ -211,8 +214,13 @@ def _levenshtein_distance(sentence1, sentence2):
                                              new_distances[-1])))
         distances = new_distances
     levenshtein = distances[-1]
-    return 2 ** (-1 * levenshtein)
+    dis = float((maxlen - levenshtein)/maxlen)
+    # smoothing
+    s = (sigmoid(dis * 6) - 0.5) * 2
+    # print("smoothing[%s| %s]: %s -> %s" % (sentence1, sentence2, dis, s))
+    return s
 
+_smooth = lambda x, y, z: (x * y) + z
 
 def _similarity_distance(s1, s2):
     '''
@@ -223,9 +231,21 @@ def _similarity_distance(s1, s2):
     # https://docs.scipy.org/doc/numpy-1.13.0/reference/generated/numpy.linalg.norm.html
     g = 1 / (np.linalg.norm(a - b) + 1)
     u = _levenshtein_distance(s1, s2)
-    r = g * 5 + u * 0.8
-    r = min(r, 1.0)
+    # print("g: %s, u: %s" % (g, u))
+    if u > 0.8:
+        r = _smooth(g, 0.05, u)
+    elif u > 0.7:
+        r = _smooth(g, 0.1, u)
+    elif u > 0.6:
+        r = _smooth(g, 0.2, u)
+    elif u > 0.5:
+        r = _smooth(g, 1, u)
+    elif u > 0.4:
+        r = _smooth(g, 4, u)
+    else:
+        r = _smooth(g, 10, u)
 
+    r = min(r, 1.0)
     return float("%.3f" % r)
 
 

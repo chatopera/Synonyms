@@ -239,6 +239,8 @@ def any2unicode(text, encoding='utf8', errors='strict'):
 
 to_unicode = any2unicode
 
+def sigmoid(x):
+    return 1.0 / (1.0 + np.exp(-x))
 
 def call_on_class_only(*args, **kwargs):
     """Raise exception when load methods are called on instance"""
