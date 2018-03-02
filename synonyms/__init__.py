@@ -60,6 +60,13 @@ _vectors = None
 _stopwords = set()
 
 '''
+lambda fns
+'''
+# combine similarity scores
+_similarity_smooth = lambda x, y, z: (x * y) + z
+_sim_molecule = lambda x: np.sum(x, axis=0)  # 分子
+
+'''
 nearby
 '''
 def _load_vocab(file_path):
@@ -92,11 +99,9 @@ def nearby(word):
     except KeyError as e:
         return [[], []]
 
-
 '''
 similarity
 '''
-
 # stopwords
 _fin_stopwords_path = os.path.join(curdir, 'data', 'stopwords.txt')
 def _load_stopwords(file_path):
@@ -140,8 +145,6 @@ def _load_w2v(model_file=_f_model, binary=True):
 print(">> Synonyms on loading vectors ...")
 _vectors = _load_w2v(model_file=_f_model)
 
-_sim_molecule = lambda x: np.sum(x, axis=0)  # 分子
-
 def _get_wv(sentence):
     '''
     get word2vec data by sentence
@@ -175,7 +178,6 @@ def _get_wv(sentence):
             r = np.average(c, axis=0)
             vectors.append(r)
     return vectors
-
 
 def _unigram_overlap(sentence1, sentence2):
     '''
@@ -222,10 +224,9 @@ def _levenshtein_distance(sentence1, sentence2):
 
 def _nearby_levenshtein_distance(s1, s2):
     '''
-    使用
+    使用空间距离近的词汇优化编辑距离计算
     '''
-    s1_len = len(s1)
-    s2_len = len(s2)
+    s1_len, s2_len = len(s1), len(s2)
     maxlen = max(s1_len, s2_len)
     first, second = (s2, s1) if s1_len == maxlen else (s1, s2)
     ft = set() # all related words with first sentence 
@@ -240,9 +241,6 @@ def _nearby_levenshtein_distance(s1, s2):
         scores.append(max([_levenshtein_distance(x, y) for y in ft]))
     s = np.sum(scores) / maxlen
     return s
-
-# combine similarity scores
-_similarity_smooth = lambda x, y, z: (x * y) + z
 
 def _similarity_distance(s1, s2):
     '''
@@ -282,7 +280,6 @@ def compare(s1, s2, seg=True):
         s1 = s1.split()
         s2 = s2.split()
     assert len(s1) > 0 and len(s2) > 0, "The length of s1 and s2 should > 0."
-
     return _similarity_distance(s1, s2)
 
 def display(word):
@@ -297,7 +294,6 @@ def display(word):
 def main():
     display("人脸")
     display("NOT_EXIST")
-
 
 if __name__ == '__main__':
     main()
