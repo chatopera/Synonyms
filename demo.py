@@ -36,7 +36,7 @@ import synonyms  # https://github.com/huyingxi/Synonyms
 import numpy
 import unittest
 
-compare_ = lambda x,y,z: "%s vs %s: %f" % (x, y, synonyms.compare(x, y, seg=z))
+compare_ = lambda x,y,z: "*"* 30 + "\n%s vs %s: %f" % (x, y, synonyms.compare(x, y, seg=z))
 
 # run testcase: python /Users/hain/ai/Synonyms/demo.py Test.testExample
 class Test(unittest.TestCase):
@@ -52,35 +52,20 @@ class Test(unittest.TestCase):
 
     def test_pairs(self):
         print("test_pairs")
-        print("*"* 30)
         print(compare_("轿车", "汽车", True))
-        print("*"* 30)
         print(compare_("宝石", "宝物", True))
-        print("*"* 30)
         print(compare_("旅游", "游历", True))
-        print("*"* 30)
         print(compare_("男孩子", "小伙子", True))
-        print("*"* 30)
         print(compare_("海岸", "海滨", True))
-        print("*"* 30)
         print(compare_("庇护所", "精神病院", True))
-        print("*"* 30)
         print(compare_("魔术师", "巫师", True))
-        print("*"* 30)
         print(compare_("中午", "正午", True))
-        print("*"* 30)
         print(compare_("火炉", "炉灶", True))
-        print("*"* 30)
         print(compare_("食物", "水果", True))
-        print("*"* 30)
         print(compare_("鸡", "公鸡", True))
-        print("*"* 30)
         print(compare_("鸟", "鹤", True))
-        print("*"* 30)
         print(compare_("工具", "器械", True))
-        print("*"* 30)
         print(compare_("兄弟", "和尚", True))
-        print("*"* 30)
         print(compare_("起重机", "器械", True))
 
     def test_similarity(self):
@@ -110,7 +95,6 @@ class Test(unittest.TestCase):
         sen2 = "巴赫"
         r = synonyms.compare(sen1, sen2, seg=True)
         print("%s vs %s" % (sen1, sen2), r)
-     
 
     def test_nearby(self):
         synonyms.display("人脸")  # synonyms.display calls synonyms.nearby

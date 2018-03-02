@@ -149,7 +149,7 @@ def _get_wv(sentence):
     '''
     global _vectors
     vectors = []
-    for y in sentence.split():
+    for y in sentence:
         y_ = any2unicode(y).strip()
         if y_ not in _stopwords:
             syns = nearby(y_)[0]
@@ -214,13 +214,35 @@ def _levenshtein_distance(sentence1, sentence2):
                                              new_distances[-1])))
         distances = new_distances
     levenshtein = distances[-1]
-    dis = float((maxlen - levenshtein)/maxlen)
+    d = float((maxlen - levenshtein)/maxlen)
     # smoothing
-    s = (sigmoid(dis * 6) - 0.5) * 2
-    # print("smoothing[%s| %s]: %s -> %s" % (sentence1, sentence2, dis, s))
+    s = (sigmoid(d * 6) - 0.5) * 2
+    # print("smoothing[%s| %s]: %s -> %s" % (sentence1, sentence2, d, s))
     return s
 
-_smooth = lambda x, y, z: (x * y) + z
+def _nearby_levenshtein_distance(s1, s2):
+    '''
+    使用
+    '''
+    s1_len = len(s1)
+    s2_len = len(s2)
+    maxlen = max(s1_len, s2_len)
+    first, second = (s2, s1) if s1_len == maxlen else (s1, s2)
+    ft = set() # all related words with first sentence 
+    for x in first:
+        ft.add(x)
+        n, _ = nearby(x)
+        for o in n:
+            ft.add(o)
+    scores = []
+    if len(ft) == 0: return 0.0 # invalid length for first string
+    for x in second:
+        scores.append(max([_levenshtein_distance(x, y) for y in ft]))
+    s = np.sum(scores) / maxlen
+    return s
+
+# combine similarity scores
+_similarity_smooth = lambda x, y, z: (x * y) + z
 
 def _similarity_distance(s1, s2):
     '''
@@ -230,24 +252,20 @@ def _similarity_distance(s1, s2):
     b = _sim_molecule(_get_wv(s2))
     # https://docs.scipy.org/doc/numpy-1.13.0/reference/generated/numpy.linalg.norm.html
     g = 1 / (np.linalg.norm(a - b) + 1)
-    u = _levenshtein_distance(s1, s2)
+
+    u = _nearby_levenshtein_distance(s1, s2)
     # print("g: %s, u: %s" % (g, u))
     if u > 0.8:
-        r = _smooth(g, 0.05, u)
+        r = _similarity_smooth(g, 1, u)
     elif u > 0.7:
-        r = _smooth(g, 0.1, u)
+        r = _similarity_smooth(g, 1.5, u)
     elif u > 0.6:
-        r = _smooth(g, 0.2, u)
-    elif u > 0.5:
-        r = _smooth(g, 1, u)
-    elif u > 0.4:
-        r = _smooth(g, 4, u)
+        r = _similarity_smooth(g, 2, u)
     else:
-        r = _smooth(g, 10, u)
+        r = _similarity_smooth(g, 4, u)
 
     r = min(r, 1.0)
     return float("%.3f" % r)
-
 
 def compare(s1, s2, seg=True):
     '''
@@ -257,12 +275,15 @@ def compare(s1, s2, seg=True):
     seg : True : The original sentences need jieba.cut
           Flase : The original sentences have been cut.
     '''
-    assert len(s1) > 0 and len(s2) > 0, "The length of s1 and s2 should > 0."
     if seg:
-        s1 = ' '.join(jieba.cut(s1))
-        s2 = ' '.join(jieba.cut(s2))
-    return _similarity_distance(s1, s2)
+        s1 = [x for x in jieba.cut(s1)]
+        s2 = [x for x in jieba.cut(s2)]
+    else:
+        s1 = s1.split()
+        s2 = s2.split()
+    assert len(s1) > 0 and len(s2) > 0, "The length of s1 and s2 should > 0."
 
+    return _similarity_distance(s1, s2)
 
 def display(word):
     print("'%s'近义词：" % word)
@@ -272,7 +293,6 @@ def display(word):
         print(" out of vocabulary")
     for k, v in enumerate(o[0]):
         print("  %d. %s:%s" % (k + 1, v, o[1][k]))
-
 
 def main():
     display("人脸")

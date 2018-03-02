@@ -12,7 +12,7 @@ Chinese Synonyms for Natural Language Processing and Understanding.
 ```
 pip install -U synonyms
 ```
-兼容py2和py3，当前稳定版本 v2.3。**同时，Node.js 用户可以使用 [node-synonyms](https://www.npmjs.com/package/node-synonyms)了。**
+兼容py2和py3，当前稳定版本 [v2.x](https://github.com/huyingxi/Synonyms/releases)。**同时，Node.js 用户可以使用 [node-synonyms](https://www.npmjs.com/package/node-synonyms)了。**
 
 ```
 npm install node-synonyms
