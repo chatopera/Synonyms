@@ -7,6 +7,18 @@ Chinese Synonyms for Natural Language Processing and Understanding.
 
 ![](https://camo.githubusercontent.com/ae91a5698ad80d3fe8e0eb5a4c6ee7170e088a7d/687474703a2f2f37786b6571692e636f6d312e7a302e676c622e636c6f7564646e2e636f6d2f61692f53637265656e25323053686f74253230323031372d30342d30342532306174253230382e32302e3437253230504d2e706e67)
 
+# Content:
+
+* [Install](https://github.com/huyingxi/Synonyms#welcome)
+* [Usage](https://github.com/huyingxi/Synonyms#usage)
+* [Demo](https://github.com/huyingxi/Synonyms#demo)
+* [Valuation](https://github.com/huyingxi/Synonyms#valuation)
+* [Benchmark](https://github.com/huyingxi/Synonyms#benchmark)
+* [Statement](https://github.com/huyingxi/Synonyms#statement)
+* [References](https://github.com/huyingxi/Synonyms#references)
+* [Frequently Asked Questions](https://github.com/huyingxi/Synonyms#frequently-asked-questions-faq)
+* [License](https://github.com/huyingxi/Synonyms#license)
+
 # Welcome
 
 ```
@@ -91,7 +103,8 @@ $ python demo.py
 ```
 
 ## Voice of Users
-![](assets/4.png)
+
+<img src="https://github.com/huyingxi/Synonyms/raw/master/assets/4.png" width="600">
 
 ## Data
 ```
@@ -115,7 +128,7 @@ Synonyms的词表容量是125,792，下面选择一些在同义词词林、知�
 
 ![](./assets/5.png)
 
-注：同义词林及知网数据、分数来源, https://github.com/yaleimeng/Final_word_Similarity；Synonyms也在不断优化中，新的分数可能和上图不一致。
+注：同义词林及知网数据、分数[来源](https://github.com/yaleimeng/Final_word_Similarity)。Synonyms也在不断优化中，新的分数可能和上图不一致。
 
 ## Benchmark
 
@@ -174,6 +187,16 @@ meminfo 8GB
 [wikidata-corpus](https://github.com/Samurais/wikidata-corpus)
 
 [word2vec原理推导与代码分析](http://www.hankcs.com/nlp/word2vec.html)
+
+# Frequently Asked Questions (FAQ)
+
+1. 是否支持添加单词到词表中？
+
+不支持，欲了解更多请看 [#5](https://github.com/huyingxi/Synonyms/issues/5)
+
+2. 词向量的训练是用哪个工具？
+
+Google发布的[word2vec](https://code.google.com/archive/p/word2vec/)，该库由C语言编写，内存使用效率高，训练速度快。gensim可以加载word2vec输出的模型文件。
 
 # Authors
 
