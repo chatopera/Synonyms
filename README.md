@@ -11,7 +11,7 @@ Chinese Synonyms for Natural Language Processing and Understanding.
 
 * [Install](https://github.com/huyingxi/Synonyms#welcome)
 * [Usage](https://github.com/huyingxi/Synonyms#usage)
-* [Demo](https://github.com/huyingxi/Synonyms#demo)
+* [Quick Get Start](https://github.com/huyingxi/Synonyms#quick-get-start)
 * [Valuation](https://github.com/huyingxi/Synonyms#valuation)
 * [Benchmark](https://github.com/huyingxi/Synonyms#benchmark)
 * [Statement](https://github.com/huyingxi/Synonyms#statement)
@@ -24,7 +24,9 @@ Chinese Synonyms for Natural Language Processing and Understanding.
 ```
 pip install -U synonyms
 ```
-兼容py2和py3，当前稳定版本 [v2.x](https://github.com/huyingxi/Synonyms/releases)。**同时，Node.js 用户可以使用 [node-synonyms](https://www.npmjs.com/package/node-synonyms)了。**
+兼容py2和py3，当前稳定版本 [v2.x](https://github.com/huyingxi/Synonyms/releases)。
+
+**Node.js 用户可以使用 [node-synonyms](https://www.npmjs.com/package/node-synonyms)了。**
 
 ```
 npm install node-synonyms
@@ -32,11 +34,16 @@ npm install node-synonyms
 
 ![](./assets/3.gif)
 
-## Samples
-
-![](assets/2.png)
+本文档的配置和接口说明面向python工具包， node版本查看[项目](https://www.npmjs.com/package/node-synonyms)。 
 
 ## Usage
+
+支持使用环境变量配置分词词表和word2vec词向量文件。
+
+| 环境变量 | 描述 |
+| --- | --- |
+| *SYNONYMS_WORD2VEC_BIN_MODEL_ZH_CN* | 使用word2vec训练的词向量文件，二进制格式。 |
+| *SYNONYMS_WORDSEG_DICT* | 中文分词[**主字典**](https://github.com/fxsjy/jieba#%E5%BB%B6%E8%BF%9F%E5%8A%A0%E8%BD%BD%E6%9C%BA%E5%88%B6)，格式和使用[参考](https://github.com/fxsjy/jieba#%E8%BD%BD%E5%85%A5%E8%AF%8D%E5%85%B8) | 
 
 ### synonyms#nearby
 ```
@@ -96,7 +103,11 @@ synonyms.nearby(人脸) = [
 
 ![](assets/1.png)
 
-## Demo
+## Samples
+
+![](assets/2.png)
+
+## Quick Get Start
 ```
 $ pip install -r Requirements.txt
 $ python demo.py

@@ -41,6 +41,9 @@ if sys.version_info[0] < 3:
 else:
     PLT = 3
 
+# Get Environment variables
+ENVIRON = os.environ.copy()
+
 import json
 import gzip
 import shutil
@@ -65,6 +68,17 @@ lambda fns
 # combine similarity scores
 _similarity_smooth = lambda x, y, z: (x * y) + z
 _sim_molecule = lambda x: np.sum(x, axis=0)  # 分子
+
+
+'''
+tokenizer settings
+'''
+if "SYNONYMS_WORDSEG_DICT" in ENVIRON:
+    tokenizer_dict = ENVIRON["SYNONYMS_WORDSEG_DICT"]
+    if os.exist(tokenizer_dict):
+        jieba.set_dictionary(tokenizer_dict)
+        print("info: set wordseg dict with %s" % tokenizer_dict)
+    else: print("warning: can not find dict at [%s]" % tokenizer_dict)
 
 '''
 nearby
@@ -133,13 +147,15 @@ def _segment_words(sen):
 
 # vectors
 _f_model = os.path.join(curdir, 'data', 'words.vector')
+if "SYNONYMS_WORD2VEC_BIN_MODEL_ZH_CN" in ENVIRON:
+    _f_model = ENVIRON["SYNONYMS_WORD2VEC_BIN_MODEL_ZH_CN"]
 def _load_w2v(model_file=_f_model, binary=True):
     '''
     load word2vec model
     '''
     if not os.path.exists(model_file):
         print("os.path : ", os.path)
-        raise Exception("Model file does not exist.")
+        raise Exception("Model file [%s] does not exist." % model_file)
     return KeyedVectors.load_word2vec_format(
         model_file, binary=binary, unicode_errors='ignore')
 print(">> Synonyms on loading vectors ...")
