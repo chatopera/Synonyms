@@ -33,6 +33,7 @@ from numpy import dot, zeros, dtype, float32 as REAL,\
     double, array, vstack, fromstring, sqrt, newaxis,\
     ndarray, sum as np_sum, prod, ascontiguousarray,\
     argmax
+from sklearn.neighbors import KDTree
 
 class Vocab(object):
     """
@@ -68,6 +69,7 @@ class KeyedVectors():
         self.vocab = {}
         self.index2word = []
         self.vector_size = None
+        self.kdt = None
 
     @property
     def wv(self):
@@ -198,7 +200,12 @@ class KeyedVectors():
                 (result.syn0.shape[0], len(result.vocab)))
             result.syn0 = ascontiguousarray(result.syn0[: len(result.vocab)])
         assert (len(result.vocab), vector_size) == result.syn0.shape
-
+        '''
+        KDTree
+        Build KDTree with vectors.
+        http://scikit-learn.org/stable/modules/generated/sklearn.neighbors.KDTree.html#sklearn.neighbors.KDTree
+        '''
+        result.kdt = KDTree(result.syn0, leaf_size=10, metric = "euclidean")
         print("loaded %s matrix from %s" % (result.syn0.shape, fname))
         return result
 
@@ -222,6 +229,22 @@ class KeyedVectors():
         else:
             raise KeyError("word '%s' not in vocabulary" % word)
 
+    def neighbours(self, word, size = 10):
+        """
+        Get nearest words with KDTree, ranking by cosine distance
+        """
+        v = self.word_vec(word)
+        [distances], [points] = self.kdt.query(array([v]), k = size, return_distance = True)
+        assert len(distances) == len(points), "distances and points should be in same shape."
+        words, scores = [], {}
+        for (x,y) in zip(points, distances):
+            w = self.index2word[x]
+            s = utils.cosine(v, self.syn0[x])
+            if s < 0: s = abs(s)
+            words.append(w)
+            scores[w] = min(s, 1.0)
+        for x in sorted(words, key=scores.get, reverse=True):
+            yield x, scores[x]
 
 import unittest
 

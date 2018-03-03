@@ -1,1 +1,1 @@
-synonyms>=2.5
+synonyms>=2.7

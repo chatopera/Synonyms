@@ -13,7 +13,7 @@ Welcome
 
 setup(
     name='synonyms',
-    version='2.6',
+    version='3.0',
     description='Chinese Synonyms for Natural Language Processing and Understanding',
     long_description=LONGDOC,
     author='Hai Liang Wang, Hu Ying Xi',
@@ -41,7 +41,8 @@ setup(
     install_requires=[
         'jieba>=0.39',
         'six>=1.11.0',
-        'numpy>=1.13.1'
+        'numpy>=1.13.1',
+        'scikit-learn==0.19.1'
     ],
     package_data={
         'synonyms': [

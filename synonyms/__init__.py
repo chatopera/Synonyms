@@ -51,6 +51,8 @@ from synonyms.word2vec import KeyedVectors
 from synonyms.utils import any2utf8
 from synonyms.utils import any2unicode
 from synonyms.utils import sigmoid
+from synonyms.utils import cosine
+from sklearn.neighbors import KDTree
 import jieba.posseg as _tokenizer
 import jieba
 
@@ -67,54 +69,23 @@ lambda fns
 '''
 # combine similarity scores
 _similarity_smooth = lambda x, y, z: (x * y) + z
-_sim_molecule = lambda x: np.sum(x, axis=0)  # 分子
-
+_flat_sum_array = lambda x: np.sum(x, axis=0)  # 分子
 
 '''
 tokenizer settings
 '''
+tokenizer_dict = os.path.join(curdir, 'data', 'vocab.txt')
 if "SYNONYMS_WORDSEG_DICT" in ENVIRON:
-    tokenizer_dict = ENVIRON["SYNONYMS_WORDSEG_DICT"]
-    if os.exist(tokenizer_dict):
-        jieba.set_dictionary(tokenizer_dict)
+    if os.exist(ENVIRON["SYNONYMS_WORDSEG_DICT"]):
         print("info: set wordseg dict with %s" % tokenizer_dict)
+        tokenizer_dict = ENVIRON["SYNONYMS_WORDSEG_DICT"]
     else: print("warning: can not find dict at [%s]" % tokenizer_dict)
 
-'''
-nearby
-'''
-def _load_vocab(file_path):
-    '''
-    load vocab dict
-    '''
-    global _vocab
-    if PLT == 2:
-        import io
-        fin = io.TextIOWrapper(
-            io.BufferedReader(
-                gzip.open(file_path)),
-            encoding='utf8',
-            errors='ignore')
-    else:
-        fin = gzip.open(file_path, 'rt', encoding='utf-8', errors="ignore")
-
-    _vocab = json.loads(fin.read())
-
-# build on load
-print(">> Synonyms on loading vocab ...")
-_load_vocab(os.path.join(curdir, "data", "words.nearby.json.gz"))
-
-def nearby(word):
-    '''
-    Nearby word
-    '''
-    try:
-        return _vocab[any2unicode(word)]
-    except KeyError as e:
-        return [[], []]
+print(">> Synonyms load wordseg dict [%s] ... " % tokenizer_dict)
+jieba.set_dictionary(tokenizer_dict)
 
 '''
-similarity
+word embedding
 '''
 # stopwords
 _fin_stopwords_path = os.path.join(curdir, 'data', 'stopwords.txt')
@@ -131,7 +102,7 @@ def _load_stopwords(file_path):
     for w in stopwords:
         _stopwords.add(any2unicode(w).strip())
 
-print(">> Synonyms on loading stopwords ...")
+print(">> Synonyms on loading stopwords [%s] ..." % _fin_stopwords_path)
 _load_stopwords(_fin_stopwords_path)
 
 def _segment_words(sen):
@@ -158,7 +129,7 @@ def _load_w2v(model_file=_f_model, binary=True):
         raise Exception("Model file [%s] does not exist." % model_file)
     return KeyedVectors.load_word2vec_format(
         model_file, binary=binary, unicode_errors='ignore')
-print(">> Synonyms on loading vectors ...")
+print(">> Synonyms on loading vectors [%s] ..." % _f_model)
 _vectors = _load_w2v(model_file=_f_model)
 
 def _get_wv(sentence):
@@ -194,18 +165,6 @@ def _get_wv(sentence):
             r = np.average(c, axis=0)
             vectors.append(r)
     return vectors
-
-def _unigram_overlap(sentence1, sentence2):
-    '''
-    compute unigram overlap
-    '''
-    x = set(sentence1.split())
-    y = set(sentence2.split())
-
-    intersection = x & y
-    union = x | y
-
-    return ((float)(len(intersection)) / (float)(len(union)))
 
 def _levenshtein_distance(sentence1, sentence2):
     '''
@@ -262,24 +221,31 @@ def _similarity_distance(s1, s2):
     '''
     compute similarity with distance measurement
     '''
-    a = _sim_molecule(_get_wv(s1))
-    b = _sim_molecule(_get_wv(s2))
-    # https://docs.scipy.org/doc/numpy-1.13.0/reference/generated/numpy.linalg.norm.html
-    g = 1 / (np.linalg.norm(a - b) + 1)
-
+    g = cosine(_flat_sum_array(_get_wv(s1)), _flat_sum_array(_get_wv(s2)))
     u = _nearby_levenshtein_distance(s1, s2)
     # print("g: %s, u: %s" % (g, u))
     if u > 0.8:
-        r = _similarity_smooth(g, 1, u)
-    elif u > 0.7:
-        r = _similarity_smooth(g, 1.5, u)
+        r = _similarity_smooth(g, 0.1, u)
     elif u > 0.6:
-        r = _similarity_smooth(g, 2, u)
+        r = _similarity_smooth(g, 0.25, u)
+    elif u > 0.4:
+        r = _similarity_smooth(g, 0.5, u)
     else:
-        r = _similarity_smooth(g, 4, u)
+        r = _similarity_smooth(g, 1, u)
 
+    if r < 0: r = abs(r)
     r = min(r, 1.0)
     return float("%.3f" % r)
+
+def nearby(word):
+    '''
+    Nearby word
+    '''
+    words, scores = [], []
+    for x in _vectors.neighbours(any2unicode(word)):
+        words.append(x[0])
+        scores.append(x[1])
+    return words, scores
 
 def compare(s1, s2, seg=True):
     '''

@@ -36,7 +36,7 @@ import synonyms  # https://github.com/huyingxi/Synonyms
 import numpy
 import unittest
 
-compare_ = lambda x,y,z: "*"* 30 + "\n%s vs %s: %f" % (x, y, synonyms.compare(x, y, seg=z))
+compare_ = lambda x,y,z: "%s vs %s: %f" % (x, y, synonyms.compare(x, y, seg=z)) + "\n" +"*"* 30 + "\n"
 
 # run testcase: python /Users/hain/ai/Synonyms/demo.py Test.testExample
 class Test(unittest.TestCase):
@@ -97,7 +97,7 @@ class Test(unittest.TestCase):
         print("%s vs %s" % (sen1, sen2), r)
 
     def test_nearby(self):
-        synonyms.display("人脸")  # synonyms.display calls synonyms.nearby
+        synonyms.display("奥运")  # synonyms.display calls synonyms.nearby
 
 
 def test():

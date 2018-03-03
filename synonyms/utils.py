@@ -239,6 +239,12 @@ def any2unicode(text, encoding='utf8', errors='strict'):
 
 to_unicode = any2unicode
 
+# cosine distance
+# https://docs.scipy.org/doc/numpy-1.13.0/reference/generated/numpy.linalg.norm.html
+from numpy import dot
+from numpy.linalg import norm
+cosine = lambda a, b: dot(a, b)/(norm(a)*norm(b))
+
 def sigmoid(x):
     return 1.0 / (1.0 + np.exp(-x))
 
