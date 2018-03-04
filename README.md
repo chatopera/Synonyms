@@ -45,6 +45,21 @@ npm install node-synonyms
 | *SYNONYMS_WORD2VEC_BIN_MODEL_ZH_CN* | 使用word2vec训练的词向量文件，二进制格式。 |
 | *SYNONYMS_WORDSEG_DICT* | 中文分词[**主字典**](https://github.com/fxsjy/jieba#%E5%BB%B6%E8%BF%9F%E5%8A%A0%E8%BD%BD%E6%9C%BA%E5%88%B6)，格式和使用[参考](https://github.com/fxsjy/jieba#%E8%BD%BD%E5%85%A5%E8%AF%8D%E5%85%B8) | 
 
+### synonyms#seg
+中文分词
+```
+import synonyms
+synonyms.seg("中文近义词工具包")
+```
+
+分词结果，由两个list组成的元组，分别是单词和对应的词性。
+```
+(['中文', '近义词', '工具包'], ['nz', 'n', 'n'])
+```
+
+**该分词不去停用词和标点。**
+
+
 ### synonyms#nearby
 ```
 import synonyms

@@ -1,1 +1,1 @@
-synonyms>=3.2
+synonyms>=3.3
