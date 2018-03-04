@@ -7,7 +7,7 @@ Chinese Synonyms for Natural Language Processing and Understanding.
 
 ![](https://camo.githubusercontent.com/ae91a5698ad80d3fe8e0eb5a4c6ee7170e088a7d/687474703a2f2f37786b6571692e636f6d312e7a302e676c622e636c6f7564646e2e636f6d2f61692f53637265656e25323053686f74253230323031372d30342d30342532306174253230382e32302e3437253230504d2e706e67)
 
-# Content:
+# Table of Content:
 
 * [Install](https://github.com/huyingxi/Synonyms#welcome)
 * [Usage](https://github.com/huyingxi/Synonyms#usage)
@@ -100,12 +100,9 @@ synonyms.nearby(人脸) = (
 ```
 
 ## PCA
+以“人脸”为例主要成分分析：
 
 ![](assets/1.png)
-
-## Samples
-
-![](assets/2.png)
 
 ## Quick Get Start
 ```
@@ -113,7 +110,11 @@ $ pip install -r Requirements.txt
 $ python demo.py
 ```
 
+## Change logs
+更新情况[说明](./CHANGELOG.md)。
+
 ## Voice of Users
+用户怎么说：
 
 <img src="https://github.com/huyingxi/Synonyms/raw/master/assets/4.png" width="600">
 
@@ -180,7 +181,7 @@ meminfo 8GB
 
 ## Statement
 
-[Synonyms](https://github.com/huyingxi/Synonyms)发布证书 GPL 3.0。数据和程序可用于研究和商业产品，必须注明引用和地址，比如发布的任何媒体、期刊、杂志或博客等内容。
+[Synonyms](https://github.com/huyingxi/Synonyms)发布证书 MIT。数据和程序可用于研究和商业产品，必须注明引用和地址，比如发布的任何媒体、期刊、杂志或博客等内容。
 ```
 @online{Synonyms:hain2017,
   author = {Hai Liang Wang, Hu Ying Xi},
@@ -190,8 +191,6 @@ meminfo 8GB
   urldate = {2017-09-27}
 }
 ```
-
-任何基于[Synonyms](https://github.com/huyingxi/Synonyms)衍生的数据和项目也需要开放并需要声明一致的“声明”。
 
 # References
 
@@ -228,4 +227,4 @@ Google发布的[word2vec](https://code.google.com/archive/p/word2vec/)，该库�
 [jieba: 中文分词](https://github.com/fxsjy/jieba)
 
 # License
-[GPL3.0](./LICENSE)
+[MIT](./LICENSE)
