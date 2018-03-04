@@ -26,13 +26,13 @@ pip install -U synonyms
 ```
 兼容py2和py3，当前稳定版本 [v3.x](https://github.com/huyingxi/Synonyms/releases)。
 
+![](./assets/3.gif)
+
 **Node.js 用户可以使用 [node-synonyms](https://www.npmjs.com/package/node-synonyms)了。**
 
 ```
 npm install node-synonyms
 ```
-
-![](./assets/3.gif)
 
 本文档的配置和接口说明面向python工具包， node版本查看[项目](https://www.npmjs.com/package/node-synonyms)。 
 
@@ -119,10 +119,6 @@ $ python demo.py
 <img src="https://github.com/huyingxi/Synonyms/raw/master/assets/4.png" width="600">
 
 ## Data
-```
-synonyms/data/words.nearby.x.pklz # compressed pickle object
-```
-
 data is built based on [wikidata-corpus](https://github.com/Samurais/wikidata-corpus).
 
 ## Valuation

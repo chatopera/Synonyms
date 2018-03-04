@@ -52,9 +52,8 @@ from synonyms.utils import any2utf8
 from synonyms.utils import any2unicode
 from synonyms.utils import sigmoid
 from synonyms.utils import cosine
-from sklearn.neighbors import KDTree
-import jieba.posseg as _tokenizer
 import jieba
+import jieba.posseg as _tokenizer
 
 '''
 globals
@@ -85,9 +84,6 @@ if "SYNONYMS_WORDSEG_DICT" in ENVIRON:
 print(">> Synonyms load wordseg dict [%s] ... " % tokenizer_dict)
 jieba.set_dictionary(tokenizer_dict)
 
-'''
-word embedding
-'''
 # stopwords
 _fin_stopwords_path = os.path.join(curdir, 'data', 'stopwords.txt')
 def _load_stopwords(file_path):
@@ -117,6 +113,9 @@ def _segment_words(sen):
         tags.append(x.flag)
     return words, tags
 
+'''
+word embedding
+'''
 # vectors
 _f_model = os.path.join(curdir, 'data', 'words.vector')
 if "SYNONYMS_WORD2VEC_BIN_MODEL_ZH_CN" in ENVIRON:
@@ -167,6 +166,10 @@ def _get_wv(sentence):
             vectors.append(r)
     return vectors
 
+'''
+Distance
+'''
+# Levenshtein Distance
 def _levenshtein_distance(sentence1, sentence2):
     '''
     Return the Levenshtein distance between two strings.
@@ -237,6 +240,11 @@ def _similarity_distance(s1, s2):
     if r < 0: r = abs(r)
     r = min(r, 1.0)
     return float("%.3f" % r)
+
+'''
+Public Methods
+'''
+seg = _segment_words # word segmenter
 
 def nearby(word):
     '''

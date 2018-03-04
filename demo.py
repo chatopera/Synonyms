@@ -50,6 +50,10 @@ class Test(unittest.TestCase):
     def tearDown(self):
         pass
 
+    def test_wordseg(self):
+        print("test_wordseg")
+        print(synonyms.seg("中文近义词工具包"))
+
     def test_pairs(self):
         print("test_pairs")
         print(compare_("轿车", "汽车", True))
