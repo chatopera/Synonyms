@@ -212,7 +212,7 @@ def _nearby_levenshtein_distance(s1, s2):
     for x in first:
         ft.add(x)
         n, _ = nearby(x)
-        for o in n:
+        for o in n[:5]:
             ft.add(o)
     scores = []
     if len(ft) == 0: return 0.0 # invalid length for first string
@@ -229,10 +229,10 @@ def _similarity_distance(s1, s2):
     u = _nearby_levenshtein_distance(s1, s2)
     # print("g: %s, u: %s" % (g, u))
     if u > 0.8:
-        r = _similarity_smooth(g, 0.1, u)
-    elif u > 0.6:
-        r = _similarity_smooth(g, 0.25, u)
+        r = _similarity_smooth(g, 0.005, u)
     elif u > 0.4:
+        r = _similarity_smooth(g, 0.05, u)
+    elif u > 0.2:
         r = _similarity_smooth(g, 0.5, u)
     else:
         r = _similarity_smooth(g, 1, u)
