@@ -98,6 +98,7 @@ class Test(unittest.TestCase):
 
     def test_nearby(self):
         synonyms.display("奥运")  # synonyms.display calls synonyms.nearby
+        synonyms.display("北新桥")  # synonyms.display calls synonyms.nearby
 
 
 def test():

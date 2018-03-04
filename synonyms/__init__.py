@@ -63,6 +63,7 @@ _vocab = dict()
 _size = 0
 _vectors = None
 _stopwords = set()
+_cache_nearby = dict()
 
 '''
 lambda fns
@@ -241,10 +242,18 @@ def nearby(word):
     '''
     Nearby word
     '''
+    w = any2unicode(word)
+    # read from cache
+    if w in _cache_nearby: return _cache_nearby[w]
+
     words, scores = [], []
-    for x in _vectors.neighbours(any2unicode(word)):
-        words.append(x[0])
-        scores.append(x[1])
+    try:
+        for x in _vectors.neighbours(w):
+            words.append(x[0])
+            scores.append(x[1])
+    except: pass # ignore key error, OOV
+    # put into cache
+    _cache_nearby[w] = (words, scores)
     return words, scores
 
 def compare(s1, s2, seg=True):
