@@ -233,13 +233,15 @@ class KeyedVectors():
         """
         Get nearest words with KDTree, ranking by cosine distance
         """
+        word = word.strip()
         v = self.word_vec(word)
         [distances], [points] = self.kdt.query(array([v]), k = size, return_distance = True)
         assert len(distances) == len(points), "distances and points should be in same shape."
         words, scores = [], {}
         for (x,y) in zip(points, distances):
             w = self.index2word[x]
-            s = utils.cosine(v, self.syn0[x])
+            if w == word: s = 1.0
+            else: s = utils.cosine(v, self.syn0[x])
             if s < 0: s = abs(s)
             words.append(w)
             scores[w] = min(s, 1.0)
