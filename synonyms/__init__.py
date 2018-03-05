@@ -52,8 +52,8 @@ from synonyms.utils import any2utf8
 from synonyms.utils import any2unicode
 from synonyms.utils import sigmoid
 from synonyms.utils import cosine
-import jieba
-import jieba.posseg as _tokenizer
+from synonyms import jieba
+from synonyms.jieba import posseg as _tokenizer
 
 '''
 globals
