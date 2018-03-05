@@ -92,7 +92,6 @@ class Test(unittest.TestCase):
         print("旗帜引领方向 vs 旗帜指引道路:", r)
         # assert r > 0, "the similarity should be bigger then zero"
 
-
         sen1 = "发生历史性变革"
         sen2 = "发生历史性变革"
         r = synonyms.compare(sen1, sen2, seg=True)

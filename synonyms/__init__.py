@@ -20,7 +20,7 @@ from __future__ import division
 __copyright__ = "Copyright (c) 2017 . All Rights Reserved"
 __author__ = "Hu Ying Xi<>, Hai Liang Wang<hailiang.hl.wang@gmail.com>"
 __date__ = "2017-09-27"
-__version__ = "3.3.5"
+__version__ = "3.3.6"
 
 import os
 import sys
@@ -68,7 +68,7 @@ _cache_nearby = dict()
 lambda fns
 '''
 # combine similarity scores
-_similarity_smooth = lambda x, y, z: (x * y) + z
+_similarity_smooth = lambda x, y, z, u: (x * y) + z - u
 _flat_sum_array = lambda x: np.sum(x, axis=0)  # 分子
 
 '''
@@ -228,14 +228,18 @@ def _similarity_distance(s1, s2):
     g = cosine(_flat_sum_array(_get_wv(s1)), _flat_sum_array(_get_wv(s2)))
     u = _nearby_levenshtein_distance(s1, s2)
     # print("g: %s, u: %s" % (g, u))
-    if u > 0.8:
-        r = _similarity_smooth(g, 0.005, u)
+    if u >= 0.99:
+        r = 1.0
+    elif u > 0.9:
+        r = _similarity_smooth(g, 0.05, u, 0.05)
+    elif u > 0.8:
+        r = _similarity_smooth(g, 0.1, u, 0.2)
     elif u > 0.4:
-        r = _similarity_smooth(g, 0.05, u)
+        r = _similarity_smooth(g, 0.25, u, 0.15)
     elif u > 0.2:
-        r = _similarity_smooth(g, 0.5, u)
+        r = _similarity_smooth(g, 0.5, u, 0.1)
     else:
-        r = _similarity_smooth(g, 1, u)
+        r = g
 
     if r < 0: r = abs(r)
     r = min(r, 1.0)
@@ -272,6 +276,7 @@ def compare(s1, s2, seg=True):
     seg : True : The original sentences need jieba.cut
           Flase : The original sentences have been cut.
     '''
+    if s1 == s2: return 1.0
     if seg:
         s1 = [x for x in jieba.cut(s1)]
         s2 = [x for x in jieba.cut(s2)]
