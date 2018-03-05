@@ -153,6 +153,8 @@ Synonyms的词表容量是125,792，下面选择一些在同义词词林、知�
 
 注：同义词林及知网数据、分数[来源](https://github.com/yaleimeng/Final_word_Similarity)。Synonyms也在不断优化中，新的分数可能和上图不一致。
 
+更多[比对结果](./VALUATION.md)。
+
 ## Benchmark
 
 Test with py3, MacBook Pro.

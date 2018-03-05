@@ -20,7 +20,7 @@ from __future__ import division
 __copyright__ = "Copyright (c) 2017 . All Rights Reserved"
 __author__ = "Hu Ying Xi<>, Hai Liang Wang<hailiang.hl.wang@gmail.com>"
 __date__ = "2017-09-27"
-
+__version__ = "3.3.5"
 
 import os
 import sys

@@ -54,23 +54,27 @@ class Test(unittest.TestCase):
         print("test_wordseg")
         print(synonyms.seg("中文近义词工具包"))
 
-    def test_pairs(self):
-        print("test_pairs")
-        print(compare_("轿车", "汽车", True))
-        print(compare_("宝石", "宝物", True))
-        print(compare_("旅游", "游历", True))
-        print(compare_("男孩子", "小伙子", True))
-        print(compare_("海岸", "海滨", True))
-        print(compare_("庇护所", "精神病院", True))
-        print(compare_("魔术师", "巫师", True))
-        print(compare_("中午", "正午", True))
-        print(compare_("火炉", "炉灶", True))
-        print(compare_("食物", "水果", True))
-        print(compare_("鸡", "公鸡", True))
-        print(compare_("鸟", "鹤", True))
-        print(compare_("工具", "器械", True))
-        print(compare_("兄弟", "和尚", True))
-        print(compare_("起重机", "器械", True))
+    def test_diff(self):
+        print("test_diff")
+        result = []
+        # 30个  评测词对中的左侧词
+        left = ['轿车', '宝石', '旅游', '男孩子', '海岸', '庇护所', '魔术师', '中午', '火炉', '食物', '鸟', '鸟', '工具', '兄弟', '起重机', '小伙子',
+                '旅行', '和尚', '墓地', '食物', '海岸', '森林', '岸边', '和尚', '海岸', '小伙子', '琴弦', '玻璃', '中午', '公鸡']
+        # 30个  评测词对中的右侧词
+        right = ['汽车', '宝物', '游历', '小伙子', '海滨', '精神病院', '巫师', '正午', '炉灶', '水果', '公鸡', '鹤', '器械', '和尚', '器械', '兄弟',
+                 '轿车', '圣贤', '林地', '公鸡', '丘陵', '墓地', '林地', '奴隶', '森林', '巫师', '微笑', '魔术师', '绳子', '航行']
+        # 人工评定的相似度列表。
+        human = [0.98, 0.96, 0.96, 0.94, 0.925, 0.9025, 0.875, 0.855, 0.7775, 0.77, 0.7625, 0.7425, 0.7375, 0.705, 0.42, 0.415,
+                 0.29, 0.275, 0.2375,
+                 0.2225, 0.2175, 0.21, 0.1575, 0.1375, 0.105, 0.105, 0.0325, 0.0275, 0.02, 0.02]
+        result.append("# synonyms 分数评测 [(v%s)](https://pypi.python.org/pypi/synonyms/%s)" % (synonyms.__version__, synonyms.__version__))
+        result.append("| %s |  %s |   %s  |  %s |" % ("词1", "词2", "synonyms", "人工评定"))
+        result.append("| --- | --- | --- | --- |")
+        for x,y,z in zip(left, right, human):
+            result.append("| %s | %s | %s  |  %s |" % (x, y, synonyms.compare(x, y), z))
+        for x in result: print(x)
+        with open(os.path.join(curdir, "VALUATION.md"), "w") as fout:
+            for x in result: fout.write(x + "\n")
 
     def test_similarity(self):
         '''
