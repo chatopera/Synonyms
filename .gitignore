@@ -10,3 +10,4 @@ sftp-config.json
 dist/
 synonyms.egg-info
 .vscode/
+build/

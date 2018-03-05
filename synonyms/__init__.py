@@ -82,7 +82,7 @@ if "SYNONYMS_WORDSEG_DICT" in ENVIRON:
     else: print("warning: can not find dict at [%s]" % tokenizer_dict)
 
 print(">> Synonyms load wordseg dict [%s] ... " % tokenizer_dict)
-jieba.set_dictionary(tokenizer_dict)
+_tokenizer.initialize(tokenizer_dict)
 
 # stopwords
 _fin_stopwords_path = os.path.join(curdir, 'data', 'stopwords.txt')
