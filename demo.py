@@ -31,7 +31,12 @@ if sys.version_info[0] < 3:
     reload(sys)
     sys.setdefaultencoding("utf-8")
     # raise "Must be using Python 3"
+    # 
 
+from absl import flags
+from absl import logging
+
+FLAGS = flags.FLAGS
 import synonyms  # https://github.com/huyingxi/Synonyms
 import numpy
 import unittest
@@ -113,4 +118,5 @@ def test():
 
 
 if __name__ == '__main__':
+    FLAGS([__file__, '--verbosity', '-2'])
     test()

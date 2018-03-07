@@ -6,7 +6,6 @@ import re
 import os
 import sys
 import time
-import logging
 import marshal
 import tempfile
 import threading
@@ -14,6 +13,7 @@ from math import log
 from hashlib import md5
 from ._compat import *
 from . import finalseg
+from absl import logging
 
 if os.name == 'nt':
     from shutil import move as _replace_file
@@ -24,11 +24,6 @@ _get_abs_path = lambda path: os.path.normpath(os.path.join(os.getcwd(), path))
 
 DEFAULT_DICT = None
 DEFAULT_DICT_NAME = "dict.txt"
-
-log_console = logging.StreamHandler(sys.stderr)
-default_logger = logging.getLogger(__name__)
-default_logger.setLevel(logging.DEBUG)
-default_logger.addHandler(log_console)
 
 DICT_WRITING = {}
 
@@ -44,10 +39,6 @@ re_han_default = re.compile("([\u4E00-\u9FD5a-zA-Z0-9+#&\._%]+)", re.U)
 re_skip_default = re.compile("(\r\n|\s)", re.U)
 re_han_cut_all = re.compile("([\u4E00-\u9FD5]+)", re.U)
 re_skip_cut_all = re.compile("[^a-zA-Z0-9+#\n]", re.U)
-
-def setLogLevel(log_level):
-    global logger
-    default_logger.setLevel(log_level)
 
 class Tokenizer(object):
 
@@ -89,10 +80,10 @@ class Tokenizer(object):
         return lfreq, ltotal
 
     def initialize(self, dictionary=None):
-        default_logger.debug("initialize dictionary: %s| initialized: %s"% (dictionary, self.initialized))
+        logging.debug("initialize dictionary: %s| initialized: %s"% (dictionary, self.initialized))
         if dictionary:
             abs_path = _get_abs_path(dictionary)
-            default_logger.debug("abs_path: %s| self.dictionary: %s" % (abs_path, self.dictionary))
+            logging.debug("abs_path: %s| self.dictionary: %s" % (abs_path, self.dictionary))
             if self.dictionary == abs_path and self.initialized:
                 return
             else:
@@ -110,7 +101,7 @@ class Tokenizer(object):
             if self.initialized:
                 return
 
-            default_logger.debug("Building prefix dict from %s ..." % (abs_path or 'the default dictionary'))
+            logging.debug("Building prefix dict from %s ..." % (abs_path or 'the default dictionary'))
             t1 = time.time()
             if self.cache_file:
                 cache_file = self.cache_file
@@ -129,7 +120,7 @@ class Tokenizer(object):
             load_from_cache_fail = True
             if os.path.isfile(cache_file) and (abs_path == DEFAULT_DICT or
                 os.path.getmtime(cache_file) > os.path.getmtime(abs_path)):
-                default_logger.debug(
+                logging.debug(
                     "Loading model from cache %s" % cache_file)
                 try:
                     with open(cache_file, 'rb') as cf:
@@ -143,7 +134,7 @@ class Tokenizer(object):
                 DICT_WRITING[abs_path] = wlock
                 with wlock:
                     self.FREQ, self.total = self.gen_pfdict(self.get_dict_file())
-                    default_logger.debug(
+                    logging.debug(
                         "Dumping model to file cache %s" % cache_file)
                     try:
                         # prevent moving across different filesystems
@@ -153,7 +144,7 @@ class Tokenizer(object):
                                 (self.FREQ, self.total), temp_cache_file)
                         _replace_file(fpath, cache_file)
                     except Exception:
-                        default_logger.exception("Dump cache file failed.")
+                        logging.exception("Dump cache file failed.")
 
                 try:
                     del DICT_WRITING[abs_path]
@@ -161,12 +152,12 @@ class Tokenizer(object):
                     pass
 
             self.initialized = True
-            default_logger.debug(
+            logging.debug(
                 "Loading model cost %.3f seconds." % (time.time() - t1))
-            default_logger.debug("Prefix dict has been built succesfully.")
+            logging.debug("Prefix dict has been built succesfully.")
 
     def check_initialized(self):
-        # default_logger.debug("check_initialized: %s" % self.initialized)
+        # logging.debug("check_initialized: %s" % self.initialized)
         if not self.initialized:
             self.initialize()
 

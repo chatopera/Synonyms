@@ -28,12 +28,16 @@ if sys.version_info[0] < 3:
 else:
     xrange = range
 
+from absl import logging
+
 import synonyms.utils as utils
 from numpy import dot, zeros, dtype, float32 as REAL,\
     double, array, vstack, fromstring, sqrt, newaxis,\
     ndarray, sum as np_sum, prod, ascontiguousarray,\
     argmax
 from sklearn.neighbors import KDTree
+
+
 
 class Vocab(object):
     """
@@ -113,14 +117,14 @@ class KeyedVectors():
         """
         counts = None
         if fvocab is not None:
-            print("loading word counts from %s" % fvocab)
+            logging.debug("loading word counts from %s" % fvocab)
             counts = {}
             with utils.smart_open(fvocab) as fin:
                 for line in fin:
                     word, count = utils.to_unicode(line).strip().split()
                     counts[word] = int(count)
 
-        print("loading projection weights from %s" % fname)
+        logging.debug("loading projection weights from %s" % fname)
         with utils.smart_open(fname) as fin:
             header = utils.to_unicode(fin.readline(), encoding=encoding)
             # throws for invalid file format
@@ -133,9 +137,9 @@ class KeyedVectors():
 
             def add_word(word, weights):
                 word_id = len(result.vocab)
-                # print("word id: %d, word: %s, weights: %s" % (word_id, word, weights))
+                # logging.debug("word id: %d, word: %s, weights: %s" % (word_id, word, weights))
                 if word in result.vocab:
-                    print(
+                    logging.debug(
                         "duplicate word '%s' in %s, ignoring all but first" %
                         (word, fname))
                     return
@@ -151,7 +155,7 @@ class KeyedVectors():
                 else:
                     # vocab file given, but word is missing -- set count to
                     # None (TODO: or raise?)
-                    print(
+                    logging.debug(
                         "vocabulary file is incomplete: '%s' is missing" %
                         word)
                     result.vocab[word] = Vocab(index=word_id, count=None)
@@ -195,7 +199,7 @@ class KeyedVectors():
                     word, weights = parts[0], [REAL(x) for x in parts[1:]]
                     add_word(word, weights)
         if result.syn0.shape[0] != len(result.vocab):
-            print(
+            logging.debug(
                 "duplicate words detected, shrinking matrix size from %i to %i" %
                 (result.syn0.shape[0], len(result.vocab)))
             result.syn0 = ascontiguousarray(result.syn0[: len(result.vocab)])
@@ -206,7 +210,7 @@ class KeyedVectors():
         http://scikit-learn.org/stable/modules/generated/sklearn.neighbors.KDTree.html#sklearn.neighbors.KDTree
         '''
         result.kdt = KDTree(result.syn0, leaf_size=10, metric = "euclidean")
-        print("loaded %s matrix from %s" % (result.syn0.shape, fname))
+        logging.debug("loaded %s matrix from %s" % (result.syn0.shape, fname))
         return result
 
     def word_vec(self, word, use_norm=False):
