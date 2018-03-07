@@ -23,7 +23,7 @@ else:
 _get_abs_path = lambda path: os.path.normpath(os.path.join(os.getcwd(), path))
 
 DEFAULT_DICT = None
-DEFAULT_DICT_NAME = "dict.txt"
+DEFAULT_DICT_NAME = os.path.join(os.path.pardir, "data", "vocab.txt")
 
 DICT_WRITING = {}
 
