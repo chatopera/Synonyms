@@ -252,6 +252,12 @@ def call_on_class_only(*args, **kwargs):
     """Raise exception when load methods are called on instance"""
     raise AttributeError('This method should be called on a class object.')
 
+def is_digit(obj):
+    '''
+    Check if an object is Number
+    '''
+    return isinstance(obj, (numbers.Integral, numbers.Complex, numbers.Real))
+
 def is_zhs(str):
     '''
     Check if str is Chinese Word

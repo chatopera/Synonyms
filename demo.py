@@ -108,6 +108,12 @@ class Test(unittest.TestCase):
         r = synonyms.compare(sen1, sen2, seg=True)
         print("%s vs %s" % (sen1, sen2), r)
 
+
+        sen1 = "你们好呀"
+        sen2 = "大家好"
+        r = synonyms.compare(sen1, sen2, seg=False)
+        print("%s vs %s" % (sen1, sen2), r)
+
     def test_nearby(self):
         synonyms.display("奥运")  # synonyms.display calls synonyms.nearby
         synonyms.display("北新桥")  # synonyms.display calls synonyms.nearby
@@ -118,5 +124,5 @@ def test():
 
 
 if __name__ == '__main__':
-    FLAGS([__file__, '--verbosity', '-2'])
+    FLAGS([__file__, '--verbosity', '1'])
     test()

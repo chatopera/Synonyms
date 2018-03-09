@@ -20,7 +20,7 @@ from __future__ import division
 __copyright__ = "Copyright (c) 2017 . All Rights Reserved"
 __author__ = "Hu Ying Xi<>, Hai Liang Wang<hailiang.hl.wang@gmail.com>"
 __date__ = "2017-09-27"
-__version__ = "3.3.9"
+__version__ = "3.3.10"
 
 import os
 import sys
@@ -53,6 +53,7 @@ from .utils import any2utf8
 from .utils import any2unicode
 from .utils import sigmoid
 from .utils import cosine
+from .utils import is_digit
 import jieba
 from .jieba import posseg as _tokenizer
 
@@ -226,20 +227,14 @@ def _similarity_distance(s1, s2):
     '''
     compute similarity with distance measurement
     '''
-    # g = 0.0
+    g = 0.0
     try:
-        g = cosine(_flat_sum_array(_get_wv(s1)), _flat_sum_array(_get_wv(s2)))
+        g_ = cosine(_flat_sum_array(_get_wv(s1)), _flat_sum_array(_get_wv(s2)))
+        if is_digit(g_): g = g_
     except: pass
 
-    try:
-        g_nan_num = np.isnan(g).sum()
-        if g_nan_num == 100:
-            g = 0.0
-    except:
-        pass
-
     u = _nearby_levenshtein_distance(s1, s2)
-    # print("g: %s, u: %s" % (g, u))
+    logging.debug("g: %s, u: %s" % (g, u))
     if u >= 0.99:
         r = 1.0
     elif u > 0.9:
