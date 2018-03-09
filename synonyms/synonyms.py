@@ -20,7 +20,7 @@ from __future__ import division
 __copyright__ = "Copyright (c) 2017 . All Rights Reserved"
 __author__ = "Hu Ying Xi<>, Hai Liang Wang<hailiang.hl.wang@gmail.com>"
 __date__ = "2017-09-27"
-__version__ = "3.3.8"
+__version__ = "3.3.9"
 
 import os
 import sys
@@ -48,13 +48,13 @@ import json
 import gzip
 import shutil
 from absl import logging
-from synonyms.word2vec import KeyedVectors
-from synonyms.utils import any2utf8
-from synonyms.utils import any2unicode
-from synonyms.utils import sigmoid
-from synonyms.utils import cosine
-from synonyms import jieba
-from synonyms.jieba import posseg as _tokenizer
+from .word2vec import KeyedVectors
+from .utils import any2utf8
+from .utils import any2unicode
+from .utils import sigmoid
+from .utils import cosine
+import jieba
+from .jieba import posseg as _tokenizer
 
 '''
 globals
@@ -226,7 +226,10 @@ def _similarity_distance(s1, s2):
     '''
     compute similarity with distance measurement
     '''
-    g = cosine(_flat_sum_array(_get_wv(s1)), _flat_sum_array(_get_wv(s2)))
+    g = 0.0
+    try:
+        g = cosine(_flat_sum_array(_get_wv(s1)), _flat_sum_array(_get_wv(s2)))
+    except: pass
     u = _nearby_levenshtein_distance(s1, s2)
     # print("g: %s, u: %s" % (g, u))
     if u >= 0.99:
@@ -240,7 +243,7 @@ def _similarity_distance(s1, s2):
     elif u > 0.2:
         r = _similarity_smooth(g, 0.5, u, 0.1)
     else:
-        r = g
+        r = _similarity_smooth(g, 1, u, 0)
 
     if r < 0: r = abs(r)
     r = min(r, 1.0)

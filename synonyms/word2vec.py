@@ -30,7 +30,7 @@ else:
 
 from absl import logging
 
-import synonyms.utils as utils
+import utils
 from numpy import dot, zeros, dtype, float32 as REAL,\
     double, array, vstack, fromstring, sqrt, newaxis,\
     ndarray, sum as np_sum, prod, ascontiguousarray,\
