@@ -226,10 +226,18 @@ def _similarity_distance(s1, s2):
     '''
     compute similarity with distance measurement
     '''
-    g = 0.0
+    # g = 0.0
     try:
         g = cosine(_flat_sum_array(_get_wv(s1)), _flat_sum_array(_get_wv(s2)))
     except: pass
+
+    try:
+        g_nan_num = np.isnan(g).sum()
+        if g_nan_num == 100:
+            g = 0.0
+    except:
+        pass
+
     u = _nearby_levenshtein_distance(s1, s2)
     # print("g: %s, u: %s" % (g, u))
     if u >= 0.99:
