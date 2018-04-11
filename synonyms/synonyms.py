@@ -134,7 +134,7 @@ def _load_w2v(model_file=_f_model, binary=True):
 print(">> Synonyms on loading vectors [%s] ..." % _f_model)
 _vectors = _load_w2v(model_file=_f_model)
 
-def _get_wv(sentence):
+def _get_wv(sentence, ignore=False):
     '''
     get word2vec data by sentence
     sentence is segmented string.
@@ -151,10 +151,13 @@ def _get_wv(sentence):
             try:
                 c.append(_vectors.word_vec(y_))
             except KeyError as error:
-                logging.warn("not exist in w2v model: %s" % y_)
-                # c.append(np.zeros((100,), dtype=float))
-                random_state = np.random.RandomState(seed=(hash(y_) % (2**32 - 1)))
-                c.append(random_state.uniform(low=-10.0, high=10.0, size=(100,)))
+                if ignore:
+                    continue
+                else:
+                    logging.warning("not exist in w2v model: %s" % y_)
+                    # c.append(np.zeros((100,), dtype=float))
+                    random_state = np.random.RandomState(seed=(hash(y_) % (2**32 - 1)))
+                    c.append(random_state.uniform(low=-10.0, high=10.0, size=(100,)))
             for n in syns:
                 if n is None: continue
                 try:
@@ -223,13 +226,13 @@ def _nearby_levenshtein_distance(s1, s2):
     s = np.sum(scores) / maxlen
     return s
 
-def _similarity_distance(s1, s2):
+def _similarity_distance(s1, s2, ignore):
     '''
     compute similarity with distance measurement
     '''
     g = 0.0
     try:
-        g_ = cosine(_flat_sum_array(_get_wv(s1)), _flat_sum_array(_get_wv(s2)))
+        g_ = cosine(_flat_sum_array(_get_wv(s1, ignore)), _flat_sum_array(_get_wv(s2, ignore)))
         if is_digit(g_): g = g_
     except: pass
 
@@ -275,7 +278,7 @@ def nearby(word):
     _cache_nearby[w] = (words, scores)
     return words, scores
 
-def compare(s1, s2, seg=True):
+def compare(s1, s2, seg=True, ignore=False):
     '''
     compare similarity
     s1 : sentence1
@@ -291,7 +294,7 @@ def compare(s1, s2, seg=True):
         s1 = s1.split()
         s2 = s2.split()
     assert len(s1) > 0 and len(s2) > 0, "The length of s1 and s2 should > 0."
-    return _similarity_distance(s1, s2)
+    return _similarity_distance(s1, s2, ignore)
 
 def display(word):
     print("'%s'近义词：" % word)
