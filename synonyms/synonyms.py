@@ -242,11 +242,11 @@ def _similarity_distance(s1, s2):
     elif u > 0.8:
         r = _similarity_smooth(g, 0.1, u, 0.2)
     elif u > 0.4:
-        r = _similarity_smooth(g, 0.25, u, 0.15)
+        r = _similarity_smooth(g, 0.2, u, 0.15)
     elif u > 0.2:
-        r = _similarity_smooth(g, 0.5, u, 0.1)
+        r = _similarity_smooth(g, 0.3, u, 0.1)
     else:
-        r = _similarity_smooth(g, 1, u, 0)
+        r = _similarity_smooth(g, 0.4, u, 0)
 
     if r < 0: r = abs(r)
     r = min(r, 1.0)
