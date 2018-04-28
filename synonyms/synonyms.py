@@ -213,17 +213,26 @@ def _nearby_levenshtein_distance(s1, s2):
     s1_len, s2_len = len(s1), len(s2)
     maxlen = max(s1_len, s2_len)
     first, second = (s2, s1) if s1_len == maxlen else (s1, s2)
-    ft = set() # all related words with first sentence 
+    ft_1 = set() # all related words with first sentence 
     for x in first:
-        ft.add(x)
+        ft_1.add(x)
         n, _ = nearby(x)
         for o in n[:5]:
-            ft.add(o)
-    scores = []
-    if len(ft) == 0: return 0.0 # invalid length for first string
+            ft_1.add(o)
+            
+    ft_2 = set() # all related words with second sentence
     for x in second:
-        scores.append(max([_levenshtein_distance(x, y) for y in ft]))
-    s = np.sum(scores) / maxlen
+        ft_2.add(x)
+        n, _ = nearby(x)
+        for o in n[:5]:
+            ft_2.add(0)
+            
+    scores = []
+    if len(ft_1) == 0 or len(ft_2) == 0: return 0.0 # invalid length
+    for x in ft_1:
+        for y in ft_2:
+            scores.append([_levenshtein_distance(x, y)])
+    s = np.sum(scores) / (s1_len * s2_len)
     return s
 
 def _similarity_distance(s1, s2, ignore):
