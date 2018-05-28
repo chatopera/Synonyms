@@ -114,6 +114,15 @@ class Test(unittest.TestCase):
         r = synonyms.compare(sen1, sen2, seg=False)
         print("%s vs %s" % (sen1, sen2), r)
 
+
+    def test_swap_sent(self):
+        print("test_swap_sent")        
+        s1 = synonyms.compare("教学", "老师")
+        s2 = synonyms.compare("老师", "教学")
+        print('"教学", "老师": %s ' % s1)
+        print('"老师", "教学": %s ' % s2)
+        assert s1 == s2, "Scores should be the same after swap sents"
+
     def test_nearby(self):
         synonyms.display("奥运")  # synonyms.display calls synonyms.nearby
         synonyms.display("北新桥")  # synonyms.display calls synonyms.nearby

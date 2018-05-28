@@ -1,3 +1,5 @@
+# 3.6
+* Fix Bug: compare 保证交换两个句子后分数一致 [#60](https://github.com/huyingxi/Synonyms/issues/60)
 
 # 3.5
 * 根据实际情况，降低向量距离对近似度分数的影响

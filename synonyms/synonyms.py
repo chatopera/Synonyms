@@ -211,28 +211,28 @@ def _nearby_levenshtein_distance(s1, s2):
     使用空间距离近的词汇优化编辑距离计算
     '''
     s1_len, s2_len = len(s1), len(s2)
-    maxlen = max(s1_len, s2_len)
-    first, second = (s2, s1) if s1_len == maxlen else (s1, s2)
-    ft_1 = set() # all related words with first sentence 
+    maxlen = s1_len
+    if s1_len == s2_len:
+        first, second = sorted([s1, s2])
+    elif s1_len < s2_len:
+        first = s1
+        second = s2
+        maxlen = s2_len
+    else:
+        first = s2
+        second = s1
+
+    ft = set() # all related words with first sentence 
     for x in first:
-        ft_1.add(x)
+        ft.add(x)
         n, _ = nearby(x)
-        for o in n[:5]:
-            ft_1.add(o)
-            
-    ft_2 = set() # all related words with second sentence
-    for x in second:
-        ft_2.add(x)
-        n, _ = nearby(x)
-        for o in n[:5]:
-            ft_2.add(0)
-            
+        for o in n[:10]:
+            ft.add(o)
+    
     scores = []
-    if len(ft_1) == 0 or len(ft_2) == 0: return 0.0 # invalid length
-    for x in ft_1:
-        for y in ft_2:
-            scores.append([_levenshtein_distance(x, y)])
-    s = np.sum(scores) / (s1_len * s2_len)
+    for x in second:
+        scores.append(max([_levenshtein_distance(x, y) for y in ft]))
+    s = np.sum(scores) / maxlen
     return s
 
 def _similarity_distance(s1, s2, ignore):
