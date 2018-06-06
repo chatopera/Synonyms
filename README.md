@@ -221,6 +221,10 @@ meminfo 8GB
 
 Google发布的[word2vec](https://code.google.com/archive/p/word2vec/)，该库由C语言编写，内存使用效率高，训练速度快。gensim可以加载word2vec输出的模型文件。
 
+3. 相似度计算的方法是什么？
+
+[详见 #64](https://github.com/huyingxi/Synonyms/issues/64)
+
 # Authors
 
 [Hai Liang Wang](http://blog.chatbot.io/webcv/)
