@@ -128,6 +128,9 @@ class Test(unittest.TestCase):
         synonyms.display("北新桥")  # synonyms.display calls synonyms.nearby
 
 
+    def test_badcase_1(self):
+        synonyms.display("人脸")  # synonyms.display calls synonyms.nearby
+
 def test():
     unittest.main()
 
