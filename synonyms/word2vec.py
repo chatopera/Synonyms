@@ -30,7 +30,7 @@ else:
 
 from absl import logging
 
-import utils
+from .utils import smart_open, to_unicode, cosine
 from numpy import dot, zeros, dtype, float32 as REAL,\
     double, array, vstack, fromstring, sqrt, newaxis,\
     ndarray, sum as np_sum, prod, ascontiguousarray,\
@@ -119,14 +119,14 @@ class KeyedVectors():
         if fvocab is not None:
             logging.debug("loading word counts from %s" % fvocab)
             counts = {}
-            with utils.smart_open(fvocab) as fin:
+            with smart_open(fvocab) as fin:
                 for line in fin:
-                    word, count = utils.to_unicode(line).strip().split()
+                    word, count = to_unicode(line).strip().split()
                     counts[word] = int(count)
 
         logging.debug("loading projection weights from %s" % fname)
-        with utils.smart_open(fname) as fin:
-            header = utils.to_unicode(fin.readline(), encoding=encoding)
+        with smart_open(fname) as fin:
+            header = to_unicode(fin.readline(), encoding=encoding)
             # throws for invalid file format
             vocab_size, vector_size = (int(x) for x in header.split())
             if limit:
@@ -178,7 +178,7 @@ class KeyedVectors():
                         # have)
                         if ch != b'\n':
                             word.append(ch)
-                    word = utils.to_unicode(
+                    word = to_unicode(
                         b''.join(word), encoding=encoding, errors=unicode_errors)
                     weights = fromstring(fin.read(binary_len), dtype=REAL)
                     add_word(word, weights)
@@ -188,7 +188,7 @@ class KeyedVectors():
                     if line == b'':
                         raise EOFError(
                             "unexpected end of input; is count incorrect or file otherwise damaged?")
-                    parts = utils.to_unicode(
+                    parts = to_unicode(
                         line.rstrip(),
                         encoding=encoding,
                         errors=unicode_errors).split(" ")
@@ -245,7 +245,7 @@ class KeyedVectors():
         for (x,y) in zip(points, distances):
             w = self.index2word[x]
             if w == word: s = 1.0
-            else: s = utils.cosine(v, self.syn0[x])
+            else: s = cosine(v, self.syn0[x])
             if s < 0: s = abs(s)
             words.append(w)
             scores[w] = min(s, 1.0)
