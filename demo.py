@@ -59,6 +59,12 @@ class Test(unittest.TestCase):
         print("test_wordseg")
         print(synonyms.seg("中文近义词工具包"))
 
+
+    def test_word_vector(self):
+        print("test_word_vector")
+        word = "三国"
+        print(word, "向量", synonyms.v(word))
+
     def test_diff(self):
         print("test_diff")
         result = []

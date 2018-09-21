@@ -1,3 +1,7 @@
+# 3.8
+* change import path of utils in word2vec.py to local path
+* expose vector fn
+
 # 3.6
 * Fix Bug: compare 保证交换两个句子后分数一致 [#60](https://github.com/huyingxi/Synonyms/issues/60)
 

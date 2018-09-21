@@ -206,6 +206,13 @@ def _levenshtein_distance(sentence1, sentence2):
     # print("smoothing[%s| %s]: %s -> %s" % (sentence1, sentence2, d, s))
     return s
 
+def v(word):
+    '''
+    获得一个词语的向量，OOV时抛出 KeyError 异常
+    '''
+    y_ = any2unicode(word).strip()
+    return _vectors.word_vec(y_)
+
 def _nearby_levenshtein_distance(s1, s2):
     '''
     使用空间距离近的词汇优化编辑距离计算
