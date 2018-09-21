@@ -206,6 +206,15 @@ def _levenshtein_distance(sentence1, sentence2):
     # print("smoothing[%s| %s]: %s -> %s" % (sentence1, sentence2, d, s))
     return s
 
+def sv(sentence, ignore=False):
+    '''
+    获得一个分词后句子的向量，向量以BoW方式组成
+    sentence: 句子是分词后通过空格联合起来
+    ignore: 是否忽略OOV，False时，随机生成一个向量
+    '''
+    return _get_wv(sentence, ignore = ignore)
+
+
 def v(word):
     '''
     获得一个词语的向量，OOV时抛出 KeyError 异常
