@@ -78,7 +78,7 @@ tokenizer settings
 '''
 tokenizer_dict = os.path.join(curdir, 'data', 'vocab.txt')
 if "SYNONYMS_WORDSEG_DICT" in ENVIRON:
-    if os.exist(ENVIRON["SYNONYMS_WORDSEG_DICT"]):
+    if os.path.exists(ENVIRON["SYNONYMS_WORDSEG_DICT"]):
         print("info: set wordseg dict with %s" % tokenizer_dict)
         tokenizer_dict = ENVIRON["SYNONYMS_WORDSEG_DICT"]
     else: print("warning: can not find dict at [%s]" % tokenizer_dict)
@@ -303,23 +303,43 @@ def nearby(word):
     _cache_nearby[w] = (words, scores)
     return words, scores
 
-def compare(s1, s2, seg=True, ignore=False):
+def compare(s1, s2, seg=True, ignore=False, stopwords=False):
     '''
     compare similarity
     s1 : sentence1
     s2 : sentence2
     seg : True : The original sentences need jieba.cut
           Flase : The original sentences have been cut.
+    ignore: True: ignore OOV words
+            False: get vector randomly for OOV words
     '''
     if s1 == s2: return 1.0
+    
+    s1_words = []
+    s2_words = []
+
     if seg:
         s1 = [x for x in jieba.cut(s1)]
         s2 = [x for x in jieba.cut(s2)]
     else:
         s1 = s1.split()
         s2 = s2.split()
+
+    # check stopwords
+    if not stopwords:
+        global _stopwords
+        for x in s1: 
+            if not x in _stopwords:
+                s1_words.append(x)
+        for x in s2:
+            if not x in _stopwords:
+                s2_words.append(x)
+    else:
+        s1_words = s1 
+        s2_words = s2
+
     assert len(s1) > 0 and len(s2) > 0, "The length of s1 and s2 should > 0."
-    return _similarity_distance(s1, s2, ignore)
+    return _similarity_distance(s1_words, s2_words, ignore)
 
 def display(word):
     print("'%s'近义词：" % word)
