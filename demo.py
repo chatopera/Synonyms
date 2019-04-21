@@ -137,6 +137,13 @@ class Test(unittest.TestCase):
     def test_badcase_1(self):
         synonyms.display("人脸")  # synonyms.display calls synonyms.nearby
 
+
+    def test_basecase_2(self):
+        print("test_basecase_2")
+        sen1 = "今天天气"
+        sen2 = "今天天气怎么样"
+        r = synonyms.compare(sen1, sen2, seg=True)
+
 def test():
     unittest.main()
 

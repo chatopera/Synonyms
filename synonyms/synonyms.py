@@ -247,8 +247,10 @@ def _nearby_levenshtein_distance(s1, s2):
     
     scores = []
     for x in second:
-        scores.append(max([_levenshtein_distance(x, y) for y in ft]))
-    s = np.sum(scores) / maxlen
+        choices = [_levenshtein_distance(x, y) for y in ft]
+        if len(choices) > 0: scores.append(max(choices))
+
+    s = np.sum(scores) / maxlen if len(scores) > 0 else 0
     return s
 
 def _similarity_distance(s1, s2, ignore):
@@ -319,8 +321,8 @@ def compare(s1, s2, seg=True, ignore=False, stopwords=False):
     s2_words = []
 
     if seg:
-        s1 = [x for x in jieba.cut(s1)]
-        s2 = [x for x in jieba.cut(s2)]
+        s1 = [x for x in jieba.cut(s1, cut_all=False, HMM=False)]
+        s2 = [x for x in jieba.cut(s2, cut_all=False, HMM=False)]
     else:
         s1 = s1.split()
         s2 = s2.split()
