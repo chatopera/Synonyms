@@ -287,13 +287,14 @@ Public Methods
 '''
 seg = _segment_words # word segmenter
 
-def nearby(word):
+def nearby(word, size = 10):
     '''
     Nearby word
     '''
     w = any2unicode(word)
+    wk = w + '-' + str(size)
     # read from cache
-    if w in _cache_nearby: return _cache_nearby[w]
+    if wk in _cache_nearby: return _cache_nearby[wk]
 
     words, scores = [], []
     try:
@@ -302,7 +303,7 @@ def nearby(word):
             scores.append(x[1])
     except: pass # ignore key error, OOV
     # put into cache
-    _cache_nearby[w] = (words, scores)
+    _cache_nearby[wk] = (words, scores)
     return words, scores
 
 def compare(s1, s2, seg=True, ignore=False, stopwords=False):
@@ -343,9 +344,9 @@ def compare(s1, s2, seg=True, ignore=False, stopwords=False):
     assert len(s1) > 0 and len(s2) > 0, "The length of s1 and s2 should > 0."
     return _similarity_distance(s1_words, s2_words, ignore)
 
-def display(word):
+def display(word, size = 10):
     print("'%s'近义词：" % word)
-    o = nearby(word)
+    o = nearby(word, size)
     assert len(o) == 2, "should contain 2 list"
     if len(o[0]) == 0:
         print(" out of vocabulary")
