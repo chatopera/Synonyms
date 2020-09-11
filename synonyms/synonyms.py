@@ -17,10 +17,10 @@ Chinese Synonyms for Natural Language Processing and Understanding.
 from __future__ import print_function
 from __future__ import division
 
-__copyright__ = "Copyright (c) 2017 . All Rights Reserved"
+__copyright__ = "Copyright (c) (2017-2020) Chatopera Inc. All Rights Reserved"
 __author__ = "Hu Ying Xi<>, Hai Liang Wang<hailiang.hl.wang@gmail.com>"
 __date__ = "2017-09-27"
-__version__ = "3.3.10"
+__version__ = "3.11.0"
 
 import os
 import sys
