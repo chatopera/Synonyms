@@ -68,9 +68,9 @@ synonyms.seg("中文近义词工具包")
 
 ```
 import synonyms
-print("人脸: %s" % (synonyms.nearby("人脸")))
-print("识别: %s" % (synonyms.nearby("识别")))
-print("NOT_EXIST: %s" % (synonyms.nearby("NOT_EXIST")))
+print("人脸: ", synonyms.nearby("人脸"))
+print("识别: ", synonyms.nearby("识别"))
+print("NOT_EXIST: ", synonyms.nearby("NOT_EXIST"))
 ```
 
 `synonyms.nearby(WORD [,SIZE])`返回一个元组，元组中包含两项：`([nearby_words], [nearby_words_score])`，`nearby_words`是 WORD 的近义词们，也以 list 的方式存储，并且按照距离的长度由近及远排列，`nearby_words_score`是`nearby_words`中**对应位置**的词的距离的分数，分数在(0-1)区间内，越接近于 1，代表越相近；`SIZE` 是返回词汇数量，默认 10。比如:
