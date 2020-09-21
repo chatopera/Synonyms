@@ -15,7 +15,7 @@ export PATH=/opt/miniconda3/envs/venv-py3/bin:$PATH
 cd $baseDir/..
 if [ -f .env ]; then
     echo "load env with" `pwd`"/.env"
-    source .env
+    #source .env
 fi
 
 python demo.py

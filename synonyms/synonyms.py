@@ -20,7 +20,7 @@ from __future__ import division
 __copyright__ = "Copyright (c) (2017-2020) Chatopera Inc. All Rights Reserved"
 __author__ = "Hu Ying Xi<>, Hai Liang Wang<hailiang.hl.wang@gmail.com>"
 __date__ = "2017-09-27"
-__version__ = "3.11.0"
+__version__ = "3.12.0"
 
 import os
 import sys
@@ -56,6 +56,7 @@ from .utils import cosine
 from .utils import is_digit
 import jieba
 from .jieba import posseg as _tokenizer
+import wget
 
 '''
 globals
@@ -119,19 +120,28 @@ def _segment_words(sen):
 word embedding
 '''
 # vectors
-_f_model = os.path.join(curdir, 'data', 'words.vector')
+_f_url = os.environ.get("SYNONYMS_WORD2VEC_BIN_URL_ZH_CN", "https://static-public.chatopera.com/ml/synonyms/words.vector.gz")
+_f_model = os.path.join(curdir, 'data', 'words.vector.gz')
+_download_model = not os.path.exists(_f_model)
 if "SYNONYMS_WORD2VEC_BIN_MODEL_ZH_CN" in ENVIRON:
     _f_model = ENVIRON["SYNONYMS_WORD2VEC_BIN_MODEL_ZH_CN"]
+    _download_model = False
+
 def _load_w2v(model_file=_f_model, binary=True):
     '''
     load word2vec model
     '''
-    if not os.path.exists(model_file):
-        print("os.path : ", os.path)
+    if not os.path.exists(model_file) and _download_model:
+        print("\n[Synonyms] downloading data from %s to %s ... \n this only happens if SYNONYMS_WORD2VEC_BIN_URL_ZH_CN is not present and Synonyms initialization for the first time. \n It would take minutes that depends on network." % (_f_url, model_file))
+        wget.download(_f_url, out = model_file)
+        print("\n[Synonyms] download is done.\n")
+    elif not os.path.exists(model_file):
+        print("[Synonyms] os.path : ", os.path)
         raise Exception("Model file [%s] does not exist." % model_file)
+
     return KeyedVectors.load_word2vec_format(
         model_file, binary=binary, unicode_errors='ignore')
-print(">> Synonyms on loading vectors [%s] ..." % _f_model)
+print("[Synonyms] on loading vectors [%s] ..." % _f_model)
 _vectors = _load_w2v(model_file=_f_model)
 
 def _get_wv(sentence, ignore=False):

@@ -4,20 +4,19 @@ LONGDOC = """
 Synonyms
 =====================
 
-Chinese Synonyms for Natural Language Processing and Understanding.
+中文近义词
 
-Welcome
--------
+https://github.com/chatopera/Synonyms
 
 """
 
 setup(
     name='synonyms',
-    version='3.11.0',
-    description=' 中文近义词：聊天机器人，智能问答工具包；Chinese Synonyms for Natural Language Processing and Understanding',
+    version='3.12.0',
+    description='中文近义词：聊天机器人，智能问答工具包；Chinese Synonyms for Natural Language Processing and Understanding',
     long_description=LONGDOC,
     author='Hai Liang Wang, Hu Ying Xi',
-    author_email='hailiang.hl.wang@gmail.com',
+    author_email='hain@chatopera.com',
     url='https://github.com/chatopera/Synonyms',
     license="MIT",
     classifiers=[
@@ -32,6 +31,7 @@ setup(
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
+        'Programming Language :: Python :: 3.7',
         'Topic :: Text Processing',
         'Topic :: Text Processing :: Indexing',
         'Topic :: Text Processing :: Linguistic'],
@@ -48,5 +48,4 @@ setup(
         'synonyms': [
             '**/*.gz',
             '**/*.txt',
-            '**/*.vector',
             'LICENSE']})

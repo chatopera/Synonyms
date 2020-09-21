@@ -26,6 +26,8 @@ pip install -U synonyms
 
 兼容 py2 和 py3，当前稳定版本 [v3.x](https://github.com/chatopera/Synonyms/releases)。
 
+**提示：安装后初次使用会下载词向量文件，下载速度取决于网络情况。**
+
 ![](./assets/3.gif)
 
 **Node.js 用户可以使用 [node-synonyms](https://www.npmjs.com/package/node-synonyms)了。**
@@ -80,7 +82,7 @@ synonyms.nearby(人脸, 10) = (
 095, 0.525344, 0.524009, 0.523101, 0.516046])
 ```
 
-在 OOV 的情况下，返回 `([], [])`，目前的字典大小: 125,792。
+在 OOV 的情况下，返回 `([], [])`，目前的字典大小: 435,729。
 
 ### synonyms#compare
 
@@ -107,16 +109,16 @@ synonyms.nearby(人脸, 10) = (
 ```
 >>> synonyms.display("飞机")
 '飞机'近义词：
-  1. 架飞机:0.837399
-  2. 客机:0.764609
-  3. 直升机:0.762116
-  4. 民航机:0.750519
-  5. 航机:0.750116
-  6. 起飞:0.735736
-  7. 战机:0.734975
-  8. 飞行中:0.732649
-  9. 航空器:0.723945
-  10. 运输机:0.720578
+  1. 飞机:1.0
+  2. 直升机:0.8423391
+  3. 客机:0.8393003
+  4. 滑翔机:0.7872388
+  5. 军用飞机:0.7832081
+  6. 水上飞机:0.77857226
+  7. 运输机:0.7724742
+  8. 航机:0.7664748
+  9. 航空器:0.76592904
+  10. 民航机:0.74209654
 ```
 
 `SIZE` 是打印词汇表的数量，默认 10。
@@ -182,13 +184,19 @@ HowNet，也被称为知网，它并不只是一个语义字典，而是一个�
 
 ### 对比
 
-Synonyms 的词表容量是 125,792，下面选择一些在同义词词林、知网和 Synonyms 都存在的几个词，给出其近似度的对比：
+Synonyms 的词表容量是 435,729，下面选择一些在同义词词林、知网和 Synonyms 都存在的几个词，给出其近似度的对比：
 
 ![](./assets/5.png)
 
 注：同义词林及知网数据、分数[来源](https://github.com/yaleimeng/Final_word_Similarity)。Synonyms 也在不断优化中，新的分数可能和上图不一致。
 
 更多[比对结果](./VALUATION.md)。
+
+## Used by
+
+[Github 关联用户列表](https://github.com/chatopera/Synonyms/network/dependents?package_id=UGFja2FnZS01MjY2NDc1Nw%3D%3D)
+
+![](./assets/6.png)
 
 ## Benchmark
 
@@ -242,7 +250,7 @@ meminfo 8GB
 
 # Promotion
 
-[Chatopera 云服务](https://bot.chatopera.com/dashboard) 是面向企业聊天机器人构建的一站式解决方案，融合信息检索系统、机器学习、聊天机器人脚本语法和语音识别等技术，为定制化聊天机器人和自然语言交互而生！
+[Chatopera 云服务](https://bot.chatopera.com/dashboard)
 
 <p align="center">
   <b>Chatopera 云服务</b><br>
@@ -250,6 +258,8 @@ meminfo 8GB
       <img src="./assets/64531083-3199aa80-d341-11e9-86cd-3a3ed860b14b.png" width="800">
   </a>
 </p>
+
+Chatopera 机器人平台包括知识库、多轮对话、意图识别和语音识别等组件，标准化聊天机器人开发，支持企业 OA 智能问答、HR 智能问答、智能客服和网络营销等场景；一站式实现聊天机器人，按量付费，让聊天机器人上线！
 
 # References
 
@@ -273,9 +283,9 @@ Google 发布的[word2vec](https://code.google.com/archive/p/word2vec/)，该库
 
 # Authors
 
-[Hai Liang Wang](http://blog.chatbot.io/webcv/)
+[Hai Liang Wang](https://pre-angel.com/peoples/hailiang-wang/)
 
-[Hu Ying Xi](https://github.com/chatopera/)
+[Hu Ying Xi](https://github.com/huyingxi)
 
 # Give credits to
 
@@ -292,6 +302,14 @@ Google 发布的[word2vec](https://code.google.com/archive/p/word2vec/)，该库
 # License
 
 [MIT](./LICENSE)
+
+Copyright (2018-2020) Chatopera Inc. <https://www.chatopera.com>
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.OF
 
 [![chatoper banner][co-banner-image]][co-url]
 
