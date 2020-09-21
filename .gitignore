@@ -11,3 +11,5 @@ dist/
 synonyms.egg-info
 .vscode/
 build/
+.env
+synonyms/data/words.vector
