@@ -33,10 +33,6 @@ if sys.version_info[0] < 3:
     # raise "Must be using Python 3"
     # 
 
-from absl import flags
-from absl import logging
-
-FLAGS = flags.FLAGS
 import synonyms  # https://github.com/huyingxi/Synonyms
 import numpy
 import unittest
@@ -144,10 +140,20 @@ class Test(unittest.TestCase):
         sen2 = "今天天气怎么样"
         r = synonyms.compare(sen1, sen2, seg=True)
 
+
+    def test_analyse_extract_tags(self):
+        '''
+        使用 Tag 方式获得关键词
+        https://github.com/fxsjy/jieba/tree/v0.39
+        '''
+        from synonyms.jieba import analyse
+        sentence = "华为芯片被断供，源于美国关于华为的修订版禁令生效——9月15日以来，台积电、高通、三星等华为的重要合作伙伴，只要没有美国的相关许可证，都无法供应芯片给华为，而中芯国际等国产芯片企业，也因采用美国技术，而无法供货给华为。目前华为部分型号的手机产品出现货少的现象，若该形势持续下去，华为手机业务将遭受重创。"
+        keywords = analyse.extract_tags(sentence, topK=5, withWeight=False, allowPOS=())
+        print("[test_analyse_extract_tags] keywords %s" % keywords)
+
 def test():
     unittest.main()
 
 
 if __name__ == '__main__':
-    FLAGS([__file__, '--verbosity', '1'])
     test()

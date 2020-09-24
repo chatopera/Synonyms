@@ -13,7 +13,6 @@ from math import log
 from hashlib import md5
 from ._compat import *
 from . import finalseg
-from absl import logging
 
 if os.name == 'nt':
     from shutil import move as _replace_file
@@ -24,6 +23,8 @@ _get_abs_path = lambda path: os.path.normpath(os.path.join(os.getcwd(), path))
 
 DEFAULT_DICT = None
 DEFAULT_DICT_NAME = os.path.join(os.path.pardir, "data", "vocab.txt")
+
+print("[jieba] default dict file path %s" % DEFAULT_DICT_NAME)
 
 DICT_WRITING = {}
 
@@ -80,10 +81,10 @@ class Tokenizer(object):
         return lfreq, ltotal
 
     def initialize(self, dictionary=None):
-        logging.debug("initialize dictionary: %s| initialized: %s"% (dictionary, self.initialized))
+        # print("initialize dictionary: %s| initialized: %s"% (dictionary, self.initialized))
         if dictionary:
             abs_path = _get_abs_path(dictionary)
-            logging.debug("abs_path: %s| self.dictionary: %s" % (abs_path, self.dictionary))
+            # print("abs_path: %s| self.dictionary: %s" % (abs_path, self.dictionary))
             if self.dictionary == abs_path and self.initialized:
                 return
             else:
@@ -101,7 +102,7 @@ class Tokenizer(object):
             if self.initialized:
                 return
 
-            logging.debug("Building prefix dict from %s ..." % (abs_path or 'the default dictionary'))
+            # print("Building prefix dict from %s ..." % (abs_path or 'the default dictionary'))
             t1 = time.time()
             if self.cache_file:
                 cache_file = self.cache_file
@@ -120,8 +121,7 @@ class Tokenizer(object):
             load_from_cache_fail = True
             if os.path.isfile(cache_file) and (abs_path == DEFAULT_DICT or
                 os.path.getmtime(cache_file) > os.path.getmtime(abs_path)):
-                logging.debug(
-                    "Loading model from cache %s" % cache_file)
+                # print("Loading model from cache %s" % cache_file)
                 try:
                     with open(cache_file, 'rb') as cf:
                         self.FREQ, self.total = marshal.load(cf)
@@ -134,8 +134,7 @@ class Tokenizer(object):
                 DICT_WRITING[abs_path] = wlock
                 with wlock:
                     self.FREQ, self.total = self.gen_pfdict(self.get_dict_file())
-                    logging.debug(
-                        "Dumping model to file cache %s" % cache_file)
+                    # print("Dumping model to file cache %s" % cache_file)
                     try:
                         # prevent moving across different filesystems
                         fd, fpath = tempfile.mkstemp(dir=tmpdir)
@@ -144,7 +143,7 @@ class Tokenizer(object):
                                 (self.FREQ, self.total), temp_cache_file)
                         _replace_file(fpath, cache_file)
                     except Exception:
-                        logging.exception("Dump cache file failed.")
+                        print("[Synonyms] jieba dump cache file failed.")
 
                 try:
                     del DICT_WRITING[abs_path]
@@ -152,12 +151,12 @@ class Tokenizer(object):
                     pass
 
             self.initialized = True
-            logging.debug(
-                "Loading model cost %.3f seconds." % (time.time() - t1))
-            logging.debug("Prefix dict has been built succesfully.")
+            # print(
+            #     "Loading model cost %.3f seconds." % (time.time() - t1))
+            # print("Prefix dict has been built succesfully.")
 
     def check_initialized(self):
-        # logging.debug("check_initialized: %s" % self.initialized)
+        # print("check_initialized: %s" % self.initialized)
         if not self.initialized:
             self.initialize()
 
@@ -343,6 +342,7 @@ class Tokenizer(object):
 
     def get_dict_file(self):
         if self.dictionary == DEFAULT_DICT:
+            print("[jieba] load default dict %s ..." % DEFAULT_DICT_NAME)
             return get_module_res(DEFAULT_DICT_NAME)
         else:
             return open(self.dictionary, 'rb')

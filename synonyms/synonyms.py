@@ -18,15 +18,15 @@ from __future__ import print_function
 from __future__ import division
 
 __copyright__ = "Copyright (c) (2017-2020) Chatopera Inc. All Rights Reserved"
-__author__ = "Hu Ying Xi<>, Hai Liang Wang<hailiang.hl.wang@gmail.com>"
-__date__ = "2017-09-27"
-__version__ = "3.12.0"
+__author__ = "Hu Ying Xi<>, Hai Liang Wang<hain@chatopera.com>"
+__date__ = "2020-09-24"
+__version__ = "3.13.0"
 
 import os
 import sys
 import numpy as np
 curdir = os.path.dirname(os.path.abspath(__file__))
-sys.path.append(curdir)
+sys.path.insert(0, curdir)
 
 PLT = 2
 
@@ -47,7 +47,6 @@ ENVIRON = os.environ.copy()
 import json
 import gzip
 import shutil
-from absl import logging
 from .word2vec import KeyedVectors
 from .utils import any2utf8
 from .utils import any2unicode
@@ -55,7 +54,7 @@ from .utils import sigmoid
 from .utils import cosine
 from .utils import is_digit
 import jieba
-from .jieba import posseg as _tokenizer
+from jieba import posseg as _tokenizer
 import wget
 
 '''
@@ -105,12 +104,12 @@ def _load_stopwords(file_path):
 print(">> Synonyms on loading stopwords [%s] ..." % _fin_stopwords_path)
 _load_stopwords(_fin_stopwords_path)
 
-def _segment_words(sen):
+def _segment_words(sen, HMM=True):
     '''
     segment words with jieba
     '''
     words, tags = [], []
-    m = _tokenizer.cut(sen, HMM=True)  # HMM更好的识别新词
+    m = _tokenizer.cut(sen, HMM=HMM)  # HMM更好的识别新词
     for x in m:
         words.append(x.word)
         tags.append(x.flag)
@@ -134,7 +133,7 @@ def _load_w2v(model_file=_f_model, binary=True):
     if not os.path.exists(model_file) and _download_model:
         print("\n[Synonyms] downloading data from %s to %s ... \n this only happens if SYNONYMS_WORD2VEC_BIN_URL_ZH_CN is not present and Synonyms initialization for the first time. \n It would take minutes that depends on network." % (_f_url, model_file))
         wget.download(_f_url, out = model_file)
-        print("\n[Synonyms] download is done.\n")
+        print("\n[Synonyms] downloaded.\n")
     elif not os.path.exists(model_file):
         print("[Synonyms] os.path : ", os.path)
         raise Exception("Model file [%s] does not exist." % model_file)
@@ -164,7 +163,7 @@ def _get_wv(sentence, ignore=False):
                 if ignore:
                     continue
                 else:
-                    logging.warning("not exist in w2v model: %s" % y_)
+                    print("[Synonyms] not exist in w2v model: %s" % y_)
                     # c.append(np.zeros((100,), dtype=float))
                     random_state = np.random.RandomState(seed=(hash(y_) % (2**32 - 1)))
                     c.append(random_state.uniform(low=-10.0, high=10.0, size=(100,)))
@@ -274,7 +273,6 @@ def _similarity_distance(s1, s2, ignore):
     except: pass
 
     u = _nearby_levenshtein_distance(s1, s2)
-    logging.debug("g: %s, u: %s" % (g, u))
     if u >= 0.99:
         r = 1.0
     elif u > 0.9:
@@ -332,8 +330,8 @@ def compare(s1, s2, seg=True, ignore=False, stopwords=False):
     s2_words = []
 
     if seg:
-        s1 = [x for x in jieba.cut(s1, cut_all=False, HMM=False)]
-        s2 = [x for x in jieba.cut(s2, cut_all=False, HMM=False)]
+        s1, _ = _segment_words(s1)
+        s2, _ = _segment_words(s2)
     else:
         s1 = s1.split()
         s2 = s2.split()

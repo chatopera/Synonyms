@@ -44,11 +44,12 @@ class IDFLoader(object):
     def set_new_path(self, new_idf_path):
         if self.path != new_idf_path:
             self.path = new_idf_path
-            content = open(new_idf_path, 'rb').read().decode('utf-8')
-            self.idf_freq = {}
-            for line in content.splitlines():
-                word, freq = line.strip().split(' ')
-                self.idf_freq[word] = float(freq)
+            with open(new_idf_path, 'rb') as f:
+                content = f.read().decode('utf-8')
+                self.idf_freq = {}
+                for line in content.splitlines():
+                    word, freq = line.strip().split(' ')
+                    self.idf_freq[word] = float(freq)
             self.median_idf = sorted(
                 self.idf_freq.values())[len(self.idf_freq) // 2]
 

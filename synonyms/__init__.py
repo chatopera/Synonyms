@@ -1,4 +1,5 @@
 __all__ = ["seg",
+    "jieba",
     "nearby", 
     "compare", 
     "display", 
