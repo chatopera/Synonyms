@@ -47,24 +47,7 @@ npm install node-synonyms
 | _SYNONYMS_WORD2VEC_BIN_MODEL_ZH_CN_ | 使用 word2vec 训练的词向量文件，二进制格式。                                                                                                                                                       |
 | _SYNONYMS_WORDSEG_DICT_             | 中文分词[**主字典**](https://github.com/fxsjy/jieba#%E5%BB%B6%E8%BF%9F%E5%8A%A0%E8%BD%BD%E6%9C%BA%E5%88%B6)，格式和使用[参考](https://github.com/fxsjy/jieba#%E8%BD%BD%E5%85%A5%E8%AF%8D%E5%85%B8) |
 
-### synonyms#seg
-
-中文分词
-
-```
-import synonyms
-synonyms.seg("中文近义词工具包")
-```
-
-分词结果，由两个 list 组成的元组，分别是单词和对应的词性。
-
-```
-(['中文', '近义词', '工具包'], ['nz', 'n', 'n'])
-```
-
-**该分词不去停用词和标点。**
-
-### synonyms#nearby
+### synonyms#nearby(word [, size = 10])
 
 ```
 import synonyms
@@ -84,7 +67,7 @@ synonyms.nearby(人脸, 10) = (
 
 在 OOV 的情况下，返回 `([], [])`，目前的字典大小: 435,729。
 
-### synonyms#compare
+### synonyms#compare(sen1, sen2 [, seg=True])
 
 两个句子的相似度比较
 
@@ -102,7 +85,7 @@ synonyms.nearby(人脸, 10) = (
 发生历史性变革 vs 发生历史性变革: 1.0
 ```
 
-### synonyms#display
+### synonyms#display(word [, size = 10])
 
 以友好的方式打印近义词，方便调试，`display(WORD [, SIZE])`调用了 `synonyms#nearby` 方法。
 
@@ -123,7 +106,7 @@ synonyms.nearby(人脸, 10) = (
 
 `SIZE` 是打印词汇表的数量，默认 10。
 
-### synonyms#v
+### synonyms#v(word)
 
 获得一个词语的向量，该向量为 numpy 的 array，当该词语是未登录词时，抛出 KeyError 异常。
 
@@ -141,6 +124,30 @@ array([-2.412167  ,  2.2628384 , -7.0214124 ,  3.9381874 ,  0.8219283 ,
 ```
     sentence: 句子是分词后通过空格联合起来
     ignore: 是否忽略OOV，False时，随机生成一个向量
+```
+
+### synonyms#seg(sentence)
+
+中文分词
+
+```
+synonyms.seg("中文近义词工具包")
+```
+
+分词结果，由两个 list 组成的元组，分别是单词和对应的词性。
+
+```
+(['中文', '近义词', '工具包'], ['nz', 'n', 'n'])
+```
+
+**该分词不去停用词和标点。**
+
+### synonyms#keywords(sentence [, topK=5, withWeight=False])
+
+提取关键词，默认按照重要程度提取关键词。
+
+```
+keywords = synonyms.keywords("9月15日以来，台积电、高通、三星等华为的重要合作伙伴，只要没有美国的相关许可证，都无法供应芯片给华为，而中芯国际等国产芯片企业，也因采用美国技术，而无法供货给华为。目前华为部分型号的手机产品出现货少的现象，若该形势持续下去，华为手机业务将遭受重创。")
 ```
 
 ## PCA

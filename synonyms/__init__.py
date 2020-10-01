@@ -1,8 +1,8 @@
 __all__ = ["seg",
-    "jieba",
     "nearby", 
     "compare", 
     "display", 
+    "keywords",
     "KeyedVectors", 
     "any2utf8",
     "sigmoid",
@@ -12,5 +12,4 @@ __all__ = ["seg",
 
 from .word2vec import *
 from .synonyms import *
-import jieba
 from .synonyms import __version__

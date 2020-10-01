@@ -20,7 +20,7 @@ from __future__ import division
 __copyright__ = "Copyright (c) (2017-2020) Chatopera Inc. All Rights Reserved"
 __author__ = "Hu Ying Xi<>, Hai Liang Wang<hain@chatopera.com>"
 __date__ = "2020-09-24"
-__version__ = "3.13.0"
+__version__ = "3.15.0"
 
 import os
 import sys
@@ -53,8 +53,7 @@ from .utils import any2unicode
 from .utils import sigmoid
 from .utils import cosine
 from .utils import is_digit
-import jieba
-from jieba import posseg as _tokenizer
+from .jieba import posseg, analyse
 import wget
 
 '''
@@ -84,7 +83,7 @@ if "SYNONYMS_WORDSEG_DICT" in ENVIRON:
     else: print("warning: can not find dict at [%s]" % tokenizer_dict)
 
 print(">> Synonyms load wordseg dict [%s] ... " % tokenizer_dict)
-_tokenizer.initialize(tokenizer_dict)
+posseg.initialize(tokenizer_dict)
 
 # stopwords
 _fin_stopwords_path = os.path.join(curdir, 'data', 'stopwords.txt')
@@ -106,14 +105,20 @@ _load_stopwords(_fin_stopwords_path)
 
 def _segment_words(sen, HMM=True):
     '''
-    segment words with jieba
+    segment words
     '''
     words, tags = [], []
-    m = _tokenizer.cut(sen, HMM=HMM)  # HMM更好的识别新词
+    m = posseg.cut(sen, HMM=HMM)  # HMM更好的识别新词
     for x in m:
         words.append(x.word)
         tags.append(x.flag)
     return words, tags
+
+def keywords(sentence, topK=5, withWeight=False, allowPOS=()):
+    '''
+    extract keywords with Jieba Tokenizer
+    '''
+    return analyse.extract_tags(sentence, topK=topK, withWeight=withWeight, allowPOS=allowPOS)
 
 '''
 word embedding
@@ -319,8 +324,8 @@ def compare(s1, s2, seg=True, ignore=False, stopwords=False):
     compare similarity
     s1 : sentence1
     s2 : sentence2
-    seg : True : The original sentences need jieba.cut
-          Flase : The original sentences have been cut.
+    seg : True : The original sentences need be cut
+          False : The original sentences have been cut
     ignore: True: ignore OOV words
             False: get vector randomly for OOV words
     '''
