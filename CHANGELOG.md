@@ -1,3 +1,8 @@
+# 3.15
+
+- Fix jieba exports 冲突，改为只暴露 keywords, seg 接口
+- 修正 vocab.txt 里的错误
+
 # 3.13
 
 - 减少依赖
