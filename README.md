@@ -3,7 +3,7 @@
 
 We are sorry, but you can read the codes and implement by yourself or use other packages.
 
-在维护这个项目上，我们投入了大量的时间和成本，现在 Chatopera 会尽可能的维护有限的开源项目已保证质量。
+在维护这个项目上，我们投入了大量的时间和资金成本，现在 Chatopera 会尽可能的维护有限的开源项目以保证质量。
 
 # Synonyms
 
