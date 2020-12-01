@@ -20,7 +20,7 @@ from __future__ import division
 __copyright__ = "Copyright (c) (2017-2020) Chatopera Inc. All Rights Reserved"
 __author__ = "Hu Ying Xi<>, Hai Liang Wang<hain@chatopera.com>"
 __date__ = "2020-09-24"
-__version__ = "3.15.0"
+__version__ = "3.16.0"
 
 import os
 import sys
@@ -124,7 +124,7 @@ def keywords(sentence, topK=5, withWeight=False, allowPOS=()):
 word embedding
 '''
 # vectors
-_f_url = os.environ.get("SYNONYMS_WORD2VEC_BIN_URL_ZH_CN", "https://static-public.chatopera.com/ml/synonyms/words.vector.gz")
+_f_url = os.environ.get("SYNONYMS_WORD2VEC_BIN_URL_ZH_CN", "http://192.168.2.217:30080/ml/synonyms/words.vector.gz")
 _f_model = os.path.join(curdir, 'data', 'words.vector.gz')
 _download_model = not os.path.exists(_f_model)
 if "SYNONYMS_WORD2VEC_BIN_MODEL_ZH_CN" in ENVIRON:

@@ -1,6 +1,5 @@
 # Caution: this project is Out of Service!!!
 
-
 We are sorry, but you can read the codes and implement by yourself or use other packages.
 
 在维护这个项目上，我们投入了大量的时间和资金成本，现在 Chatopera 会尽可能的维护有限的开源项目以保证质量。
@@ -28,8 +27,10 @@ Chinese Synonyms for Natural Language Processing and Understanding.
 # Welcome
 
 ```
-pip install -U synonyms
+pip install -U http://192.168.2.217:30080/ml/synonyms/synonyms-3.16.0.tar.gz
 ```
+
+Find latest versions in [http://192.168.2.217:30080/ml/synonyms](http://192.168.2.217:30080/ml/synonyms).
 
 兼容 py2 和 py3，当前稳定版本 [v3.x](https://github.com/chatopera/Synonyms/releases)。
 
@@ -317,7 +318,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 [co-banner-image]: https://user-images.githubusercontent.com/3538629/42383104-da925942-8168-11e8-8195-868d5fcec170.png
 [co-url]: https://www.chatopera.com
 
-
 ## Chatopera 云服务
 
 [https://bot.chatopera.com/](https://bot.chatopera.com/)
@@ -377,7 +377,6 @@ Chatopera 机器人平台包括知识库、多轮对话、意图识别和语音�
 
 </p>
 </details>
-
 
 <p align="center">
   <b>立即使用</b><br>

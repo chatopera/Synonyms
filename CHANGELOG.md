@@ -1,3 +1,8 @@
+# 3.16
+
+- Use internal pkg download link
+- keep it private, 闭源
+
 # 3.15
 
 - Fix jieba exports 冲突，改为只暴露 keywords, seg 接口
