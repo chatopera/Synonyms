@@ -24,10 +24,8 @@ Chinese Synonyms for Natural Language Processing and Understanding.
 # Welcome
 
 ```
-pip install -U http://192.168.2.217:30080/ml/synonyms/synonyms-3.16.0.tar.gz
+pip install -U synonyms
 ```
-
-Find latest versions in [http://192.168.2.217:30080/ml/synonyms](http://192.168.2.217:30080/ml/synonyms).
 
 兼容 py2 和 py3，当前稳定版本 [v3.x](https://github.com/chatopera/Synonyms/releases)。
 
@@ -35,13 +33,7 @@ Find latest versions in [http://192.168.2.217:30080/ml/synonyms](http://192.168.
 
 ![](./assets/3.gif)
 
-**Node.js 用户可以使用 [node-synonyms](https://www.npmjs.com/package/node-synonyms)了。**
-
-```
-npm install node-synonyms
-```
-
-本文档的配置和接口说明面向 python 工具包， node 版本查看[项目](https://www.npmjs.com/package/node-synonyms)。
+本文档的配置和接口说明面向 python 工具包。
 
 ## Usage
 
