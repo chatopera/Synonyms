@@ -1,6 +1,6 @@
 #! /bin/bash 
 ###########################################
-# publish package to pypi
+#
 ###########################################
 
 # constants
@@ -13,4 +13,16 @@ export PATH=/opt/miniconda3/envs/venv-py3/bin:$PATH
 # main 
 [ -z "${BASH_SOURCE[0]}" -o "${BASH_SOURCE[0]}" = "$0" ] || return
 cd $baseDir/..
-python setup.py upload -r pypi
+
+if [ ! -d tmp ]; then
+    mkdir tmp
+fi
+
+if [ -f synonyms/data/words.vector.gz ]; then
+    echo "Move pkg to tmp"
+    mv synonyms/data/words.vector.gz tmp
+fi
+
+rm -rf ./dist/*
+python setup.py sdist upload -r pypi
+mv tmp/words.vector.gz synonyms/data/words.vector.gz
