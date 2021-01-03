@@ -1,8 +1,5 @@
-# Caution: this project is Out of Service!!!
-
-We are sorry, but you can read the codes and implement by yourself or use other packages.
-
-在维护这个项目上，我们投入了大量的时间和资金成本，现在 Chatopera 会尽可能的维护有限的开源项目以保证质量。
+[![PyPI](https://img.shields.io/pypi/v/synonyms.svg)](https://pypi.python.org/pypi/synonyms) [![](https://img.shields.io/pypi/pyversions/synonyms.svg)](https://pypi.org/pypi/synonyms/) [![](https://img.shields.io/pypi/l/synonyms.svg)](https://pypi.org/pypi/synonyms/) [![](https://img.shields.io/pypi/status/synonyms.svg)](https://pypi.org/pypi/synonyms/)
+[![](https://img.shields.io/pypi/format/synonyms.svg)](https://pypi.org/pypi/synonyms/)
 
 # Synonyms
 

@@ -1,7 +1,6 @@
 # 3.16
 
-- Use internal pkg download link
-- keep it private, 闭源
+- Use github vector pkg download link
 
 # 3.15
 

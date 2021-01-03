@@ -22,8 +22,9 @@ if [ -f synonyms/data/words.vector.gz ]; then
     mv synonyms/data/words.vector.gz tmp
 fi
 
+rm -rf ./dist/*
 python setup.py sdist
 # python setup.py sdist upload -r pypi
 mv tmp/words.vector.gz synonyms/data/words.vector.gz
 
-echo "Now upload ./dist/synonyms-xxx.tar.gz to `corsair:/static/ml/synonyms` download from http://192.168.2.217:30080/ml/synonyms/"
+echo "For internal package downloading, now upload ./dist/synonyms-xxx.tar.gz to corsair:/static/ml/synonyms download from http://192.168.2.217:30080/ml/synonyms/"

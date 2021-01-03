@@ -124,7 +124,7 @@ def keywords(sentence, topK=5, withWeight=False, allowPOS=()):
 word embedding
 '''
 # vectors
-_f_url = os.environ.get("SYNONYMS_WORD2VEC_BIN_URL_ZH_CN", "http://192.168.2.217:30080/ml/synonyms/words.vector.gz")
+_f_url = os.environ.get("SYNONYMS_WORD2VEC_BIN_URL_ZH_CN", "https://github.com/chatopera/Synonyms/releases/download/3.15.0/words.vector.gz")
 _f_model = os.path.join(curdir, 'data', 'words.vector.gz')
 _download_model = not os.path.exists(_f_model)
 if "SYNONYMS_WORD2VEC_BIN_MODEL_ZH_CN" in ENVIRON:
