@@ -31,9 +31,18 @@ pip install -U synonyms
 
 **提示：安装后初次使用会下载词向量文件，下载速度取决于网络情况。**
 
-![](./assets/3.gif)
+[#118 词向量文件一直下载不下来?](https://github.com/chatopera/Synonyms/issues/118)可尝试按下述方法设置国内的词向量备份地址：
+
+```
+export SYNONYMS_WORD2VEC_BIN_MODEL_ZH_CN=https://gitee.com/chatopera/cskefu/attach_files/610602/download/words.vector.gz
+pip install -U synonyms
+```
+
+其它环境变量介绍见下文。
 
 本文档的配置和接口说明面向 python 工具包。
+
+![](./assets/3.gif)
 
 ## Usage
 
