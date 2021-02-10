@@ -1,3 +1,7 @@
+# 3.16
+
+- Use github vector pkg download link
+
 # 3.15
 
 - Fix jieba exports 冲突，改为只暴露 keywords, seg 接口

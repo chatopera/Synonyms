@@ -1,3 +1,6 @@
+[![PyPI](https://img.shields.io/pypi/v/synonyms.svg)](https://pypi.python.org/pypi/synonyms) [![](https://img.shields.io/pypi/pyversions/synonyms.svg)](https://pypi.org/pypi/synonyms/) [![](https://img.shields.io/pypi/l/synonyms.svg)](https://pypi.org/pypi/synonyms/) [![](https://img.shields.io/pypi/status/synonyms.svg)](https://pypi.org/pypi/synonyms/)
+[![](https://img.shields.io/pypi/format/synonyms.svg)](https://pypi.org/pypi/synonyms/)
+
 # 自然语言处理推荐入门&工具书
 
 本书由 [Synonyms](https://github.com/chatopera/Synonyms) 作者参与著作。
@@ -12,7 +15,6 @@
 [《智能问答与深度学习》](https://item.jd.com/12479014.html) 这本书是服务于准备入门机器学习和自然语言处理的学生和软件工程师的，在理论上介绍了很多原理、算法，同时也提供很多示例程序增加实践性，这些程序被汇总到示例程序代码库，这些程序主要是帮助大家理解原理和算法的，欢迎大家下载和执行。代码库的地址是：
 
 [https://github.com/l11x0m7/book-of-qna-code](https://github.com/l11x0m7/book-of-qna-code)
-
 
 # Synonyms
 
@@ -36,23 +38,28 @@ Chinese Synonyms for Natural Language Processing and Understanding.
 
 # Welcome
 
-```
+```bash
 pip install -U synonyms
+python -c "import synonyms" # download word vectors file
 ```
 
 兼容 py2 和 py3，当前稳定版本 [v3.x](https://github.com/chatopera/Synonyms/releases)。
 
 **提示：安装后初次使用会下载词向量文件，下载速度取决于网络情况。**
 
+[#118 词向量文件一直下载不下来？](https://github.com/chatopera/Synonyms/issues/118)可尝试按下述方法设置国内的词向量备份地址：
+
+```bash
+export SYNONYMS_WORD2VEC_BIN_URL_ZH_CN=https://gitee.com/chatopera/cskefu/attach_files/610602/download/words.vector.gz
+pip install -U synonyms
+python -c "import synonyms" # download word vectors file
+```
+
+其它环境变量介绍见下文，[Windows cmd 使用 `set SYNONYMS_WORD2VEC_BIN_URL_ZH_CN` 设置环境变量](https://blog.csdn.net/songchunyi/article/details/6413759)。
+
+本文档的配置和接口说明面向 python 工具包。
+
 ![](./assets/3.gif)
-
-**Node.js 用户可以使用 [node-synonyms](https://www.npmjs.com/package/node-synonyms)了。**
-
-```
-npm install node-synonyms
-```
-
-本文档的配置和接口说明面向 python 工具包， node 版本查看[项目](https://www.npmjs.com/package/node-synonyms)。
 
 ## Usage
 
@@ -65,7 +72,7 @@ npm install node-synonyms
 
 ### synonyms#nearby(word [, size = 10])
 
-```
+```python
 import synonyms
 print("人脸: ", synonyms.nearby("人脸"))
 print("识别: ", synonyms.nearby("识别"))
@@ -74,7 +81,7 @@ print("NOT_EXIST: ", synonyms.nearby("NOT_EXIST"))
 
 `synonyms.nearby(WORD [,SIZE])`返回一个元组，元组中包含两项：`([nearby_words], [nearby_words_score])`，`nearby_words`是 WORD 的近义词们，也以 list 的方式存储，并且按照距离的长度由近及远排列，`nearby_words_score`是`nearby_words`中**对应位置**的词的距离的分数，分数在(0-1)区间内，越接近于 1，代表越相近；`SIZE` 是返回词汇数量，默认 10。比如:
 
-```
+```python
 synonyms.nearby(人脸, 10) = (
     ["图片", "图像", "通过观察", "数字图像", "几何图形", "脸部", "图象", "放大镜", "面孔", "Mii"],
     [0.597284, 0.580373, 0.568486, 0.535674, 0.531835, 0.530
@@ -87,7 +94,7 @@ synonyms.nearby(人脸, 10) = (
 
 两个句子的相似度比较
 
-```
+```python
     sen1 = "发生历史性变革"
     sen2 = "发生历史性变革"
     r = synonyms.compare(sen1, sen2, seg=True)
@@ -95,7 +102,7 @@ synonyms.nearby(人脸, 10) = (
 
 其中，参数 seg 表示 synonyms.compare 是否对 sen1 和 sen2 进行分词，默认为 True。返回值：[0-1]，并且越接近于 1 代表两个句子越相似。
 
-```
+```python
 旗帜引领方向 vs 道路决定命运: 0.429
 旗帜引领方向 vs 旗帜指引道路: 0.93
 发生历史性变革 vs 发生历史性变革: 1.0
@@ -105,7 +112,7 @@ synonyms.nearby(人脸, 10) = (
 
 以友好的方式打印近义词，方便调试，`display(WORD [, SIZE])`调用了 `synonyms#nearby` 方法。
 
-```
+```python
 >>> synonyms.display("飞机")
 '飞机'近义词：
   1. 飞机:1.0
@@ -126,7 +133,7 @@ synonyms.nearby(人脸, 10) = (
 
 获得一个词语的向量，该向量为 numpy 的 array，当该词语是未登录词时，抛出 KeyError 异常。
 
-```
+```python
 >>> synonyms.v("飞机")
 array([-2.412167  ,  2.2628384 , -7.0214124 ,  3.9381874 ,  0.8219283 ,
        -3.2809453 ,  3.8747153 , -5.217062  , -2.2786229 , -1.2572327 ],
@@ -137,7 +144,7 @@ array([-2.412167  ,  2.2628384 , -7.0214124 ,  3.9381874 ,  0.8219283 ,
 
 获得一个分词后句子的向量，向量以 BoW 方式组成
 
-```
+```python
     sentence: 句子是分词后通过空格联合起来
     ignore: 是否忽略OOV，False时，随机生成一个向量
 ```
@@ -146,13 +153,13 @@ array([-2.412167  ,  2.2628384 , -7.0214124 ,  3.9381874 ,  0.8219283 ,
 
 中文分词
 
-```
+```python
 synonyms.seg("中文近义词工具包")
 ```
 
 分词结果，由两个 list 组成的元组，分别是单词和对应的词性。
 
-```
+```python
 (['中文', '近义词', '工具包'], ['nz', 'n', 'n'])
 ```
 
@@ -174,7 +181,7 @@ keywords = synonyms.keywords("9月15日以来，台积电、高通、三星等�
 
 ## Quick Get Start
 
-```
+```bash
 $ pip install -r Requirements.txt
 $ python demo.py
 ```
@@ -326,7 +333,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 [co-banner-image]: https://user-images.githubusercontent.com/3538629/42383104-da925942-8168-11e8-8195-868d5fcec170.png
 [co-url]: https://www.chatopera.com
 
-
 ## Chatopera 云服务
 
 [https://bot.chatopera.com/](https://bot.chatopera.com/)
@@ -386,7 +392,6 @@ Chatopera 机器人平台包括知识库、多轮对话、意图识别和语音�
 
 </p>
 </details>
-
 
 <p align="center">
   <b>立即使用</b><br>

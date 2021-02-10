@@ -19,8 +19,10 @@ if [ ! -d tmp ]; then
 fi
 
 if [ -f synonyms/data/words.vector.gz ]; then
+    echo "Move pkg to tmp"
     mv synonyms/data/words.vector.gz tmp
 fi
 
+rm -rf ./dist/*
 python setup.py sdist upload -r pypi
-mv tmp/words.vector.gz synonyms/data/words.vector.gz 
+mv tmp/words.vector.gz synonyms/data/words.vector.gz
