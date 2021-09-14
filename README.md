@@ -1,20 +1,9 @@
 [![PyPI](https://img.shields.io/pypi/v/synonyms.svg)](https://pypi.python.org/pypi/synonyms) [![](https://img.shields.io/pypi/pyversions/synonyms.svg)](https://pypi.org/pypi/synonyms/) [![](https://img.shields.io/pypi/l/synonyms.svg)](https://pypi.org/pypi/synonyms/) [![](https://img.shields.io/pypi/status/synonyms.svg)](https://pypi.org/pypi/synonyms/)
 [![](https://img.shields.io/pypi/format/synonyms.svg)](https://pypi.org/pypi/synonyms/)
 
-# 自然语言处理推荐入门&工具书
+# Project Sponsor
 
-本书由 [Synonyms](https://github.com/chatopera/Synonyms) 作者参与著作。
-
-<p align="center">
-  <b>快速购书<a href="https://item.jd.com/12479014.html" target="_blank">链接</a></b><br>
-  <a href="https://item.jd.com/12479014.html" target="_blank">
-  <img src="https://user-images.githubusercontent.com/3538629/48657619-bcd24880-ea6e-11e8-8c4e-8bcb00761942.png" width="400">      
-  </a>
-</p>
-
-[《智能问答与深度学习》](https://item.jd.com/12479014.html) 这本书是服务于准备入门机器学习和自然语言处理的学生和软件工程师的，在理论上介绍了很多原理、算法，同时也提供很多示例程序增加实践性，这些程序被汇总到示例程序代码库，这些程序主要是帮助大家理解原理和算法的，欢迎大家下载和执行。代码库的地址是：
-
-[https://github.com/l11x0m7/book-of-qna-code](https://github.com/l11x0m7/book-of-qna-code)
+[Chatopera 云服务](https://docs.chatopera.com)，低代码上线智能对话机器人服务！
 
 # Synonyms
 
@@ -303,6 +292,21 @@ Google 发布的[word2vec](https://code.google.com/archive/p/word2vec/)，该库
 [Hai Liang Wang](https://pre-angel.com/peoples/hailiang-wang/)
 
 [Hu Ying Xi](https://github.com/huyingxi)
+
+## 自然语言处理推荐入门&工具书
+
+本书由 [Synonyms](https://github.com/chatopera/Synonyms) 作者参与著作。
+
+<p align="center">
+  <b>快速购书<a href="https://item.jd.com/12479014.html" target="_blank">链接</a></b><br>
+  <a href="https://item.jd.com/12479014.html" target="_blank">
+  <img src="https://user-images.githubusercontent.com/3538629/48657619-bcd24880-ea6e-11e8-8c4e-8bcb00761942.png" width="400">      
+  </a>
+</p>
+
+[《智能问答与深度学习》](https://item.jd.com/12479014.html) 这本书是服务于准备入门机器学习和自然语言处理的学生和软件工程师的，在理论上介绍了很多原理、算法，同时也提供很多示例程序增加实践性，这些程序被汇总到示例程序代码库，这些程序主要是帮助大家理解原理和算法的，欢迎大家下载和执行。代码库的地址是：
+
+[https://github.com/l11x0m7/book-of-qna-code](https://github.com/l11x0m7/book-of-qna-code)
 
 # Give credits to
 
