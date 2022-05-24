@@ -167,6 +167,14 @@ synonyms.seg("中文近义词工具包")
 keywords = synonyms.keywords("9月15日以来，台积电、高通、三星等华为的重要合作伙伴，只要没有美国的相关许可证，都无法供应芯片给华为，而中芯国际等国产芯片企业，也因采用美国技术，而无法供货给华为。目前华为部分型号的手机产品出现货少的现象，若该形势持续下去，华为手机业务将遭受重创。")
 ```
 
+## Contribution
+
+Get more logs for debugging, set environment variable.
+
+```
+SYNONYMS_DEBUG=TRUE
+```
+
 ## PCA
 
 以“人脸”为例主要成分分析：
@@ -336,7 +344,6 @@ Permission is hereby granted, free of charge, to any person obtaining a copy of 
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.OF
-
 
 ## Chatopera 云服务
 

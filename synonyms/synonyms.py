@@ -17,7 +17,7 @@ Chinese Synonyms for Natural Language Processing and Understanding.
 from __future__ import print_function
 from __future__ import division
 
-__copyright__ = "Copyright (c) (2017-2020) Chatopera Inc. All Rights Reserved"
+__copyright__ = "Copyright (c) (2017-2022) Chatopera Inc. All Rights Reserved"
 __author__ = "Hu Ying Xi<>, Hai Liang Wang<hain@chatopera.com>"
 __date__ = "2020-09-24"
 __version__ = "3.16.0"
@@ -64,6 +64,10 @@ _size = 0
 _vectors = None
 _stopwords = set()
 _cache_nearby = dict()
+_debug = False
+
+if "SYNONYMS_DEBUG" in ENVIRON:
+    if ENVIRON["SYNONYMS_DEBUG"].lower() == "true": _debug = True
 
 '''
 lambda fns
@@ -71,6 +75,14 @@ lambda fns
 # combine similarity scores
 _similarity_smooth = lambda x, y, z, u: (x * y) + z - u
 _flat_sum_array = lambda x: np.sum(x, axis=0)  # 分子
+_logging_debug = lambda x: print(">> Synonyms DEBUG %s" % x) if _debug else None
+
+'''
+Sponsorship
+'''
+print("\n Synonyms: v%s, Project home: %s" % (__version__, "https://github.com/chatopera/Synonyms/"))
+print("\n Project Sponsored by Chatopera")
+print("\n  deliver your chatbots with Chatopera Cloud Services --> https://bot.chatopera.com\n")
 
 '''
 tokenizer settings
@@ -124,7 +136,10 @@ def keywords(sentence, topK=5, withWeight=False, allowPOS=()):
 word embedding
 '''
 # vectors
-_f_url = os.environ.get("SYNONYMS_WORD2VEC_BIN_URL_ZH_CN", "https://github.com/chatopera/Synonyms/releases/download/3.15.0/words.vector.gz")
+## Model File on GitHub https://github.com/chatopera/Synonyms/releases/download/3.15.0/words.vector.gz
+## Model File on Gitee, Default.
+SYNONYMS_WORD2VEC_BIN_URL_ZH_CN = "https://gitee.com/chatopera/cskefu/attach_files/610602/download/words.vector.gz"
+_f_url = os.environ.get("SYNONYMS_WORD2VEC_BIN_URL_ZH_CN", SYNONYMS_WORD2VEC_BIN_URL_ZH_CN)
 _f_model = os.path.join(curdir, 'data', 'words.vector.gz')
 _download_model = not os.path.exists(_f_model)
 if "SYNONYMS_WORD2VEC_BIN_MODEL_ZH_CN" in ENVIRON:
@@ -136,16 +151,16 @@ def _load_w2v(model_file=_f_model, binary=True):
     load word2vec model
     '''
     if not os.path.exists(model_file) and _download_model:
-        print("\n[Synonyms] downloading data from %s to %s ... \n this only happens if SYNONYMS_WORD2VEC_BIN_URL_ZH_CN is not present and Synonyms initialization for the first time. \n It would take minutes that depends on network." % (_f_url, model_file))
+        print("\n>> Synonyms downloading data from %s to %s ... \n this only happens if SYNONYMS_WORD2VEC_BIN_URL_ZH_CN is not present and Synonyms initialization for the first time. \n It would take minutes that depends on network." % (_f_url, model_file))
         wget.download(_f_url, out = model_file)
-        print("\n[Synonyms] downloaded.\n")
+        print("\n>> Synonyms downloaded.\n")
     elif not os.path.exists(model_file):
-        print("[Synonyms] os.path : ", os.path)
+        print(">> Synonyms os.path : ", os.path)
         raise Exception("Model file [%s] does not exist." % model_file)
 
     return KeyedVectors.load_word2vec_format(
         model_file, binary=binary, unicode_errors='ignore')
-print("[Synonyms] on loading vectors [%s] ..." % _f_model)
+print(">> Synonyms on loading vectors [%s] ..." % _f_model)
 _vectors = _load_w2v(model_file=_f_model)
 
 def _get_wv(sentence, ignore=False):
@@ -159,8 +174,8 @@ def _get_wv(sentence, ignore=False):
         y_ = any2unicode(y).strip()
         if y_ not in _stopwords:
             syns = nearby(y_)[0]
-            # print("sentence %s word: %s" %(sentence, y_))
-            # print("sentence %s word nearby: %s" %(sentence, " ".join(syns)))
+            _logging_debug("sentence %s word: %s" %(sentence, y_))
+            _logging_debug("sentence %s word nearby: %s" %(sentence, " ".join(syns)))
             c = []
             try:
                 c.append(_vectors.word_vec(y_))
@@ -168,7 +183,7 @@ def _get_wv(sentence, ignore=False):
                 if ignore:
                     continue
                 else:
-                    print("[Synonyms] not exist in w2v model: %s" % y_)
+                    _logging_debug("not exist in w2v model: %s" % y_)
                     # c.append(np.zeros((100,), dtype=float))
                     random_state = np.random.RandomState(seed=(hash(y_) % (2**32 - 1)))
                     c.append(random_state.uniform(low=-10.0, high=10.0, size=(100,)))
