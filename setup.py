@@ -41,7 +41,8 @@ setup(
         'six>=1.11.0',
         'numpy>=1.13.1',
         'scipy>=1.0.0',
-        'scikit-learn>=0.19.1'
+        'scikit-learn>=0.19.1',
+        'jieba>=0.40'
     ],
     package_data={
         'synonyms': [

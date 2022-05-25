@@ -18,9 +18,9 @@ from __future__ import print_function
 from __future__ import division
 
 __copyright__ = "Copyright (c) (2017-2022) Chatopera Inc. All Rights Reserved"
-__author__ = "Hu Ying Xi<>, Hai Liang Wang<hain@chatopera.com>"
+__author__ = "Hu Ying Xi<>, Hai Liang Wang<hai@chatopera.com>"
 __date__ = "2020-09-24"
-__version__ = "3.16.0"
+__version__ = "3.17.0"
 
 import os
 import sys
@@ -53,7 +53,7 @@ from .utils import any2unicode
 from .utils import sigmoid
 from .utils import cosine
 from .utils import is_digit
-from .jieba import posseg, analyse
+from jieba import posseg, analyse
 import wget
 
 '''
