@@ -12,7 +12,7 @@ https://github.com/chatopera/Synonyms
 
 setup(
     name='synonyms',
-    version='3.16.0',
+    version='3.17.0',
     description='中文近义词：聊天机器人，智能问答工具包；Chinese Synonyms for Natural Language Processing and Understanding',
     long_description=LONGDOC,
     author='Hai Liang Wang, Hu Ying Xi',
