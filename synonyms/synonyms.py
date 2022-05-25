@@ -20,7 +20,7 @@ from __future__ import division
 __copyright__ = "Copyright (c) (2017-2022) Chatopera Inc. All Rights Reserved"
 __author__ = "Hu Ying Xi<>, Hai Liang Wang<hai@chatopera.com>"
 __date__ = "2020-09-24"
-__version__ = "3.17.0"
+__version__ = "3.18.0"
 
 import os
 import sys
@@ -371,6 +371,20 @@ def compare(s1, s2, seg=True, ignore=False, stopwords=False):
 
     assert len(s1) > 0 and len(s2) > 0, "The length of s1 and s2 should > 0."
     return _similarity_distance(s1_words, s2_words, ignore)
+
+def describe():
+    '''
+    summary info of vectors
+    '''
+    vocab_size = len(_vectors.vocab.keys())
+    print("Vocab size in vector model: %d" % vocab_size)
+    print("model_path: %s" % _f_model)
+    print("version: %s" % __version__)
+    return dict({
+        "vocab_size": vocab_size,
+        "version": __version__,
+        "model_path": _f_model
+    })
 
 def display(word, size = 10):
     print("'%s'近义词：" % word)

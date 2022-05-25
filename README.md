@@ -63,6 +63,7 @@ python -c "import synonyms" # download word vectors file
 | ----------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | _SYNONYMS_WORD2VEC_BIN_MODEL_ZH_CN_ | 使用 word2vec 训练的词向量文件，二进制格式。                                                                                                                                                       |
 | _SYNONYMS_WORDSEG_DICT_             | 中文分词[**主字典**](https://github.com/fxsjy/jieba#%E5%BB%B6%E8%BF%9F%E5%8A%A0%E8%BD%BD%E6%9C%BA%E5%88%B6)，格式和使用[参考](https://github.com/fxsjy/jieba#%E8%BD%BD%E5%85%A5%E8%AF%8D%E5%85%B8) |
+| _SYNONYMS_DEBUG_                    | ["TRUE"\|"FALSE"], 是否输出调试日志，设置为 “TRUE” 输出，默认为 “FALSE”                                                                                                                            |
 
 ### synonyms#nearby(word [, size = 10])
 
@@ -122,6 +123,18 @@ synonyms.nearby(人脸, 10) = (
 ```
 
 `SIZE` 是打印词汇表的数量，默认 10。
+
+### synonyms#describe()
+
+打印当前包的描述信息：
+
+```
+>>> synonyms.describe()
+Vocab size in vector model: 435729
+model_path: /Users/hain/chatopera/Synonyms/synonyms/data/words.vector.gz
+version: 3.18.0
+{'vocab_size': 435729, 'version': '3.18.0', 'model_path': '/chatopera/Synonyms/synonyms/data/words.vector.gz'}
+```
 
 ### synonyms#v(word)
 
