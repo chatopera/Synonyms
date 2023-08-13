@@ -17,7 +17,7 @@
 from __future__ import print_function
 from __future__ import division
 
-__copyright__ = "Copyright (c) 2017 . All Rights Reserved"
+__copyright__ = "Copyright (c) 2017-2023 Chatopera Inc. All Rights Reserved"
 __author__ = "Hai Liang Wang"
 __date__ = "2017-10-21:11:26:53"
 
