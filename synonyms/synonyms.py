@@ -2,9 +2,6 @@
 # -*- coding: utf-8 -*-
 #=========================================================================
 #
-# Copyright (c) 2017 <> All Rights Reserved
-#
-#
 # File: /Users/hain/ai/Synonyms/synonyms/__init__.py
 # Author: Hai Liang Wang
 # Date: 2017-09-27
@@ -17,10 +14,10 @@ Chinese Synonyms for Natural Language Processing and Understanding.
 from __future__ import print_function
 from __future__ import division
 
-__copyright__ = "Copyright (c) (2017-2022) Chatopera Inc. All Rights Reserved"
+__copyright__ = "Copyright (c) (2017-2023) Chatopera Inc. All Rights Reserved"
 __author__ = "Hu Ying Xi<>, Hai Liang Wang<hai@chatopera.com>"
 __date__ = "2020-09-24"
-__version__ = "3.18.0"
+__version__ = "3.20.0"
 
 import os
 import sys
@@ -138,7 +135,7 @@ word embedding
 # vectors
 ## Model File on GitHub https://github.com/chatopera/Synonyms/releases/download/3.15.0/words.vector.gz
 ## Model File on Gitee, Default.
-SYNONYMS_WORD2VEC_BIN_URL_ZH_CN = "https://gitee.com/chatopera/cskefu/attach_files/610602/download/words.vector.gz"
+SYNONYMS_WORD2VEC_BIN_URL_ZH_CN = "https://gitee.com/chatopera/cskefu/releases/download/backups/words.vector.gz"
 _f_url = os.environ.get("SYNONYMS_WORD2VEC_BIN_URL_ZH_CN", SYNONYMS_WORD2VEC_BIN_URL_ZH_CN)
 _f_model = os.path.join(curdir, 'data', 'words.vector.gz')
 _download_model = not os.path.exists(_f_model)

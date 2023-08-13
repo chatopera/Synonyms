@@ -41,10 +41,11 @@ python -c "import synonyms" # download word vectors file
 
 **提示：安装后初次使用会下载词向量文件，下载速度取决于网络情况。**
 
-[#118 词向量文件一直下载不下来？](https://github.com/chatopera/Synonyms/issues/118)可尝试按下述方法设置国内的词向量备份地址：
-
 ```bash
-export SYNONYMS_WORD2VEC_BIN_URL_ZH_CN=https://gitee.com/chatopera/cskefu/attach_files/610602/download/words.vector.gz
+# 中国大陆
+export SYNONYMS_WORD2VEC_BIN_URL_ZH_CN=https://gitee.com/chatopera/cskefu/releases/download/backups/words.vector.gz
+# 海外
+export SYNONYMS_WORD2VEC_BIN_URL_ZH_CN=https://github.com/chatopera/Synonyms/releases/download/3.15.0/words.vector.gz
 pip install -U synonyms
 python -c "import synonyms" # download word vectors file
 ```
@@ -312,6 +313,8 @@ Google 发布的[word2vec](https://code.google.com/archive/p/word2vec/)，该库
 3. 相似度计算的方法是什么？
 
 [详见 #64](https://github.com/chatopera/Synonyms/issues/64)
+
+4. [#118 词向量文件一直下载不下来？](https://github.com/chatopera/Synonyms/issues/118)
 
 # Authors
 

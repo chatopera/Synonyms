@@ -1,4 +1,4 @@
-# synonyms 分数评测 [(v3.16.0)](https://pypi.python.org/pypi/synonyms/3.16.0)
+# synonyms 分数评测 [(v3.18.0)](https://pypi.python.org/pypi/synonyms/3.18.0)
 | 词1 |  词2 |   synonyms  |  人工评定 |
 | --- | --- | --- | --- |
 | 轿车 | 汽车 | 0.892  |  0.98 |

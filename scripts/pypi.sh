@@ -25,4 +25,8 @@ fi
 
 rm -rf ./dist/*
 python setup.py sdist upload -r pypi
-mv tmp/words.vector.gz synonyms/data/words.vector.gz
+
+if [ -f tmp/words.vector.gz ]; then
+    mv tmp/words.vector.gz synonyms/data/words.vector.gz
+fi
+
