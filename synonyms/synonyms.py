@@ -17,7 +17,7 @@ from __future__ import division
 __copyright__ = "Copyright (c) (2017-2023) Chatopera Inc. All Rights Reserved"
 __author__ = "Hu Ying Xi<>, Hai Liang Wang<hai@chatopera.com>"
 __date__ = "2020-09-24"
-__version__ = "3.21.0"
+__version__ = "3.22.0"
 
 import os
 import sys
@@ -160,6 +160,7 @@ def _load_w2v(model_file=_f_model, binary=True):
         min_file_size = 40900000 # ~ 40MB
 
         if dl_file_size < min_file_size:
+            os.remove(model_file)
             raise Exception("Download File Error, please read the installation guide on https://github.com/chatopera/Synonyms, reach out for help with info@chatopera.com by describing the problem and procedures.")
 
         print("\n>> Synonyms downloaded\n")
