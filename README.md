@@ -1,14 +1,4 @@
-[![PyPI](https://img.shields.io/pypi/v/synonyms.svg)](https://pypi.python.org/pypi/synonyms) [![](https://img.shields.io/pypi/pyversions/synonyms.svg)](https://pypi.org/pypi/synonyms/) [![](https://img.shields.io/pypi/l/synonyms.svg)](https://pypi.org/pypi/synonyms/) [![](https://img.shields.io/pypi/status/synonyms.svg)](https://pypi.org/pypi/synonyms/)
-[![](https://img.shields.io/pypi/format/synonyms.svg)](https://pypi.org/pypi/synonyms/)
-
-# Project Sponsor
-
-[Chatopera 云服务](https://docs.chatopera.com)，低代码上线智能对话机器人服务！
-
-[![chatoper banner][co-banner-image]][co-url]
-
-[co-banner-image]: https://user-images.githubusercontent.com/3538629/42383104-da925942-8168-11e8-8195-868d5fcec170.png
-[co-url]: https://docs.chatopera.com
+[![PyPI](https://img.shields.io/pypi/v/synonyms.svg)](https://pypi.python.org/pypi/synonyms) [![](https://img.shields.io/pypi/pyversions/synonyms.svg)](https://pypi.org/pypi/synonyms/)  [![License](https://cdndownload2.chatopera.com/cskefu/licenses/chunsong1.0.svg)](https://www.cskefu.com/licenses/v1.html "开源许可协议") [![](https://img.shields.io/pypi/format/synonyms.svg)](https://pypi.org/pypi/synonyms/)
 
 # Synonyms
 
@@ -17,6 +7,8 @@ Chinese Synonyms for Natural Language Processing and Understanding.
 更好的中文近义词：聊天机器人、智能问答工具包。
 
 `synonyms`可以用于自然语言理解的很多任务：文本对齐，推荐算法，相似度计算，语义偏移，关键字提取，概念提取，自动摘要，搜索引擎等。
+
+为提供稳定、可靠、长期优化的服务，Synonyms 改为使用 [春松许可证, v1.0](https://www.cskefu.com/licenses/v1.html) 并针对机器学习模型的下载进行收费，详见[证书商店](https://store.chatopera.com/product/syns001)。之前的贡献者（突出贡献的代码贡献者），可与我们联系，讨论收费问题。-- [Chatopera Inc.](https://www.chatopera.com) @ Oct. 2023
 
 # Table of Content:
 
@@ -32,6 +24,10 @@ Chinese Synonyms for Natural Language Processing and Understanding.
 
 # Welcome
 
+Follow steps below to install and activate packages.
+
+## 1/2 Install Sourcecodes Package
+
 ```bash
 pip install -U synonyms
 python -c "import synonyms" # download word vectors file
@@ -39,20 +35,30 @@ python -c "import synonyms" # download word vectors file
 
 兼容 py2 和 py3，当前稳定版本 [v3.x](https://github.com/chatopera/Synonyms/releases)。
 
-**提示：安装后初次使用会下载词向量文件，下载速度取决于网络情况。**
+## 2/2 Install Model Package
+
+Synonyms's machine learning model package(s) requires a License from [Chatopera License Store](https://store.chatopera.com/product/syns001), first purchase a License and get the `license id` from **Licenses** page on Chatopera License Store.
+
+Secondly, set environment variable in your terminal or shell scripts as below.
 
 ```bash
-# 中国大陆
-export SYNONYMS_WORD2VEC_BIN_URL_ZH_CN=https://gitee.com/chatopera/cskefu/releases/download/backups/words.vector.gz
-# 海外
-export SYNONYMS_WORD2VEC_BIN_URL_ZH_CN=https://github.com/chatopera/Synonyms/releases/download/3.15.0/words.vector.gz
-pip install -U synonyms
-python -c "import synonyms" # download word vectors file
+# Linux / macOS
+export SYNONYMS_DL_LICENSE=YOUR_LICENSE
+## e.g. if your license id is `FOOBAR`, run `export SYNONYMS_DL_LICENSE=FOOBAR`
+
+# Windows
+set SYNONYMS_DL_LICENSE=YOUR_LICENSE
 ```
 
-其它环境变量介绍见下文，[Windows cmd 使用 `set SYNONYMS_WORD2VEC_BIN_URL_ZH_CN` 设置环境变量](https://blog.csdn.net/songchunyi/article/details/6413759)。
+Last, download the model package by command or script -
 
-本文档的配置和接口说明面向 python 工具包。
+```bash
+python -c "import synonyms"
+```
+
+**提示：安装后初次使用会下载词向量文件，下载速度取决于网络情况。**
+
+其它环境变量介绍见下文，本文档的配置和接口说明面向 python 工具包。
 
 ![](./assets/3.gif)
 
@@ -322,7 +328,7 @@ Google 发布的[word2vec](https://code.google.com/archive/p/word2vec/)，该库
 
 [Hu Ying Xi](https://github.com/huyingxi)
 
-## 自然语言处理推荐入门&工具书
+# 自然语言处理推荐入门&工具书
 
 本书由 [Synonyms](https://github.com/chatopera/Synonyms) 作者参与著作。
 
@@ -351,15 +357,9 @@ Google 发布的[word2vec](https://code.google.com/archive/p/word2vec/)，该库
 
 # License
 
-[MIT](./LICENSE)
+[Chunsong Public License, version 1.0](./LICENSE)
 
-Copyright (2018-2023) Chatopera Inc. <https://www.chatopera.com>
-
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.OF
+# Project Sponsor
 
 ## Chatopera 云服务
 
@@ -368,62 +368,3 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 [Chatopera 云服务](https://bot.chatopera.com)是一站式实现聊天机器人的云服务，按接口调用次数计费。Chatopera 云服务是 [Chatopera 机器人平台](https://docs.chatopera.com/products/chatbot-platform/index.html)的软件即服务实例。在云计算基础上，Chatopera 云服务属于**聊天机器人即服务**的云服务。
 
 Chatopera 机器人平台包括知识库、多轮对话、意图识别和语音识别等组件，标准化聊天机器人开发，支持企业 OA 智能问答、HR 智能问答、智能客服和网络营销等场景。企业 IT 部门、业务部门借助 Chatopera 云服务快速让聊天机器人上线！
-
-<details>
-<summary>展开查看 Chatopera 云服务的产品截图</summary>
-<p>
-
-<p align="center">
-  <b>自定义词典</b><br>
-  <img src="https://static-public.chatopera.com/assets/images/64530072-da92d600-d33e-11e9-8656-01c26caff4f9.png" width="800">
-</p>
-
-<p align="center">
-  <b>自定义词条</b><br>
-  <img src="https://static-public.chatopera.com/assets/images/64530091-e41c3e00-d33e-11e9-9704-c07a2a02b84e.png" width="800">
-</p>
-
-<p align="center">
-  <b>创建意图</b><br>
-  <img src="https://static-public.chatopera.com/assets/images/64530169-12018280-d33f-11e9-93b4-9db881cf4dd5.png" width="800">
-</p>
-
-<p align="center">
-  <b>添加说法和槽位</b><br>
-  <img src="https://static-public.chatopera.com/assets/images/64530187-20e83500-d33f-11e9-87ec-a0241e3dac4d.png" width="800">
-</p>
-
-<p align="center">
-  <b>训练模型</b><br>
-  <img src="https://static-public.chatopera.com/assets/images/64530235-33626e80-d33f-11e9-8d07-fa3ae417fd5d.png" width="800">
-</p>
-
-<p align="center">
-  <b>测试对话</b><br>
-  <img src="https://static-public.chatopera.com/assets/images/64530253-3d846d00-d33f-11e9-81ea-86e6d47020d8.png" width="800">
-</p>
-
-<p align="center">
-  <b>机器人画像</b><br>
-  <img src="https://static-public.chatopera.com/assets/images/64530312-6442a380-d33f-11e9-869c-85fb6a835a97.png" width="800">
-</p>
-
-<p align="center">
-  <b>系统集成</b><br>
-  <img src="https://static-public.chatopera.com/assets/images/64530281-4ecd7980-d33f-11e9-8def-c53251f30138.png" width="800">
-</p>
-
-<p align="center">
-  <b>聊天历史</b><br>
-  <img src="https://static-public.chatopera.com/assets/images/64530295-5856e180-d33f-11e9-94d4-db50481b2d8e.png" width="800">
-</p>
-
-</p>
-</details>
-
-<p align="center">
-  <b>立即使用</b><br>
-  <a href="https://bot.chatopera.com" target="_blank">
-      <img src="https://static-public.chatopera.com/assets/images/64531083-3199aa80-d341-11e9-86cd-3a3ed860b14b.png" width="800">
-  </a>
-</p>

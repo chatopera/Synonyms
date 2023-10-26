@@ -12,16 +12,15 @@ https://github.com/chatopera/Synonyms
 
 setup(
     name='synonyms',
-    version='3.20.0',
+    version='3.21.0',
     description='中文近义词：聊天机器人，智能问答工具包；Chinese Synonyms for Natural Language Processing and Understanding',
     long_description=LONGDOC,
     author='Hai Liang Wang, Hu Ying Xi',
     author_email='hain@chatopera.com',
     url='https://github.com/chatopera/Synonyms',
-    license="MIT",
+    license="Chunsong Public License, version 1.0",
     classifiers=[
         'Intended Audience :: Developers',
-        'License :: OSI Approved :: MIT License',
         'Operating System :: OS Independent',
         'Natural Language :: Chinese (Simplified)',
         'Natural Language :: Chinese (Traditional)',

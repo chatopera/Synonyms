@@ -17,7 +17,7 @@ from __future__ import division
 __copyright__ = "Copyright (c) (2017-2023) Chatopera Inc. All Rights Reserved"
 __author__ = "Hu Ying Xi<>, Hai Liang Wang<hai@chatopera.com>"
 __date__ = "2020-09-24"
-__version__ = "3.20.0"
+__version__ = "3.21.0"
 
 import os
 import sys
@@ -80,6 +80,10 @@ Sponsorship
 print("\n Synonyms: v%s, Project home: %s" % (__version__, "https://github.com/chatopera/Synonyms/"))
 print("\n Project Sponsored by Chatopera")
 print("\n  deliver your chatbots with Chatopera Cloud Services --> https://bot.chatopera.com\n")
+print("\n Module file path: %s" % __file__)
+print("\n ************ NOTICE ************")
+print("  Require license to download model package, purchase from https://store.chatopera.com/product/syns001")
+print(" ********************************\n")
 
 '''
 tokenizer settings
@@ -133,12 +137,10 @@ def keywords(sentence, topK=5, withWeight=False, allowPOS=()):
 word embedding
 '''
 # vectors
-## Model File on GitHub https://github.com/chatopera/Synonyms/releases/download/3.15.0/words.vector.gz
-## Model File on Gitee, Default.
-SYNONYMS_WORD2VEC_BIN_URL_ZH_CN = "https://gitee.com/chatopera/cskefu/releases/download/backups/words.vector.gz"
-_f_url = os.environ.get("SYNONYMS_WORD2VEC_BIN_URL_ZH_CN", SYNONYMS_WORD2VEC_BIN_URL_ZH_CN)
+_licenseid = os.environ.get("SYNONYMS_DL_LICENSE", None)
 _f_model = os.path.join(curdir, 'data', 'words.vector.gz')
 _download_model = not os.path.exists(_f_model)
+
 if "SYNONYMS_WORD2VEC_BIN_MODEL_ZH_CN" in ENVIRON:
     _f_model = ENVIRON["SYNONYMS_WORD2VEC_BIN_MODEL_ZH_CN"]
     _download_model = False
@@ -148,9 +150,20 @@ def _load_w2v(model_file=_f_model, binary=True):
     load word2vec model
     '''
     if not os.path.exists(model_file) and _download_model:
-        print("\n>> Synonyms downloading data from %s to %s ... \n this only happens if SYNONYMS_WORD2VEC_BIN_URL_ZH_CN is not present and Synonyms initialization for the first time. \n It would take minutes that depends on network." % (_f_url, model_file))
+        if not _licenseid:
+            raise Exception("SYNONYMS_DL_LICENSE is not in Environment variables, check out Installation Guide on https://github.com/chatopera/Synonyms")
+
+        _f_url = "https://store.chatopera.com/dl/%s.gz" % _licenseid
+        print("\n>> Synonyms downloading data from %s to %s ... \n this only happens if Synonyms initialization for the first time. \n It would take minutes that depends on network." % (_f_url, model_file))
         wget.download(_f_url, out = model_file)
-        print("\n>> Synonyms downloaded.\n")
+        dl_file_size = os.path.getsize(model_file)
+        min_file_size = 40900000 # ~ 40MB
+
+        if dl_file_size < min_file_size:
+            raise Exception("Download File Error, please read the installation guide on https://github.com/chatopera/Synonyms, reach out for help with info@chatopera.com by describing the problem and procedures.")
+
+        print("\n>> Synonyms downloaded\n")
+
     elif not os.path.exists(model_file):
         print(">> Synonyms os.path : ", os.path)
         raise Exception("Model file [%s] does not exist." % model_file)

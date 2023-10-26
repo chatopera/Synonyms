@@ -25,7 +25,7 @@ __date__ = "2017-09-28:22:23:34"
 import os
 import sys
 curdir = os.path.dirname(os.path.abspath(__file__))
-sys.path.append(curdir)
+sys.path.insert(0, curdir)
 
 if sys.version_info[0] < 3:
     reload(sys)
