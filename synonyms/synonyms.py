@@ -17,7 +17,7 @@ from __future__ import division
 __copyright__ = "Copyright (c) (2017-2023) Chatopera Inc. All Rights Reserved"
 __author__ = "Hu Ying Xi<>, Hai Liang Wang<hai@chatopera.com>"
 __date__ = "2020-09-24"
-__version__ = "3.22.0"
+__version__ = "3.23.0"
 
 import os
 import sys
@@ -51,7 +51,7 @@ from .utils import sigmoid
 from .utils import cosine
 from .utils import is_digit
 from jieba import posseg, analyse
-import wget
+from chatoperastore import download_licensedfile, LicensedfileDownloadException
 
 '''
 globals
@@ -153,9 +153,8 @@ def _load_w2v(model_file=_f_model, binary=True):
         if not _licenseid:
             raise Exception("SYNONYMS_DL_LICENSE is not in Environment variables, check out Installation Guide on https://github.com/chatopera/Synonyms")
 
-        _f_url = "https://store.chatopera.com/dl/%s.gz" % _licenseid
-        print("\n>> Synonyms downloading data from %s to %s ... \n this only happens if Synonyms initialization for the first time. \n It would take minutes that depends on network." % (_f_url, model_file))
-        wget.download(_f_url, out = model_file)
+        print("\n>> Synonyms downloading data with licenseId %s, save to %s ... \n this only happens if Synonyms initialization for the first time. \n It would take minutes that depends on network." % (_licenseid, model_file))
+        download_licensedfile(_licenseid, model_file)
         dl_file_size = os.path.getsize(model_file)
         min_file_size = 40900000 # ~ 40MB
 

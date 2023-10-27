@@ -33,7 +33,7 @@ if sys.version_info[0] < 3:
     # raise "Must be using Python 3"
     # 
 
-import synonyms  # https://github.com/huyingxi/Synonyms
+import synonyms  # https://github.com/chatopera/Synonyms
 import numpy
 import unittest
 

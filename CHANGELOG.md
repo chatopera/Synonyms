@@ -1,3 +1,7 @@
+# 3.23
+
+- Use chatoperastore to download model file
+
 # 3.16
 
 - Use github vector pkg download link
