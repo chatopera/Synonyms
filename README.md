@@ -39,7 +39,7 @@ python -c "import synonyms" # download word vectors file
 
 Synonyms's machine learning model package(s) requires a License from [Chatopera License Store](https://store.chatopera.com/product/syns001), first purchase a License and get the `license id` from **Licenses** page on Chatopera License Store(`license id`：在证书商店，证书详情页，点击【复制证书标识】).
 
-![image](https://cdndownload2.chatopera.com/store/imgs/syn_order_post.png)
+![image](https://cdndownload2.chatopera.com/store/imgs/syn_order_post.jpg)
 
 Secondly, set environment variable in your terminal or shell scripts as below.
 
