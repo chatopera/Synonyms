@@ -49,7 +49,10 @@ export SYNONYMS_DL_LICENSE=YOUR_LICENSE
 ## e.g. if your license id is `FOOBAR`, run `export SYNONYMS_DL_LICENSE=FOOBAR`
 
 # Windows
+## 1/2 Command Prompt
 set SYNONYMS_DL_LICENSE=YOUR_LICENSE
+## 2/2 PowerShell
+$env:SYNONYMS_DL_LICENSE='YOUR_LICENSE'
 ```
 
 Last, download the model package by command or script -
