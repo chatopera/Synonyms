@@ -17,7 +17,7 @@ from __future__ import division
 __copyright__ = "Copyright (c) (2017-2023) Chatopera Inc. All Rights Reserved"
 __author__ = "Hu Ying Xi<>, Hai Liang Wang<hai@chatopera.com>"
 __date__ = "2020-09-24"
-__version__ = "3.23.3"
+__version__ = "3.23.5"
 
 import os
 import sys
