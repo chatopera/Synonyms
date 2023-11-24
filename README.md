@@ -73,7 +73,7 @@ print("SYNONYMS_DL_LICENSE=", _licenseid)
 
 **提示：安装后初次使用会下载词向量文件，下载速度取决于网络情况。**
 
-## 2/3 Download Model Package
+## 3/3 Download Model Package
 
 Last, download the model package by command or script -
 
