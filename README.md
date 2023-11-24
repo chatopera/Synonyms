@@ -43,6 +43,8 @@ Synonyms's machine learning model package(s) requires a License from [Chatopera 
 
 Secondly, set environment variable in your terminal or shell scripts as below.
 
+* For OS Users, e.g. Linux, Windows, macOS
+
 ```bash
 # Linux / macOS
 export SYNONYMS_DL_LICENSE=YOUR_LICENSE
@@ -62,6 +64,20 @@ python -c "import synonyms"
 ```
 
 **提示：安装后初次使用会下载词向量文件，下载速度取决于网络情况。**
+
+* For Jupyter Notebook Users
+
+```python
+# In jupyter notebook
+import os
+os.environ["SYNONYMS_DL_LICENSE"] = "YOUR_LICENSE"
+_licenseid = os.environ.get("SYNONYMS_DL_LICENSE", None)
+print("SYNONYMS_DL_LICENSE=", _licenseid)
+import synonyms
+```
+
+![](./assets/screenshot_20231124180125.png)
+
 
 其它环境变量介绍见下文，本文档的配置和接口说明面向 python 工具包。
 
