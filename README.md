@@ -26,16 +26,15 @@ Chinese Synonyms for Natural Language Processing and Understanding.
 
 Follow steps below to install and activate packages.
 
-## 1/2 Install Sourcecodes Package
+## 1/3 Install Sourcecodes Package
 
 ```bash
 pip install -U synonyms
-python -c "import synonyms" # download word vectors file
 ```
 
 兼容 py2 和 py3，当前稳定版本 [v3.x](https://github.com/chatopera/Synonyms/releases)。
 
-## 2/2 Install Model Package
+## 2/3 Config license id
 
 Synonyms's machine learning model package(s) requires a License from [Chatopera License Store](https://store.chatopera.com/product/syns001), first purchase a License and get the `license id` from **Licenses** page on Chatopera License Store(`license id`：在证书商店，证书详情页，点击【复制证书标识】).
 
@@ -59,14 +58,6 @@ set SYNONYMS_DL_LICENSE=YOUR_LICENSE
 $env:SYNONYMS_DL_LICENSE='YOUR_LICENSE'
 ```
 
-Last, download the model package by command or script -
-
-```bash
-python -c "import synonyms"
-```
-
-**提示：安装后初次使用会下载词向量文件，下载速度取决于网络情况。**
-
 * For Python Code Users
 
 Jupyter Notebook, etc.
@@ -76,13 +67,19 @@ import os
 os.environ["SYNONYMS_DL_LICENSE"] = "YOUR_LICENSE"
 _licenseid = os.environ.get("SYNONYMS_DL_LICENSE", None)
 print("SYNONYMS_DL_LICENSE=", _licenseid)
-import synonyms
 ```
 
 ![](./assets/screenshot_20231124180125.png)
 
+**提示：安装后初次使用会下载词向量文件，下载速度取决于网络情况。**
 
-其它环境变量介绍见下文，本文档的配置和接口说明面向 python 工具包。
+## 2/3 Download Model Package
+
+Last, download the model package by command or script -
+
+```bash
+python -c "import synonyms; synonyms.display('能量')" # download word vectors file
+```
 
 ![](./assets/3.gif)
 
