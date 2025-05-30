@@ -6,7 +6,7 @@ Chinese Synonyms for Natural Language Processing and Understanding.
 
 更好的中文近义词：聊天机器人、智能问答工具包。
 
-`synonyms`可以用于自然语言理解的很多任务：文本对齐，推荐算法，相似度计算，语义偏移，关键字提取，概念提取，自动摘要，搜索引擎等。
+`synonyms`可以用于自然语言理解的很多任务：[RAG (Retrieval-Augmented Generation)](https://github.com/chatopera/Synonyms/issues/146)，推荐算法，相似度计算，语义偏移，关键字提取，智能问答，自动摘要，搜索引擎等。
 
 为提供稳定、可靠、长期优化的服务，Synonyms 改为使用 [春松许可证, v1.0](https://www.cskefu.com/licenses/v1.html) 并针对机器学习模型的下载进行收费，详见[证书商店](https://store.chatopera.com/product/syns001)。之前的贡献者（突出贡献的代码贡献者），可与我们联系，讨论收费问题。-- [Chatopera Inc.](https://www.chatopera.com) @ Oct. 2023
 
