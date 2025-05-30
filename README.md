@@ -233,14 +233,14 @@ SYNONYMS_DEBUG=TRUE
 
 ## Quick Get Start
 
-* 熟悉接口
+### 熟悉接口
 
 ```bash
 $ pip install -r Requirements.txt
 $ python demo.py
 ```
 
-* 实现 RAG (Retrieval-Augmented Generation)服务
+### 实现 RAG (Retrieval-Augmented Generation)服务
 
 查看示例程序, [hailiang-wang/llm-get-started](https://github.com/hailiang-wang/llm-get-started/tree/master/003_rag_langchain)
 
