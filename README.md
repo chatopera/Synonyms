@@ -233,10 +233,16 @@ SYNONYMS_DEBUG=TRUE
 
 ## Quick Get Start
 
+* 熟悉接口
+
 ```bash
 $ pip install -r Requirements.txt
 $ python demo.py
 ```
+
+* 实现 RAG (Retrieval-Augmented Generation)服务
+
+查看示例程序, [hailiang-wang/llm-get-started](https://github.com/hailiang-wang/llm-get-started/tree/master/003_rag_langchain)
 
 ## Change logs
 
@@ -351,6 +357,8 @@ Google 发布的[word2vec](https://code.google.com/archive/p/word2vec/)，该库
 [详见 #64](https://github.com/chatopera/Synonyms/issues/64)
 
 4. [#118 词向量文件一直下载不下来？](https://github.com/chatopera/Synonyms/issues/118)
+
+5. [#146 Synonyms 和 Langchain 实现 RAG 检索服务](https://github.com/chatopera/Synonyms/issues/146)
 
 # Authors
 
