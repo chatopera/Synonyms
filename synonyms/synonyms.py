@@ -17,7 +17,7 @@ from __future__ import division
 __copyright__ = "Copyright (c) (2017-2023) Chatopera Inc. All Rights Reserved"
 __author__ = "Hu Ying Xi<>, Hai Liang Wang<hai@chatopera.com>"
 __date__ = "2020-09-24"
-__version__ = "3.23.5"
+__version__ = "3.23.6"
 
 import os
 import sys
@@ -247,11 +247,21 @@ def _levenshtein_distance(sentence1, sentence2):
 
 def sv(sentence, ignore=False):
     '''
-    获得一个分词后句子的向量，向量以BoW方式组成
+    获得一个分词后句子的向量，向量以 array[array[]] 方式组成，即获取 sentence 中每个词的向量 array[] 放在一个 array 中
+
     sentence: 句子是分词后通过空格联合起来
     ignore: 是否忽略OOV，False时，随机生成一个向量
     '''
     return _get_wv(sentence, ignore = ignore)
+
+def bow(sentence, ignore=False):
+    '''
+    获得一个分词后句子的向量，向量以BoW方式组成
+
+    sentence: 句子是分词后通过空格联合起来
+    ignore: 是否忽略OOV，False时，随机生成一个向量
+    '''
+    return _flat_sum_array(_get_wv(sentence, ignore))
 
 
 def v(word):

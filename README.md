@@ -93,7 +93,7 @@ python -c "import synonyms; synonyms.display('能量')" # download word vectors 
 | _SYNONYMS_WORDSEG_DICT_             | 中文分词[**主字典**](https://github.com/fxsjy/jieba#%E5%BB%B6%E8%BF%9F%E5%8A%A0%E8%BD%BD%E6%9C%BA%E5%88%B6)，格式和使用[参考](https://github.com/fxsjy/jieba#%E8%BD%BD%E5%85%A5%E8%AF%8D%E5%85%B8) |
 | _SYNONYMS_DEBUG_                    | ["TRUE"\|"FALSE"], 是否输出调试日志，设置为 “TRUE” 输出，默认为 “FALSE”                                                                                                                            |
 
-### synonyms#nearby(word [, size = 10])
+### synonyms.nearby(word [, size = 10])
 
 ```python
 import synonyms
@@ -113,7 +113,7 @@ synonyms.nearby(人脸, 10) = (
 
 在 OOV 的情况下，返回 `([], [])`，目前的字典大小: 435,729。
 
-### synonyms#compare(sen1, sen2 [, seg=True])
+### synonyms.compare(sen1, sen2 [, seg=True])
 
 两个句子的相似度比较
 
@@ -131,7 +131,7 @@ synonyms.nearby(人脸, 10) = (
 发生历史性变革 vs 发生历史性变革: 1.0
 ```
 
-### synonyms#display(word [, size = 10])
+### synonyms.display(word [, size = 10])
 
 以友好的方式打印近义词，方便调试，`display(WORD [, SIZE])`调用了 `synonyms#nearby` 方法。
 
@@ -152,7 +152,7 @@ synonyms.nearby(人脸, 10) = (
 
 `SIZE` 是打印词汇表的数量，默认 10。
 
-### synonyms#describe()
+### synonyms.describe()
 
 打印当前包的描述信息：
 
@@ -164,7 +164,7 @@ version: 3.18.0
 {'vocab_size': 435729, 'version': '3.18.0', 'model_path': '/chatopera/Synonyms/synonyms/data/words.vector.gz'}
 ```
 
-### synonyms#v(word)
+### synonyms.v(word)
 
 获得一个词语的向量，该向量为 numpy 的 array，当该词语是未登录词时，抛出 KeyError 异常。
 
@@ -175,7 +175,16 @@ array([-2.412167  ,  2.2628384 , -7.0214124 ,  3.9381874 ,  0.8219283 ,
       dtype=float32)
 ```
 
-### synonyms#sv(sentence, ignore=False)
+### synonyms.sv(sentence, ignore=False)
+
+获得一个分词后句子的向量，向量以 array[array[]] 方式组成，即获取 sentence 中每个词的向量 array[] 放在一个 array 中
+
+```python
+    sentence: 句子是分词后通过空格联合起来
+    ignore: 是否忽略OOV，False时，随机生成一个向量
+```
+
+### synonyms.bow(sentence, ignore=False)
 
 获得一个分词后句子的向量，向量以 BoW 方式组成
 
@@ -184,7 +193,7 @@ array([-2.412167  ,  2.2628384 , -7.0214124 ,  3.9381874 ,  0.8219283 ,
     ignore: 是否忽略OOV，False时，随机生成一个向量
 ```
 
-### synonyms#seg(sentence)
+### synonyms.seg(sentence)
 
 中文分词
 
@@ -200,7 +209,7 @@ synonyms.seg("中文近义词工具包")
 
 **该分词不去停用词和标点。**
 
-### synonyms#keywords(sentence [, topK=5, withWeight=False])
+### synonyms.keywords(sentence [, topK=5, withWeight=False])
 
 提取关键词，默认按照重要程度提取关键词。
 

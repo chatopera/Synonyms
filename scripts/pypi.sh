@@ -24,7 +24,8 @@ if [ -f synonyms/data/words.vector.gz ]; then
 fi
 
 rm -rf ./dist/*
-python setup.py sdist upload -r pypi
+python setup.py sdist
+twine upload --skip-existing dist/*
 
 if [ -f tmp/words.vector.gz ]; then
     mv tmp/words.vector.gz synonyms/data/words.vector.gz
