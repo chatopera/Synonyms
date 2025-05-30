@@ -93,6 +93,20 @@ python -c "import synonyms; synonyms.display('能量')" # download word vectors 
 | _SYNONYMS_WORDSEG_DICT_             | 中文分词[**主字典**](https://github.com/fxsjy/jieba#%E5%BB%B6%E8%BF%9F%E5%8A%A0%E8%BD%BD%E6%9C%BA%E5%88%B6)，格式和使用[参考](https://github.com/fxsjy/jieba#%E8%BD%BD%E5%85%A5%E8%AF%8D%E5%85%B8) |
 | _SYNONYMS_DEBUG_                    | ["TRUE"\|"FALSE"], 是否输出调试日志，设置为 “TRUE” 输出，默认为 “FALSE”                                                                                                                            |
 
+### 熟悉接口
+
+```bash
+$ pip install -r Requirements.txt
+$ python demo.py
+```
+
+### 实现 RAG (Retrieval-Augmented Generation)服务
+
+查看示例程序, [hailiang-wang/llm-get-started](https://github.com/hailiang-wang/llm-get-started/tree/master/003_rag_langchain)
+
+
+## APIs
+
 ### synonyms.nearby(word [, size = 10])
 
 ```python
@@ -231,18 +245,6 @@ SYNONYMS_DEBUG=TRUE
 
 ![](assets/1.png)
 
-## Quick Get Start
-
-### 熟悉接口
-
-```bash
-$ pip install -r Requirements.txt
-$ python demo.py
-```
-
-### 实现 RAG (Retrieval-Augmented Generation)服务
-
-查看示例程序, [hailiang-wang/llm-get-started](https://github.com/hailiang-wang/llm-get-started/tree/master/003_rag_langchain)
 
 ## Change logs
 
